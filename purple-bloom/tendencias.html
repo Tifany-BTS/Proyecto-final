@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tendencias de moda Purple Bloom: blusas fluidas, vestidos midi y pantalones de corte moderno para esta temporada.">
+  <meta property="og:title" content="Tendencias de moda | Purple Bloom">
+  <meta property="og:description" content="Tendencias de moda Purple Bloom: blusas fluidas, vestidos midi y pantalones de corte moderno para esta temporada.">
+  <meta property="og:image" content="https://tu-dominio.com/img/tendencias.jpg">
+  <meta property="og:url" content="https://tu-dominio.com/tendencias.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tendencias de moda | Purple Bloom">
+  <meta name="twitter:description" content="Tendencias de moda Purple Bloom: blusas fluidas, vestidos midi y pantalones de corte moderno para esta temporada.">
+  <meta name="twitter:image" content="https://tu-dominio.com/img/tendencias.jpg">
+  <title>Tendencias de moda | Purple Bloom</title>
+  <link rel="canonical" href="https://tu-dominio.com/tendencias.html">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Purple Bloom — Inicio">
+        <span class="site-logo__mark" aria-hidden="true">PB</span>
+        <span class="site-logo__text">Purple Bloom</span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="visually-hidden">Abrir menú</span>
+        <span class="nav-toggle__icon" aria-hidden="true">
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+        <ul class="site-nav__list">
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menú" hidden></button>
+
+      <div class="site-header__aux">
+        <a href="iniciar-sesion.html" class="site-header__login">Iniciar sesión</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <section class="favorites" aria-labelledby="trends-heading">
+      <div class="container">
+        <header class="section-header">
+          <h1 id="trends-heading">Tendencias de moda</h1>
+          <p>Blusas fluidas, vestidos midi y pantalones de corte moderno: inspirate con las tendencias que marcan esta temporada.</p>
+        </header>
+
+        <div class="favorites__grid" role="list">
+          <article class="product-card" role="listitem" aria-labelledby="trend-1-name">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Lavanda a favoritos">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
+            <h2 id="trend-1-name"><a href="producto.html?id=blusa-lavanda">Blusa Lavanda</a></h2>
+            <p class="product-card__desc">Blusa de seda en tono lavanda, corte relajado ideal para el día a día.</p>
+            <p class="product-card__price">49,99&nbsp;€</p>
+            <a href="producto.html?id=blusa-lavanda" class="btn btn--primary">Ver producto</a>
+          </article>
+
+          <article class="product-card" role="listitem" aria-labelledby="trend-2-name">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Violeta a favoritos">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <img class="product-card__image" src="img/vestido-violeta.jpg" alt="Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura" width="800" height="533" loading="lazy">
+            <h2 id="trend-2-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h2>
+            <p class="product-card__desc">Vestido midi con detalle floral, perfecto para ocasiones especiales.</p>
+            <p class="product-card__price">79,99&nbsp;€</p>
+            <a href="producto.html?id=vestido-violeta" class="btn btn--primary">Ver producto</a>
+          </article>
+
+          <article class="product-card" role="listitem" aria-labelledby="trend-3-name">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Berenjena a favoritos">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <img class="product-card__image" src="img/pantalon-berenjena.jpg" alt="Pantalón Berenjena: pantalón de corte recto en tono berenjena con pinzas" width="800" height="533" loading="lazy">
+            <h2 id="trend-3-name"><a href="producto.html?id=pantalon-berenjena">Pantalón Berenjena</a></h2>
+            <p class="product-card__desc">Pantalón de corte recto en tono berenjena, versátil y cómodo.</p>
+            <p class="product-card__price">59,99&nbsp;€</p>
+            <a href="producto.html?id=pantalon-berenjena" class="btn btn--primary">Ver producto</a>
+          </article>
+        </div>
+
+        <p class="content-note">Selección de ejemplo a partir del catálogo actual — no representa un ranking real de tendencias.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__grid">
+      <nav class="site-footer__links" aria-labelledby="footer-links-heading">
+        <h2 id="footer-links-heading">Enlaces</h2>
+        <ul>
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__powered" aria-labelledby="powered-heading">
+        <h2 id="powered-heading">Purple Bloom</h2>
+        <p>Moda femenina online.</p>
+        <p><a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a></p>
+        <p class="site-footer__copy">&copy; 2026 Purple Bloom. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/favorites.js" defer></script>
+</body>
+</html>

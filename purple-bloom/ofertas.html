@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ofertas especiales Purple Bloom: descuentos en blusas, vestidos y pantalones seleccionados para mujer.">
+  <meta property="og:title" content="Ofertas especiales | Purple Bloom">
+  <meta property="og:description" content="Ofertas especiales Purple Bloom: descuentos en blusas, vestidos y pantalones seleccionados para mujer.">
+  <meta property="og:image" content="https://tu-dominio.com/img/ofertas.jpg">
+  <meta property="og:url" content="https://tu-dominio.com/ofertas.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ofertas especiales | Purple Bloom">
+  <meta name="twitter:description" content="Ofertas especiales Purple Bloom: descuentos en blusas, vestidos y pantalones seleccionados para mujer.">
+  <meta name="twitter:image" content="https://tu-dominio.com/img/ofertas.jpg">
+  <title>Ofertas especiales | Purple Bloom</title>
+  <link rel="canonical" href="https://tu-dominio.com/ofertas.html">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Purple Bloom — Inicio">
+        <span class="site-logo__mark" aria-hidden="true">PB</span>
+        <span class="site-logo__text">Purple Bloom</span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="visually-hidden">Abrir menú</span>
+        <span class="nav-toggle__icon" aria-hidden="true">
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+        <ul class="site-nav__list">
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menú" hidden></button>
+
+      <div class="site-header__aux">
+        <a href="iniciar-sesion.html" class="site-header__login">Iniciar sesión</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <form class="site-search" role="search" aria-label="Buscar en Purple Bloom">
+          <label class="visually-hidden" for="buscar">Buscar productos</label>
+          <input
+            id="buscar"
+            type="search"
+            name="q"
+            placeholder="Buscar…"
+            autocomplete="off"
+          >
+          <button type="submit" aria-label="Enviar búsqueda">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+              <path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <section id="ofertas" class="catalog" aria-labelledby="ofertas-heading">
+      <div class="container catalog__layout">
+        <div class="catalog__main">
+          <header class="section-header">
+            <h1 id="ofertas-heading">Ofertas especiales</h1>
+            <p>Aprovecha descuentos en piezas seleccionadas. Calidad, estilo y precios pensados para tu guardarropa.</p>
+          </header>
+
+          <div class="catalog__grid" role="list" aria-label="Listado de productos en oferta"></div>
+
+          <p class="catalog__empty" role="status" aria-live="polite" hidden></p>
+          <p class="content-note">Se muestran automáticamente los productos con precio de 50&nbsp;€ o menos — si un precio cambia en el catálogo, esta lista se actualiza sola.</p>
+        </div>
+
+        <aside class="catalog__sidebar" aria-labelledby="filters-heading">
+          <h2 id="filters-heading" class="catalog__sidebar-title">Categorías</h2>
+          <nav aria-label="Filtrar por categoría">
+            <ul class="filter-list">
+              <li><button type="button" class="filter-list__link filter-list__link--active" data-category="" aria-current="true">Todas</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Blusas">Blusas</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Vestidos">Vestidos</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Pantalones">Pantalones</button></li>
+            </ul>
+          </nav>
+        </aside>
+      </div>
+
+      <a href="carrito.html" class="cart-fab" aria-label="Ver carrito de compras">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6h15l-1.5 9h-12L6 6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+          <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="cart-fab__label">Carrito</span>
+        <span class="cart-fab__count" aria-hidden="true" hidden>0</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__grid">
+      <nav class="site-footer__links" aria-labelledby="footer-links-heading">
+        <h2 id="footer-links-heading">Enlaces</h2>
+        <ul>
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__powered" aria-labelledby="powered-heading">
+        <h2 id="powered-heading">Purple Bloom</h2>
+        <p>Moda femenina online.</p>
+        <p><a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a></p>
+        <p class="site-footer__copy">&copy; 2026 Purple Bloom. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="carrito" class="visually-hidden" aria-live="polite">Carrito de compras</div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/products-data.js" defer></script>
+  <script src="js/offers.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/favorites.js" defer></script>
+</body>
+</html>

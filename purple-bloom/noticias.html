@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Novedades y noticias de Purple Bloom: colecciones de temporada, lanzamientos exclusivos y actualizaciones de la marca.">
+  <meta property="og:title" content="Novedades y noticias | Purple Bloom">
+  <meta property="og:description" content="Novedades y noticias de Purple Bloom: colecciones de temporada, lanzamientos exclusivos y actualizaciones de la marca.">
+  <meta property="og:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <meta property="og:url" content="https://tu-dominio.com/noticias.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Novedades y noticias | Purple Bloom">
+  <meta name="twitter:description" content="Novedades y noticias de Purple Bloom: colecciones de temporada, lanzamientos exclusivos y actualizaciones de la marca.">
+  <meta name="twitter:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <title>Novedades y noticias | Purple Bloom</title>
+  <link rel="canonical" href="https://tu-dominio.com/noticias.html">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Purple Bloom — Inicio">
+        <span class="site-logo__mark" aria-hidden="true">PB</span>
+        <span class="site-logo__text">Purple Bloom</span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="visually-hidden">Abrir menú</span>
+        <span class="nav-toggle__icon" aria-hidden="true">
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+        <ul class="site-nav__list">
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menú" hidden></button>
+
+      <div class="site-header__aux">
+        <a href="iniciar-sesion.html" class="site-header__login">Iniciar sesión</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <section class="news" aria-labelledby="news-heading">
+      <div class="container">
+        <header class="section-header">
+          <h1 id="news-heading">Novedades y noticias</h1>
+          <p>Las últimas noticias sobre la marca, colecciones de temporada y lanzamientos exclusivos para mujer.</p>
+        </header>
+
+        <div class="news-list">
+          <article class="news-post">
+            <p class="news-post__date">Agosto 2026</p>
+            <h2 class="news-post__title">Nueva colección de temporada</h2>
+            <p class="news-post__excerpt">Presentamos las piezas que marcan esta temporada: blusas fluidas, vestidos midi y pantalones de corte moderno pensados para el día a día.</p>
+          </article>
+
+          <article class="news-post">
+            <p class="news-post__date">Julio 2026</p>
+            <h2 class="news-post__title">Lanzamiento exclusivo: nuevos colores</h2>
+            <p class="news-post__excerpt">Ampliamos nuestra paleta con tonos lavanda, violeta y berenjena en piezas seleccionadas del catálogo.</p>
+          </article>
+
+          <article class="news-post">
+            <p class="news-post__date">Junio 2026</p>
+            <h2 class="news-post__title">Purple Bloom sigue creciendo</h2>
+            <p class="news-post__excerpt">Seguimos sumando funciones a la tienda para que comprar tus piezas favoritas sea cada vez más simple.</p>
+          </article>
+        </div>
+
+        <p class="content-note">Contenido de ejemplo — esta sección todavía no se conecta a un sistema real de noticias.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__grid">
+      <nav class="site-footer__links" aria-labelledby="footer-links-heading">
+        <h2 id="footer-links-heading">Enlaces</h2>
+        <ul>
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__powered" aria-labelledby="powered-heading">
+        <h2 id="powered-heading">Purple Bloom</h2>
+        <p>Moda femenina online.</p>
+        <p><a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a></p>
+        <p class="site-footer__copy">&copy; 2026 Purple Bloom. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</body>
+</html>

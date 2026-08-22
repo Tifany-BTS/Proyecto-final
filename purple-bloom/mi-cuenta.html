@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tu cuenta de Purple Bloom: revisá tus pedidos, tus datos personales y los productos que guardaste como favoritos.">
+  <meta property="og:title" content="Mi cuenta | Purple Bloom">
+  <meta property="og:description" content="Tu cuenta de Purple Bloom: revisá tus pedidos, tus datos personales y los productos que guardaste como favoritos.">
+  <meta property="og:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <meta property="og:url" content="https://tu-dominio.com/mi-cuenta.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mi cuenta | Purple Bloom">
+  <meta name="twitter:description" content="Tu cuenta de Purple Bloom: revisá tus pedidos, tus datos personales y los productos que guardaste como favoritos.">
+  <meta name="twitter:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <meta name="robots" content="noindex">
+  <title>Mi cuenta | Purple Bloom</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Purple Bloom — Inicio">
+        <span class="site-logo__mark" aria-hidden="true">PB</span>
+        <span class="site-logo__text">Purple Bloom</span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="visually-hidden">Abrir menú</span>
+        <span class="nav-toggle__icon" aria-hidden="true">
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+        <ul class="site-nav__list">
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados" aria-current="page">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menú" hidden></button>
+
+      <div class="site-header__aux">
+        <a href="iniciar-sesion.html" class="site-header__login">Iniciar sesión</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <div class="container account-intro">
+      <h1 id="account-heading">Mi cuenta</h1>
+      <p>Este destino todavía es un mockup estático — no hay backend ni autenticación real.</p>
+    </div>
+
+    <section class="account-section" aria-labelledby="account-orders-heading">
+      <div class="container">
+        <h2 id="account-orders-heading">Mis pedidos</h2>
+        <div class="account-orders">
+          <article class="account-order">
+            <div class="account-order__info">
+              <p class="account-order__number">Pedido #PB-1042</p>
+              <p class="account-order__date">15 de julio de 2026</p>
+            </div>
+            <p class="account-order__status account-order__status--delivered">Entregado</p>
+            <p class="account-order__total">129,98&nbsp;€</p>
+          </article>
+          <article class="account-order">
+            <div class="account-order__info">
+              <p class="account-order__number">Pedido #PB-1035</p>
+              <p class="account-order__date">2 de junio de 2026</p>
+            </div>
+            <p class="account-order__status account-order__status--transit">En camino</p>
+            <p class="account-order__total">54,99&nbsp;€</p>
+          </article>
+        </div>
+        <p class="content-note">Pedidos de ejemplo — este prototipo no procesa compras reales.</p>
+      </div>
+    </section>
+
+    <section class="account-section" aria-labelledby="account-data-heading">
+      <div class="container">
+        <h2 id="account-data-heading">Mis datos</h2>
+        <dl class="account-data">
+          <div class="account-data__row">
+            <dt>Nombre</dt>
+            <dd>—</dd>
+          </div>
+          <div class="account-data__row">
+            <dt>Correo electrónico</dt>
+            <dd>—</dd>
+          </div>
+          <div class="account-data__row">
+            <dt>Teléfono</dt>
+            <dd>—</dd>
+          </div>
+        </dl>
+        <p class="content-note">Todavía no hay backend para guardar o mostrar tus datos reales.</p>
+      </div>
+    </section>
+
+    <section id="favoritos-guardados" class="account-section" aria-labelledby="account-favorites-heading">
+      <div class="container">
+        <h2 id="account-favorites-heading">Mis favoritos</h2>
+        <div class="favorites__grid" role="list">
+          <article class="product-card" role="listitem" aria-labelledby="account-fav-1-name">
+            <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
+            <h3 id="account-fav-1-name"><a href="producto.html?id=blusa-lavanda">Blusa Lavanda</a></h3>
+            <p class="product-card__price">49,99&nbsp;€</p>
+            <a href="producto.html?id=blusa-lavanda" class="btn btn--primary">Ver producto</a>
+          </article>
+          <article class="product-card" role="listitem" aria-labelledby="account-fav-2-name">
+            <img class="product-card__image" src="img/vestido-violeta.jpg" alt="Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura" width="800" height="533" loading="lazy">
+            <h3 id="account-fav-2-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h3>
+            <p class="product-card__price">79,99&nbsp;€</p>
+            <a href="producto.html?id=vestido-violeta" class="btn btn--primary">Ver producto</a>
+          </article>
+        </div>
+        <p class="content-note">Favoritos de ejemplo — todavía no se pueden guardar productos desde el catálogo.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__grid">
+      <nav class="site-footer__links" aria-labelledby="footer-links-heading">
+        <h2 id="footer-links-heading">Enlaces</h2>
+        <ul>
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados" aria-current="page">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__powered" aria-labelledby="powered-heading">
+        <h2 id="powered-heading">Purple Bloom</h2>
+        <p>Moda femenina online.</p>
+        <p><a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a></p>
+        <p class="site-footer__copy">&copy; 2026 Purple Bloom. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</body>
+</html>

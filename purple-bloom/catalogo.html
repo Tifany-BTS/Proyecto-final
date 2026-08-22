@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explora el catálogo de Purple Bloom: blusas, vestidos y pantalones para mujer filtrados por categoría, con precios claros y compra directa desde la web.">
+  <meta property="og:title" content="Catálogo | Purple Bloom: blusas, vestidos y pantalones">
+  <meta property="og:description" content="Explora el catálogo de Purple Bloom: blusas, vestidos y pantalones para mujer filtrados por categoría, con precios claros y compra directa desde la web.">
+  <meta property="og:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <meta property="og:url" content="https://tu-dominio.com/catalogo.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Catálogo | Purple Bloom: blusas, vestidos y pantalones">
+  <meta name="twitter:description" content="Explora el catálogo de Purple Bloom: blusas, vestidos y pantalones para mujer filtrados por categoría, con precios claros y compra directa desde la web.">
+  <meta name="twitter:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <title>Catálogo | Purple Bloom: blusas, vestidos y pantalones</title>
+  <link rel="canonical" href="https://tu-dominio.com/catalogo.html">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <header class="site-header site-header--catalog" role="banner">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Purple Bloom — Inicio">
+        <span class="site-logo__mark" aria-hidden="true">PB</span>
+        <span class="site-logo__text">Purple Bloom</span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="visually-hidden">Abrir menú</span>
+        <span class="nav-toggle__icon" aria-hidden="true">
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+        <ul class="site-nav__list">
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html" aria-current="page">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="iniciar-sesion.html" class="site-nav__login">Iniciar sesión</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menú" hidden></button>
+
+      <div class="site-header__aux">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <form class="site-search" role="search" aria-label="Buscar en Purple Bloom">
+          <label class="visually-hidden" for="buscar">Buscar productos</label>
+          <input
+            id="buscar"
+            type="search"
+            name="q"
+            placeholder="Buscar…"
+            autocomplete="off"
+          >
+          <button type="submit" aria-label="Enviar búsqueda">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+              <path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <section id="catalogo" class="catalog" aria-labelledby="catalog-heading">
+      <div class="container catalog__layout">
+        <div class="catalog__main">
+          <header class="section-header">
+            <h1 id="catalog-heading">Catálogo</h1>
+            <p>Explora nuestra selección de ropa de mujer.</p>
+          </header>
+
+          <div class="catalog__grid" role="list" aria-label="Listado de productos">
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-1-name" data-category="Blusas">
+              <span class="product-card__badge">Oferta</span>
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Clásica a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/blusa-clasica.jpg" alt="Blusa Clásica: blusa blanca de manga corta con botones y cuello camisero" width="800" height="533" loading="lazy">
+              <h2 id="prod-1-name"><a href="producto.html?id=blusa-clasica">Blusa Clásica</a></h2>
+              <p class="product-card__price">39,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="blusa-clasica" aria-label="Añadir Blusa Clásica al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-2-name" data-category="Vestidos">
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Elegante a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/vestido-elegante.jpg" alt="Vestido Elegante: vestido midi color crudo con escote cruzado y abertura lateral" width="800" height="533" loading="lazy">
+              <h2 id="prod-2-name"><a href="producto.html?id=vestido-elegante">Vestido Elegante</a></h2>
+              <p class="product-card__price">84,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="vestido-elegante" aria-label="Añadir Vestido Elegante al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-3-name" data-category="Pantalones">
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Slim a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/pantalon-slim.jpg" alt="Pantalón Slim: pantalón negro de tiro alto con pinzas y corte ajustado" width="800" height="533" loading="lazy">
+              <h2 id="prod-3-name"><a href="producto.html?id=pantalon-slim">Pantalón Slim</a></h2>
+              <p class="product-card__price">54,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="pantalon-slim" aria-label="Añadir Pantalón Slim al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-4-name" data-category="Blusas">
+              <span class="product-card__badge">Oferta</span>
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Estampada a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="product-card__image" aria-hidden="true"></div>
+              <h2 id="prod-4-name"><a href="producto.html?id=blusa-estampada">Blusa Estampada</a></h2>
+              <p class="product-card__price">44,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="blusa-estampada" aria-label="Añadir Blusa Estampada al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-5-name" data-category="Vestidos">
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Casual a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/vestido-casual.jpg" alt="Vestido Casual: vestido lila de tiras con estampado floral y lazo en la cintura" width="800" height="533" loading="lazy">
+              <h2 id="prod-5-name"><a href="producto.html?id=vestido-casual">Vestido Casual</a></h2>
+              <p class="product-card__price">69,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="vestido-casual" aria-label="Añadir Vestido Casual al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-6-name" data-category="Pantalones">
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Wide Leg a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="product-card__image product-card__image--alt2" aria-hidden="true"></div>
+              <h2 id="prod-6-name"><a href="producto.html?id=pantalon-wide-leg">Pantalón Wide Leg</a></h2>
+              <p class="product-card__price">59,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="pantalon-wide-leg" aria-label="Añadir Pantalón Wide Leg al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-7-name" data-category="Blusas">
+              <span class="product-card__badge">Oferta</span>
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Lavanda a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
+              <h2 id="prod-7-name"><a href="producto.html?id=blusa-lavanda">Blusa Lavanda</a></h2>
+              <p class="product-card__price">49,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="blusa-lavanda" aria-label="Añadir Blusa Lavanda al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-8-name" data-category="Vestidos">
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Violeta a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/vestido-violeta.jpg" alt="Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura" width="800" height="533" loading="lazy">
+              <h2 id="prod-8-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h2>
+              <p class="product-card__price">79,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="vestido-violeta" aria-label="Añadir Vestido Violeta al carrito">Añadir al carrito</button>
+            </article>
+
+            <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-9-name" data-category="Pantalones">
+              <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Berenjena a favoritos">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <img class="product-card__image" src="img/pantalon-berenjena.jpg" alt="Pantalón Berenjena: pantalón de corte recto en tono berenjena con pinzas" width="800" height="533" loading="lazy">
+              <h2 id="prod-9-name"><a href="producto.html?id=pantalon-berenjena">Pantalón Berenjena</a></h2>
+              <p class="product-card__price">59,99&nbsp;€</p>
+              <button type="button" class="btn btn--small" data-action="add-to-cart" data-product-id="pantalon-berenjena" aria-label="Añadir Pantalón Berenjena al carrito">Añadir al carrito</button>
+            </article>
+          </div>
+
+          <p class="catalog__empty" role="status" aria-live="polite" hidden></p>
+        </div>
+
+        <aside class="catalog__sidebar" aria-labelledby="filters-heading">
+          <h2 id="filters-heading" class="catalog__sidebar-title">Categorías</h2>
+          <nav aria-label="Filtrar por categoría">
+            <ul class="filter-list">
+              <li><button type="button" class="filter-list__link filter-list__link--active" data-category="" aria-current="true">Todas</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Blusas">Blusas</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Vestidos">Vestidos</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Pantalones">Pantalones</button></li>
+            </ul>
+          </nav>
+        </aside>
+      </div>
+
+      <a href="carrito.html" class="cart-fab" aria-label="Ver carrito de compras">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6h15l-1.5 9h-12L6 6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+          <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="cart-fab__label">Carrito</span>
+        <span class="cart-fab__count" aria-hidden="true" hidden>0</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__grid">
+      <nav class="site-footer__links" aria-labelledby="footer-links-heading">
+        <h2 id="footer-links-heading">Enlaces</h2>
+        <ul>
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
+          <li><a href="iniciar-sesion.html">Iniciar sesión</a></li>
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__powered" aria-labelledby="powered-heading">
+        <h2 id="powered-heading">Purple Bloom</h2>
+        <p>Moda femenina online.</p>
+        <p><a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a></p>
+        <p class="site-footer__copy">&copy; 2026 Purple Bloom. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="carrito" class="visually-hidden" aria-live="polite">Carrito de compras</div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/products-data.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/favorites.js" defer></script>
+</body>
+</html>
