@@ -11,7 +11,16 @@
   font-weight: var(--font-weight-semibold);
   line-height: 1;
   cursor: pointer;
-  transition: background-color var(--transition), border-color var(--transition), color var(--transition);
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.c-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.c-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .c-btn:focus-visible {
@@ -19,14 +28,22 @@
   outline-offset: 2px;
 }
 
+/* Primary */
+
 .c-btn--primary {
   background: var(--color-primary);
   color: var(--color-on-primary);
 }
 
-.c-btn--primary:hover {
+.c-btn--primary:hover:not(:disabled) {
   background: var(--color-primary-dark);
 }
+
+.c-btn--primary:active:not(:disabled) {
+  background: color-mix(in srgb, var(--color-primary-dark) 85%, black);
+}
+
+/* Secondary */
 
 .c-btn--secondary {
   background: var(--color-surface);
@@ -34,18 +51,30 @@
   color: var(--color-text);
 }
 
-.c-btn--secondary:hover {
+.c-btn--secondary:hover:not(:disabled) {
   background: var(--color-accent);
 }
+
+.c-btn--secondary:active:not(:disabled) {
+  background: var(--color-border);
+}
+
+/* Destructive */
 
 .c-btn--destructive {
   background: var(--semantic-error);
   color: var(--color-on-primary);
 }
 
-.c-btn--destructive:hover {
-  background: var(--color-danger);
+.c-btn--destructive:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--semantic-error) 85%, black);
 }
+
+.c-btn--destructive:active:not(:disabled) {
+  background: color-mix(in srgb, var(--semantic-error) 70%, black);
+}
+
+/* Icon */
 
 .c-btn--icon {
   padding: var(--space-0-625);
@@ -54,8 +83,13 @@
   color: var(--color-text-muted);
 }
 
-.c-btn--icon:hover {
+.c-btn--icon:hover:not(:disabled) {
   background: var(--color-accent);
+  color: var(--color-text);
+}
+
+.c-btn--icon:active:not(:disabled) {
+  background: var(--color-border);
   color: var(--color-text);
 }
 

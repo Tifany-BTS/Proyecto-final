@@ -113,6 +113,19 @@
         gap: 0.75rem;
         align-items: flex-start;
       }
+
+      .pg-demo + .pg-demo-label {
+        margin-top: 1.25rem;
+      }
+
+      .pg-demo-label {
+        margin: 0 0 0.5rem;
+        color: var(--color-text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
     </style>
   </head>
   <body>
@@ -213,11 +226,26 @@
         <div class="pg-section__grid">
           <div class="pg-col pg-col--component">
             <h3>Componente</h3>
+            <p class="pg-demo-label">Idle / hover / pressed (interactúa para ver los estados)</p>
             <div class="pg-demo">
               <button type="button" class="c-btn c-btn--primary">Guardar</button>
               <button type="button" class="c-btn c-btn--secondary">Cancelar</button>
               <button type="button" class="c-btn c-btn--destructive">Eliminar</button>
               <button type="button" class="c-btn c-btn--icon" aria-label="Más opciones">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                  <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+
+            <p class="pg-demo-label">Disabled</p>
+            <div class="pg-demo">
+              <button type="button" class="c-btn c-btn--primary" disabled>Guardar</button>
+              <button type="button" class="c-btn c-btn--secondary" disabled>Cancelar</button>
+              <button type="button" class="c-btn c-btn--destructive" disabled>Eliminar</button>
+              <button type="button" class="c-btn c-btn--icon" aria-label="Más opciones" disabled>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <circle cx="5" cy="12" r="1.5" fill="currentColor" />
                   <circle cx="12" cy="12" r="1.5" fill="currentColor" />
@@ -234,6 +262,10 @@
               <dd>Al ser <code>&lt;button&gt;</code> nativos, Tab los enfoca en el orden del documento y Enter o Espacio los activa, sin código adicional.</dd>
               <dt>Foco</dt>
               <dd>El anillo de foco (<code>:focus-visible</code>) es visible al navegar con teclado y no aparece con clic de mouse.</dd>
+              <dt>Pressed</dt>
+              <dd>Al activarse con clic o Enter/Espacio, el botón oscurece su fondo y se desplaza 1px (<code>:active</code>), dando retroalimentación táctil antes de soltar.</dd>
+              <dt>Disabled</dt>
+              <dd>Con el atributo <code>disabled</code>, el botón queda fuera del orden de Tab, no se puede activar por teclado ni clic, y no aplica los estilos de hover/pressed.</dd>
               <dt>Icon button</dt>
               <dd>Al no tener texto visible, su nombre accesible depende por completo de <code>aria-label</code> (ej. <code>aria-label="Más opciones"</code>); sin él, un lector de pantalla anunciaría el botón sin descripción.</dd>
             </dl>
