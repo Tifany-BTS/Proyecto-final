@@ -1,18 +1,52 @@
 .c-dialog {
+  width: min(90vw, 28rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1-5);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-lg);
+}
+
+.c-dialog::backdrop {
+  background: var(--overlay-scrim);
 }
 
 .c-dialog-title {
+  margin: 0 0 var(--space-0-75);
+  color: var(--color-heading);
+  font-size: var(--font-size-lg);
+}
+
+.c-dialog p {
+  margin: 0;
+  color: var(--color-text-muted);
 }
 
 .c-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-0-75);
+  margin-top: var(--space-1-5);
 }
 
 @media (max-width: 480px) {
   .c-dialog {
+    width: min(94vw, 28rem);
+    padding: var(--space-1-25);
+  }
+
+  .c-dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .c-dialog-actions .c-btn {
+    width: 100%;
   }
 }
 
 @media (max-width: 768px) {
   .c-dialog {
+    padding: var(--space-1-25) var(--space-1-5);
   }
 }

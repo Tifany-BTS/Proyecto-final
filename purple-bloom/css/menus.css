@@ -1,15 +1,58 @@
-.c-menu-account {
+.pg-demo > div:has(.c-menu-account-toggle) {
+  position: relative;
 }
 
-.c-menu-account-toggle {
+.c-menu-account {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + var(--space-0-375));
+  left: 0;
+  min-width: 10rem;
+  margin: 0;
+  padding: var(--space-0-5);
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+}
+
+.c-menu-account li + li {
+  margin-top: var(--space-0-25);
+}
+
+.c-menu-account a,
+.c-menu-account button {
+  display: block;
+  width: 100%;
+  padding: var(--space-0-375) var(--space-0-625);
+  border: none;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.c-menu-account a:hover,
+.c-menu-account button:hover {
+  background: var(--color-accent);
+}
+
+.c-menu-account-toggle[aria-expanded="true"] {
+  background: var(--color-accent);
 }
 
 @media (max-width: 480px) {
   .c-menu-account {
+    min-width: 8.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .c-menu-account {
+    min-width: 9.5rem;
   }
 }
