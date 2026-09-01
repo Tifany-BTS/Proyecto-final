@@ -2,7 +2,7 @@
 }
 
 
-.c-alert-icon { padding: 8px;
+.c-alert-icon { padding: 8px; box-sizing: content-box;
 }
 .c-alert--info {border: 1px solid var(--semantic-info);}
 .c-alert--error {border: 1px solid var(--semantic-error);}
