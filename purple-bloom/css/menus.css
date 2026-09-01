@@ -1,0 +1,15 @@
+.c-menu-account {
+}
+
+.c-menu-account-toggle {
+}
+
+@media (max-width: 480px) {
+  .c-menu-account {
+  }
+}
+
+@media (max-width: 768px) {
+  .c-menu-account {
+  }
+}

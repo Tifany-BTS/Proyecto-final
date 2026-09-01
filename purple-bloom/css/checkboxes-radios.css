@@ -1,0 +1,27 @@
+.c-check-group {
+}
+
+.c-check {
+}
+
+.c-radio-group {
+}
+
+.c-radio {
+}
+
+@media (max-width: 480px) {
+  .c-check-group {
+  }
+
+  .c-radio-group {
+  }
+}
+
+@media (max-width: 768px) {
+  .c-check-group {
+  }
+
+  .c-radio-group {
+  }
+}

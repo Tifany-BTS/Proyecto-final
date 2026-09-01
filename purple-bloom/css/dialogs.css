@@ -1,0 +1,18 @@
+.c-dialog {
+}
+
+.c-dialog-title {
+}
+
+.c-dialog-actions {
+}
+
+@media (max-width: 480px) {
+  .c-dialog {
+  }
+}
+
+@media (max-width: 768px) {
+  .c-dialog {
+  }
+}
