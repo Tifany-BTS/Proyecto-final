@@ -29,7 +29,7 @@ This is a **static, framework-free, multi-page site** — plain HTML/CSS + a sma
 
 Everything lives in `css/styles.css`. All colors, spacing, and typography are CSS custom properties defined in `:root` — there should be no raw hex colors, px/rem spacing, or font-size/weight values in rules outside of the token block. When adding styles, add or reuse a token rather than hardcoding a value.
 
-- **Dark mode**: tokens are redefined twice — once under `@media (prefers-color-scheme: dark)` (guarded by `:root:not([data-theme="light"])`) and once under `:root[data-theme="dark"]` (explicit user override via the theme toggle, wins over system preference). A few tokens (`--color-primary-dark`, `--hero-overlay`, the footer link color, `--color-on-primary`) are intentionally **fixed across themes** — see the comment block at the top of the file for which ones and why (they sit on permanently-dark brand panels like the hero/footer that never invert).
+- **Dark mode**: tokens are redefined twice — once under `@media (prefers-color-scheme: dark)` (guarded by `:root:not([data-theme="light"])`) and once under `:root[data-theme="dark"]` (explicit user override via the theme toggle, wins over system preference). A few tokens (`--color-primary-dark`, the footer link color, `--color-on-primary`) are intentionally **fixed across themes** — see the comment block at the top of the file for which ones and why (they sit on permanently-dark brand panels like the hero/footer that never invert).
 - **Mobile-first**: every `@media` query in the file is `min-width` (640/768/1024px breakpoints). Base (unqualified) rules are the mobile layout; breakpoints only add complexity going up. Don't introduce `max-width` queries.
 - Layout is Flexbox/Grid throughout — Grid for card/sidebar layouts, Flexbox for one-dimensional alignment (header, forms, buttons).
 
@@ -44,9 +44,11 @@ Current scripts:
 - `theme.ts` — light/dark toggle, persisted to `localStorage`, respects system preference when no explicit choice is stored. Each page also has an inline (non-deferred) script in `<head>` that reads `localStorage` and sets `data-theme` before first paint, to avoid a flash of the wrong theme.
 - `contact-form.ts` / `login-form.ts` — client-side validation for the contact form (index.html footer) and login form (iniciar-sesion.html). Both follow the same pattern: validate on blur, then live-revalidate on input once a field has been touched; on submit, validate all fields, focus the first invalid one, and show a summary in a `.form-feedback` live region. There is no backend — "success" is a simulated message only.
 
-### Hero carousel is pure CSS
+### Hero background is a pure-CSS "silk" animation
 
-The homepage hero (`index.html`) is a radio-input carousel (`:checked ~` sibling selectors drive slide transforms, dot/arrow state) with no JS involved. Keyboard accessibility is handled by hiding the radios with the `.visually-hidden`-style clip technique (not `opacity:0`, which would also hide the focus ring) and forwarding `:focus-visible` from each radio to its corresponding dot via sibling selectors. Each slide's full-bleed photo background is applied with `.hero__carousel:has(#hero-slide-N:checked)`, layered under the shared `--hero-overlay` gradient token.
+The homepage hero (`index.html`) is a static banner (headline + tagline + CTA in `.hero__content`) with no JS involved. The animated backdrop (`.hero__silk`) is an oversized (`inset: -20%`), blurred stack of radial gradients built from the brand color tokens, slowly transformed (translate/rotate/scale) via the `silk-drift` keyframe animation — no image, canvas, or WebGL. It respects the site-wide `prefers-reduced-motion: reduce` rule (top of `styles.css`), which collapses all animation durations globally.
+
+The "Novedades / Tendencias / Ofertas" links that used to be the carousel's three slides are now a static 3-card grid (`.editorial-cards`) directly below the hero.
 
 ### Images
 

@@ -7,10 +7,9 @@
    mode, light-on-dark in dark mode) for use on normal page surfaces, such as
    form validation on the login page and the contact section.
    The --swatch-* tokens are fixed: decorative "photo" placeholder swatches,
-   not UI chrome. --overlay-scrim (nav backdrop) and --overlay-on-dark-* are
-   fixed too: translucent white/dark used only on surfaces that are already
-   permanently dark themselves (hero photo overlay, mobile nav backdrop), so
-   they must not invert with the theme either. */
+   not UI chrome. --overlay-scrim (mobile nav backdrop) is fixed too:
+   translucent dark used only on surfaces that are already permanently dark
+   themselves, so it must not invert with the theme either. */
 :root {
   --color-primary: #6b3fa0;
   --color-primary-dark: #4a2d73;
@@ -83,19 +82,10 @@
   --radius-lg: 1rem;
   --shadow: 0 2px 12px rgb(107 63 160 / 0.12);
   --shadow-lg: 0 8px 32px rgb(107 63 160 / 0.18);
-  /* Fixed (not theme-aware), same rationale as --color-primary-dark: this is
-     the brand-purple overlay painted over the hero's photo slides so their
-     white text stays readable, regardless of the site theme. */
-  --hero-overlay: linear-gradient(160deg, rgb(74 45 115 / 0.78), rgb(107 63 160 / 0.6));
-  /* Fixed, same rationale as --hero-overlay: a modal-style dimming scrim
-     should stay dark regardless of theme, not invert to a light overlay. */
+  /* Fixed (not theme-aware), same rationale as --color-primary-dark: a
+     modal-style dimming scrim should stay dark regardless of theme, not
+     invert to a light overlay. */
   --overlay-scrim: rgb(45 27 61 / 0.5);
-  /* Fixed: translucent white used only on surfaces that are already
-     permanently dark (hero photo overlay, mobile nav backdrop). */
-  --overlay-on-dark-20: rgb(255 255 255 / 0.2);
-  --overlay-on-dark-35: rgb(255 255 255 / 0.35);
-  --overlay-on-dark-40: rgb(255 255 255 / 0.4);
-  --overlay-on-dark-70: rgb(255 255 255 / 0.7);
   --transition: 200ms ease;
   --container: 72rem;
   --header-h: 4.5rem;
