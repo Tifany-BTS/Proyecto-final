@@ -125,6 +125,7 @@
         feedbackEl.classList.add("form-feedback--success");
         feedbackEl.classList.remove("form-feedback--error");
         formEl.reset();
+        pbTrackBeforeNavigate("Registro completado");
         window.setTimeout(() => {
             window.location.href = "mi-cuenta.html";
         }, 1200);

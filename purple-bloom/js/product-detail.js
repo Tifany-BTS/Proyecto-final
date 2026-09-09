@@ -59,6 +59,6 @@
     });
     const favoriteButton = root.querySelector('[data-action="add-to-favorite"]');
     favoriteButton?.addEventListener("click", () => {
-        document.dispatchEvent(new CustomEvent("purplebloom:add-to-favorite"));
+        document.dispatchEvent(new CustomEvent("purplebloom:add-to-favorite", { detail: { id: product.id } }));
     });
 })();

@@ -32,6 +32,12 @@
         saveCart(lines);
         updateBadges();
         renderCartPage();
+        const product = findPurpleBloomProduct(id);
+        pbTrack("Producto agregado al carrito", {
+            productId: id,
+            productName: product?.name,
+            price: product?.price,
+        });
     }
     function setQty(id, qty) {
         let lines = getCart();
@@ -251,6 +257,11 @@
                 firstInvalid?.focus();
                 return;
             }
+            const purchasedLines = getCart();
+            pbTrack("Checkout completado", {
+                items: cartCount(purchasedLines),
+                total: cartTotal(purchasedLines),
+            });
             saveCart([]);
             updateBadges();
             renderCartPage();

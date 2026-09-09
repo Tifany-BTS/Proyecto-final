@@ -127,6 +127,7 @@
     }
 
     showFeedback("¡Gracias! Tu mensaje fue enviado correctamente.", false);
+    pbTrack("Formulario de contacto enviado");
     formEl.reset();
   });
 })();
