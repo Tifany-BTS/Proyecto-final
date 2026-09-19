@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Evidencia de sustentación — Purple Bloom</title>
+<style>
+  :root{
+    --bg-page:#F7F6F2; --surface-1:#EFEDE6; --surface-2:#FFFFFF;
+    --text-primary:#2C2C2A; --text-secondary:#5F5E5A; --text-muted:#888780;
+    --border:#D3D1C7; --border-strong:#B4B2A9;
+    --radius:8px; --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    color-scheme: light;
+
+    /* Un color fijo por principio de UX — no cambian de significado */
+    --affordance-fill:#E6F1FB; --affordance-border:#378ADD; --affordance-text:#0C447C;
+    --consistencia-fill:#E1F5EE; --consistencia-border:#1D9E75; --consistencia-text:#085041;
+    --feedback-fill:#FAEEDA; --feedback-border:#BA7517; --feedback-text:#633806;
+    --jerarquia-fill:#F3E8FA; --jerarquia-border:#8E4FC4; --jerarquia-text:#4B2568;
+
+    /* Un color fijo por herramienta de analítica — no cambian de significado */
+    --analytics-fill:#FDECEA; --analytics-border:#D8503A; --analytics-text:#7A2A1A;
+    --mixpanel-fill:#FFF4E0; --mixpanel-border:#C98A17; --mixpanel-text:#63430A;
+    --hotjar-fill:#FDEBF1; --hotjar-border:#D43C82; --hotjar-text:#7A1E45;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme: dark;
+      --bg-page:#1C1C1A; --surface-1:#2C2C2A; --surface-2:#232320;
+      --text-primary:#EDEBE4; --text-secondary:#B4B2A9; --text-muted:#888780;
+      --border:#444441; --border-strong:#5F5E5A;
+
+      --affordance-fill:#0C447C; --affordance-border:#85B7EB; --affordance-text:#B5D4F4;
+      --consistencia-fill:#085041; --consistencia-border:#5DCAA5; --consistencia-text:#9FE1CB;
+      --feedback-fill:#633806; --feedback-border:#EF9F27; --feedback-text:#FAC775;
+      --jerarquia-fill:#3A1E52; --jerarquia-border:#C08FEF; --jerarquia-text:#E4CCFA;
+
+      --analytics-fill:#7A2A1A; --analytics-border:#F0997B; --analytics-text:#F5C4B3;
+      --mixpanel-fill:#63430A; --mixpanel-border:#EFB84A; --mixpanel-text:#FADFA0;
+      --hotjar-fill:#7A1E45; --hotjar-border:#F088B4; --hotjar-text:#FAC7DD;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; padding:32px 16px; background:var(--bg-page); color:var(--text-primary); font-family:var(--font-sans); line-height:1.55;}
+  .wrap{max-width:720px; margin:0 auto;}
+  h1{font-size:20px; font-weight:500; margin:0 0 4px;}
+  p.subtitle{font-size:13.5px; color:var(--text-secondary); margin:0 0 8px;}
+  p.netlify-link{font-size:13px; margin:0 0 28px;}
+  p.netlify-link a{color:var(--text-primary);}
+
+  h2.seccion-titulo{font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--text-muted); margin:32px 0 12px; padding-bottom:6px; border-bottom:0.5px solid var(--border);}
+  h2.seccion-titulo:first-of-type{margin-top:0;}
+
+  /* Tarjetas de principios de UX */
+  .principio-card{
+    background:var(--surface-2); border:0.5px solid var(--border-strong); border-radius:12px;
+    padding:16px 18px; margin-bottom:14px;
+  }
+  .principio-header{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .principio-badge{font-family:var(--font-mono); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.03em; padding:3px 10px; border-radius:999px; border:0.5px solid;}
+  .principio-titulo{font-size:15px; font-weight:500; margin:0;}
+
+  .badge-affordance{background:var(--affordance-fill); border-color:var(--affordance-border); color:var(--affordance-text);}
+  .badge-consistencia{background:var(--consistencia-fill); border-color:var(--consistencia-border); color:var(--consistencia-text);}
+  .badge-feedback{background:var(--feedback-fill); border-color:var(--feedback-border); color:var(--feedback-text);}
+  .badge-jerarquia{background:var(--jerarquia-fill); border-color:var(--jerarquia-border); color:var(--jerarquia-text);}
+
+  .principio-bullets{margin:0; padding-left:18px; font-size:13.5px; color:var(--text-secondary);}
+  .principio-bullets li{margin-bottom:5px;}
+  .principio-bullets code{font-family:var(--font-mono); font-size:12px; background:var(--surface-1); padding:1px 5px; border-radius:4px; color:var(--text-primary);}
+
+  /* Tarjetas de evidencia de analítica (captura + explicación) */
+  .analitica-card{
+    background:var(--surface-2); border:0.5px solid var(--border-strong); border-radius:12px;
+    padding:16px 18px; margin-bottom:14px;
+  }
+  .analitica-header{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+  .badge-analytics{background:var(--analytics-fill); border-color:var(--analytics-border); color:var(--analytics-text);}
+  .badge-mixpanel{background:var(--mixpanel-fill); border-color:var(--mixpanel-border); color:var(--mixpanel-text);}
+  .badge-hotjar{background:var(--hotjar-fill); border-color:var(--hotjar-border); color:var(--hotjar-text);}
+
+  .captura-placeholder{
+    width:100%; aspect-ratio:16/9; border-radius:8px; border:1px dashed var(--border-strong);
+    background:var(--surface-1); display:flex; align-items:center; justify-content:center;
+    font-size:12.5px; color:var(--text-muted); font-family:var(--font-mono); text-align:center; padding:12px;
+    object-fit:cover;
+  }
+  .analitica-explicacion{font-size:13.5px; color:var(--text-secondary); margin:10px 0 0;}
+  .analitica-explicacion strong{color:var(--text-primary); font-weight:500;}
+
+  footer.note{margin-top:24px; font-size:12px; color:var(--text-muted); text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Evidencia de sustentación</h1>
+  <p class="subtitle">Tifany Maite · Purple Bloom</p>
+  <p class="netlify-link">Proyecto publicado: <a href="../">Ver Purple Bloom en línea</a></p>
+
+
+  <h2 class="seccion-titulo">Fundamentos de UX aplicados</h2>
+
+  <div class="principio-card">
+    <div class="principio-header">
+      <span class="principio-badge badge-affordance">Affordance</span>
+      <p class="principio-titulo">¿Qué elementos comunican cómo se usan?</p>
+    </div>
+    <ul class="principio-bullets">
+      <li>El botón <code>Explora el catálogo</code> es sólido, del color de la marca, y su flecha se desplaza hacia la derecha al pasar el cursor o enfocarlo: indica que lleva a otra página.</li>
+      <li>El botón de favoritos de cada tarjeta de producto y el botón <code>Iniciar sesión</code> del encabezado tienen forma de botón (borde o relleno) y cambian de color al pasar el cursor.</li>
+    </ul>
+  </div>
+
+  <div class="principio-card">
+    <div class="principio-header">
+      <span class="principio-badge badge-consistencia">Consistencia</span>
+      <p class="principio-titulo">¿Qué patrones se repiten en todo el producto?</p>
+    </div>
+    <ul class="principio-bullets">
+      <li>Todos los colores, espacios y tipografías salen de <code>tokens CSS</code> compartidos, con modo claro y oscuro; los botones primarios (<code>Confirmar compra</code>, <code>Entrar</code>, <code>Explora el catálogo</code>) usan el mismo color y forma.</li>
+      <li>El encabezado (logo, navegación, cambio de tema) y el pie de página tienen la misma estructura y posición en todas las páginas.</li>
+    </ul>
+  </div>
+
+  <div class="principio-card">
+    <div class="principio-header">
+      <span class="principio-badge badge-feedback">Feedback</span>
+      <p class="principio-titulo">¿Cómo sabe el usuario que su acción tuvo efecto?</p>
+    </div>
+    <ul class="principio-bullets">
+      <li>Al iniciar sesión el botón <code>Entrar</code> pasa a <code>Entrando…</code>, aparece <code>¡Hola, Ana! Sesión iniciada</code> y el encabezado muestra un avatar con la inicial de la usuaria.</li>
+      <li>Los formularios validan al salir de cada campo y marcan el error con texto; el carrito muestra un contador que se anima al agregar y, al pagar, un resumen con los puntos canjeados y ganados.</li>
+    </ul>
+  </div>
+
+  <div class="principio-card">
+    <div class="principio-header">
+      <span class="principio-badge badge-jerarquia">Jerarquía</span>
+      <p class="principio-titulo">¿Cómo guía la interfaz la atención del usuario?</p>
+    </div>
+    <ul class="principio-bullets">
+      <li>Los títulos usan la tipografía de display en tamaño grande, con una palabra subrayada (<code>brillar</code>), y el texto secundario va más pequeño y en un tono atenuado.</li>
+      <li>En cada bloque hay una sola acción principal en color sólido (<code>Explora el catálogo</code>, <code>Confirmar compra</code>); las demás son enlaces o botones de contorno.</li>
+    </ul>
+  </div>
+
+  <h2 class="seccion-titulo">Evidencia de analítica</h2>
+
+  <div class="analitica-card">
+    <div class="analitica-header">
+      <span class="principio-badge badge-analytics">Google Analytics</span>
+    </div>
+    <img class="captura-placeholder" src="captura-analytics.jpg" loading="lazy" alt="Captura de Google Analytics con usuarios activos por país, opiniones por título de página y sesiones por grupo de canal">
+    <p class="analitica-explicacion"><strong>Qué muestra:</strong> los últimos 7 días desde que publiqué en Netlify: usuarios activos por país (Estados Unidos 7, Ecuador 3, Irlanda 1), 72 opiniones sobre la página <code>Purple Bloom | Moda…</code> y sesiones por canal (Directo 20, Recomendación 3).</p>
+  </div>
+
+  <div class="analitica-card">
+    <div class="analitica-header">
+      <span class="principio-badge badge-mixpanel">Mixpanel</span>
+    </div>
+    <img class="captura-placeholder" src="captura-mixpanel.jpg" loading="lazy" alt="Captura de Mixpanel con los eventos Producto agregado al carrito, Formulario de contacto enviado e Inicio de sesión completado">
+    <p class="analitica-explicacion"><strong>Qué decidí medir:</strong> tres eventos personalizados que recorren el embudo de la tienda: <code>Producto agregado al carrito</code> (interés de compra), <code>Formulario de contacto enviado</code> y <code>Inicio de sesión completado</code> (intención de crear relación con la marca). Analytics no capta estas acciones por defecto, y así puedo ver cuántas personas pasan de mirar a actuar.</p>
+  </div>
+
+  <div class="analitica-card">
+    <div class="analitica-header">
+      <span class="principio-badge badge-hotjar">Hotjar</span>
+    </div>
+    <img class="captura-placeholder" src="captura-hotjar.jpg" loading="lazy" alt="Captura del mapa de calor de movimientos del cursor sobre la página principal, en Contentsquare">
+    <p class="analitica-explicacion"><strong>Qué muestra:</strong> mapa de calor de movimientos (<code>Moves</code>) de la página principal, en Contentsquare (la plataforma de Hotjar): el cursor se concentra en el título del carrusel de portada y en el bloque de texto y tarjetas de debajo, es decir, donde está la propuesta de valor.</p>
+  </div>
+
+  <footer class="note">Entregado como parte de la sustentación M2.</footer>
+</div>
+</body>
+</html>

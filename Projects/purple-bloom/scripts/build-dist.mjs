@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = join(root, "dist");
 
-const staticDirs = ["css", "img", "js", "fonts", "video"];
+const staticDirs = ["css", "img", "js", "fonts", "video", "sustentacion"];
 const staticFiles = ["robots.txt", "sitemap.xml"];
 
 rmSync(dist, { recursive: true, force: true });
