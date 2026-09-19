@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Contentsquare -->
+    <script async src="https://t.contentsquare.net/uxa/4d740376053ab.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground de componentes | Purple Bloom Backoffice</title>
+    <link rel="stylesheet" href="css/playground.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        min-height: 100vh;
+        font-family: system-ui, sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+      }
+
+      .pg-aside {
+        flex: 0 0 240px;
+        border-right: 1px solid var(--color-border);
+        padding: 1.5rem 1rem;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        background: var(--color-surface);
+      }
+
+      .pg-aside h1 {
+        font-size: 1.1rem;
+        margin: 0 0 1rem;
+        color: var(--color-heading);
+      }
+
+      .pg-aside ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .pg-aside li + li {
+        margin-top: 0.5rem;
+      }
+
+      .pg-aside a {
+        color: var(--color-primary);
+      }
+
+      .pg-main {
+        flex: 1 1 auto;
+        padding: 1.5rem 2rem 4rem;
+        min-width: 0;
+      }
+
+      .pg-section {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .pg-section:first-child {
+        padding-top: 0;
+      }
+
+      .pg-section h2 {
+        margin: 0 0 1.5rem;
+        color: var(--color-heading);
+      }
+
+      .pg-section__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      @media (min-width: 768px) {
+        .pg-section__grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .pg-col h3 {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+        margin: 0 0 1rem;
+      }
+
+      .pg-col--behavior dl {
+        margin: 0;
+      }
+
+      .pg-col--behavior dt {
+        font-weight: 600;
+        margin-top: 0.75rem;
+      }
+
+      .pg-col--behavior dt:first-child {
+        margin-top: 0;
+      }
+
+      .pg-col--behavior dd {
+        margin: 0.15rem 0 0;
+      }
+
+      .pg-demo {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+
+      .pg-demo + .pg-demo-label {
+        margin-top: 1.25rem;
+      }
+
+      .pg-demo-label {
+        margin: 0 0 0.5rem;
+        color: var(--color-text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+    </style>
+    <!-- Paste this right before your closing </head> tag -->
+<script type="text/javascript">
+  (function(e,c){if(!c.__SV){var l,h;window.mixpanel=c;c._i=[];c.init=function(q,r,f){function t(d,a){var g=a.split(".");2==g.length&&(d=d[g[0]],a=g[1]);d[a]=function(){d.push([a].concat(Array.prototype.slice.call(arguments,0)))}}var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";b.people=b.people||[];b.toString=function(d){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);d||(a+=" (stub)");return a};b.people.toString=function(){return b.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders start_session_recording stop_session_recording people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
+  for(h=0;h<l.length;h++)t(b,l[h]);var n="set set_once union unset remove delete".split(" ");b.get_group=function(){function d(p){a[p]=function(){b.push([g,[p].concat(Array.prototype.slice.call(arguments,0))])}}for(var a={},g=["get_group"].concat(Array.prototype.slice.call(arguments,0)),m=0;m<n.length;m++)d(n[m]);return a};c._i.push([q,r,f])};c.__SV=1.2;var k=e.createElement("script");k.type="text/javascript";k.async=!0;k.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===
+  e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=e.getElementsByTagName("script")[0];e.parentNode.insertBefore(k,e)}})(document,window.mixpanel||[])
+
+  mixpanel.init('5527143090a1745ffa4d53ac5b917d31', {
+    autocapture: true,
+    record_sessions_percent: 100,
+  })
+
+</script>
+  </head>
+  <body>
+    <aside class="pg-aside">
+      <h1>Componentes</h1>
+      <nav aria-label="Componentes del playground">
+        <ul>
+          <li><a href="#seccion-alerts">Alerts</a></li>
+          <li><a href="#seccion-botones">Botones</a></li>
+          <li><a href="#seccion-checkboxes-radios">Checkboxes/Radios</a></li>
+          <li><a href="#seccion-dialogs">Dialogs</a></li>
+          <li><a href="#seccion-formulario">Formulario</a></li>
+          <li><a href="#seccion-graficos">Gráficos</a></li>
+          <li><a href="#seccion-inputs">Inputs</a></li>
+          <li><a href="#seccion-menus">Menús</a></li>
+          <li><a href="#seccion-toasts">Toasts</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="pg-main">
+      <!-- 1. ALERTS -->
+      <section id="seccion-alerts" class="pg-section">
+        <h2>Alerts</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+            <div class="pg-demo">
+              <div class="c-alert c-alert--success" role="status">
+                <svg class="c-alert-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <p class="c-alert-message">Los cambios se guardaron correctamente.</p>
+                <button type="button" class="c-alert-close" aria-label="Cerrar alerta">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="c-alert c-alert--error" role="alert">
+                <svg class="c-alert-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                  <path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <p class="c-alert-message">No se pudo eliminar el recurso. Inténtalo de nuevo.</p>
+                <button type="button" class="c-alert-close" aria-label="Cerrar alerta">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="c-alert c-alert--warning" role="alert">
+                <svg class="c-alert-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3l10 18H2L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M12 10v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <p class="c-alert-message">Este recurso tiene cambios sin publicar.</p>
+                <button type="button" class="c-alert-close" aria-label="Cerrar alerta">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="c-alert c-alert--info" role="status">
+                <svg class="c-alert-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                  <path d="M12 16v-5M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <p class="c-alert-message">La sincronización con el catálogo se ejecuta cada noche a las 02:00.</p>
+                <button type="button" class="c-alert-close" aria-label="Cerrar alerta">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Activación</dt>
+              <dd>No requiere activación: aparece dentro del flujo normal de la página, sin robar el foco de lo que el usuario esté haciendo.</dd>
+              <dt>Anuncio</dt>
+              <dd><code>role="alert"</code> (error, advertencia) se anuncia de forma inmediata e interrumpe al lector de pantalla; <code>role="status"</code> (éxito, informativo) se anuncia de forma educada, sin interrumpir.</dd>
+              <dt>Cierre</dt>
+              <dd>El botón de cerrar es un <code>&lt;button&gt;</code> nativo: alcanzable con Tab, se activa con Enter o Espacio y retira la alerta del DOM.</dd>
+              <dt>Foco</dt>
+              <dd>El foco nunca se mueve automáticamente hacia la alerta ni se atrapa dentro de ella.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. BOTONES -->
+      <section id="seccion-botones" class="pg-section">
+        <h2>Botones</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+            <p class="pg-demo-label">Idle / hover / pressed (interactúa para ver los estados)</p>
+            <div class="pg-demo">
+              <button type="button" class="c-btn c-btn--primary">Guardar</button>
+              <button type="button" class="c-btn c-btn--secondary">Cancelar</button>
+              <button type="button" class="c-btn c-btn--destructive">Eliminar</button>
+              <button type="button" class="c-btn c-btn--icon" aria-label="Más opciones">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                  <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+
+            <p class="pg-demo-label">Disabled</p>
+            <div class="pg-demo">
+              <button type="button" class="c-btn c-btn--primary" disabled>Guardar</button>
+              <button type="button" class="c-btn c-btn--secondary" disabled>Cancelar</button>
+              <button type="button" class="c-btn c-btn--destructive" disabled>Eliminar</button>
+              <button type="button" class="c-btn c-btn--icon" aria-label="Más opciones" disabled>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                  <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Activación</dt>
+              <dd>Al ser <code>&lt;button&gt;</code> nativos, Tab los enfoca en el orden del documento y Enter o Espacio los activa, sin código adicional.</dd>
+              <dt>Foco</dt>
+              <dd>El anillo de foco (<code>:focus-visible</code>) es visible al navegar con teclado y no aparece con clic de mouse.</dd>
+              <dt>Pressed</dt>
+              <dd>Al activarse con clic o Enter/Espacio, el botón oscurece su fondo y se desplaza 1px (<code>:active</code>), dando retroalimentación táctil antes de soltar.</dd>
+              <dt>Disabled</dt>
+              <dd>Con el atributo <code>disabled</code>, el botón queda fuera del orden de Tab, no se puede activar por teclado ni clic, y no aplica los estilos de hover/pressed.</dd>
+              <dt>Icon button</dt>
+              <dd>Al no tener texto visible, su nombre accesible depende por completo de <code>aria-label</code> (ej. <code>aria-label="Más opciones"</code>); sin él, un lector de pantalla anunciaría el botón sin descripción.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CHECKBOXES/RADIOS -->
+      <section id="seccion-checkboxes-radios" class="pg-section">
+        <h2>Checkboxes/Radios</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+
+            <fieldset class="c-check-group">
+              <legend>Filtrar tabla</legend>
+              <div class="c-check">
+                <input type="checkbox" id="filter-active" name="filter" value="active" checked />
+                <label for="filter-active">Activos</label>
+              </div>
+              <div class="c-check">
+                <input type="checkbox" id="filter-draft" name="filter" value="draft" />
+                <label for="filter-draft">Borradores</label>
+              </div>
+              <div class="c-check">
+                <input type="checkbox" id="filter-archived" name="filter" value="archived" />
+                <label for="filter-archived">Archivados</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="c-radio-group">
+              <legend>Ordenar por</legend>
+              <div class="c-radio">
+                <input type="radio" id="sort-name" name="sort" value="name" checked />
+                <label for="sort-name">Nombre</label>
+              </div>
+              <div class="c-radio">
+                <input type="radio" id="sort-date" name="sort" value="date" />
+                <label for="sort-date">Fecha de creación</label>
+              </div>
+              <div class="c-radio">
+                <input type="radio" id="sort-stock" name="sort" value="stock" />
+                <label for="sort-stock">Stock</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Checkboxes</dt>
+              <dd>Tab mueve el foco de una casilla a la siguiente; Espacio alterna el estado marcado/desmarcado de la casilla enfocada. Cada casilla se enfoca de forma independiente.</dd>
+              <dt>Radios</dt>
+              <dd>Tab entra al grupo una sola vez (se detiene en la opción seleccionada); las flechas (↑/↓/←/→) mueven el foco entre las opciones del mismo grupo (mismo <code>name</code>) y seleccionan la opción enfocada de inmediato; Espacio también selecciona la opción con foco.</dd>
+              <dt>Agrupación</dt>
+              <dd><code>&lt;fieldset&gt;</code> y <code>&lt;legend&gt;</code> dan contexto de grupo: un lector de pantalla anuncia el nombre del grupo al entrar a cualquiera de sus controles.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. DIALOGS -->
+      <section id="seccion-dialogs" class="pg-section">
+        <h2>Dialogs</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+            <div class="pg-demo">
+              <button type="button" class="c-btn c-btn--destructive" id="dialog-delete-trigger">Eliminar recurso…</button>
+            </div>
+
+            <dialog class="c-dialog" data-dialog-trigger="dialog-delete-trigger" aria-labelledby="dialog-delete-title">
+              <h2 class="c-dialog-title" id="dialog-delete-title">Eliminar recurso</h2>
+              <p>¿Seguro que deseas eliminar este recurso? Esta acción no se puede deshacer.</p>
+              <div class="c-dialog-actions">
+                <button type="button" class="c-btn c-btn--secondary" data-dialog-cancel>Cancelar</button>
+                <button type="button" class="c-btn c-btn--destructive" data-dialog-confirm>Eliminar</button>
+              </div>
+            </dialog>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Apertura</dt>
+              <dd>Enter o Espacio sobre el botón "Eliminar recurso…" lo abre mediante <code>dialog.showModal()</code> (nunca <code>.show()</code> ni <code>confirm()</code> nativo).</dd>
+              <dt>Cierre</dt>
+              <dd>Escape lo cierra (comportamiento nativo del <code>&lt;dialog&gt;</code>), igual que los botones "Cancelar" y "Eliminar".</dd>
+              <dt>Atrapado de foco</dt>
+              <dd>Mientras está abierto en modo modal, el foco queda atrapado dentro del diálogo: Tab y Shift+Tab solo ciclan entre sus elementos enfocables, el resto de la página queda inerte.</dd>
+              <dt>Retorno de foco</dt>
+              <dd>Al cerrarse (por cualquier vía), el foco vuelve al botón que lo abrió.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. FORMULARIO -->
+      <section id="seccion-formulario" class="pg-section">
+        <h2>Formulario</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+            <form class="c-form" aria-label="Formulario de ejemplo" novalidate>
+              <div class="c-field">
+                <label class="c-field-label" for="form-email">Correo electrónico</label>
+                <div class="c-field-control">
+                  <input class="c-input c-input--validated" id="form-email" name="email" type="email" autocomplete="email" required aria-describedby="form-email-error" placeholder=" " />
+                  <span class="c-field-icon" aria-hidden="true"></span>
+                </div>
+                <span class="c-field-error" id="form-email-error"></span>
+              </div>
+              <div class="c-field">
+                <label class="c-field-label" for="form-password">Contraseña</label>
+                <div class="c-field-control">
+                  <input class="c-input c-input--validated" id="form-password" name="password" type="password" autocomplete="current-password" required minlength="6" aria-describedby="form-password-error" placeholder=" " />
+                  <span class="c-field-icon" aria-hidden="true"></span>
+                </div>
+                <span class="c-field-error" id="form-password-error"></span>
+              </div>
+              <button type="submit" class="c-btn c-btn--primary">Entrar</button>
+              <div class="c-form-feedback" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Validación por campo</dt>
+              <dd>Al salir de un campo (blur) se valida; una vez "tocado", se revalida en cada tecla. El mensaje aparece bajo el campo y se asocia con <code>aria-describedby</code>.</dd>
+              <dt>Envío</dt>
+              <dd>Enter dentro de un campo o el botón "Entrar" envían el formulario. Se validan todos los campos; si hay errores se marcan con <code>aria-invalid="true"</code>, el foco pasa al primer campo inválido y el resumen indica "Revisa los campos marcados antes de continuar."</dd>
+              <dt>Resumen</dt>
+              <dd>El resumen es un <code>role="status"</code> con <code>aria-live="polite"</code>: se anuncia sin robar el foco. En éxito se muestra en verde y el formulario se vacía (simulación: no hay backend).</dd>
+              <dt>Color</dt>
+              <dd>Errores y resumen usan <code>--color-danger</code> / <code>--color-success</code> (con tema), pero el texto siempre dice qué pasó: nunca depende solo del color.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. GRÁFICOS -->
+      <section id="seccion-graficos" class="pg-section">
+        <h2>Gráficos</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Tarjetas de indicador (con sparkline)</p>
+              <div class="c-stat-grid">
+                <article class="c-stat">
+                  <p class="c-stat-label">Ventas del mes</p>
+                  <p class="c-stat-value">$12,480</p>
+                  <p class="c-stat-trend c-stat-trend--up">
+                    <svg class="c-stat-trend-arrow" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M6 2l4 6H2l4-6z" fill="currentColor" /></svg>
+                    <span>+8,4%</span>
+                    <span class="c-stat-trend-vs">vs. mes anterior</span>
+                  </p>
+                  <svg class="c-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" role="img" aria-label="Ventas del mes: tendencia de las últimas 7 semanas">
+                    <polyline points="0.0,32.0 20.0,24.0 40.0,28.0 60.0,16.0 80.0,8.0 100.0,12.0 120.0,0.0" />
+                  </svg>
+                </article>
+                <article class="c-stat">
+                  <p class="c-stat-label">Pedidos nuevos</p>
+                  <p class="c-stat-value">164</p>
+                  <p class="c-stat-trend c-stat-trend--down">
+                    <svg class="c-stat-trend-arrow" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M6 2l4 6H2l4-6z" fill="currentColor" /></svg>
+                    <span>-3,1%</span>
+                    <span class="c-stat-trend-vs">vs. mes anterior</span>
+                  </p>
+                  <svg class="c-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" role="img" aria-label="Pedidos nuevos: tendencia de las últimas 7 semanas">
+                    <polyline points="0.0,0.0 20.0,8.0 40.0,16.0 60.0,19.2 80.0,32.0 100.0,24.0 120.0,25.6" />
+                  </svg>
+                </article>
+                <article class="c-stat">
+                  <p class="c-stat-label">Visitas al catálogo</p>
+                  <p class="c-stat-value">5,239</p>
+                  <p class="c-stat-trend c-stat-trend--up">
+                    <svg class="c-stat-trend-arrow" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M6 2l4 6H2l4-6z" fill="currentColor" /></svg>
+                    <span>+1,2%</span>
+                    <span class="c-stat-trend-vs">vs. mes anterior</span>
+                  </p>
+                  <svg class="c-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" role="img" aria-label="Visitas al catálogo: tendencia de las últimas 7 semanas">
+                    <polyline points="0.0,18.6 20.0,32.0 40.0,11.9 60.0,21.3 80.0,5.2 100.0,7.9 120.0,0.0" />
+                  </svg>
+                </article>
+              </div>
+            </div>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Barras</p>
+              <figure class="c-chart">
+                <figcaption class="c-chart-title">Ventas por categoría (unidades, último mes)</figcaption>
+                <svg viewBox="0 0 440 190" role="img" aria-label="Ventas por categoría: Blusas 128, Vestidos 96, Pantalones 74 unidades">
+                  <line class="c-chart-baseline" x1="0" y1="160" x2="440" y2="160" />
+                  <rect class="c-bar" x="16" y="51.67" width="96" height="108.33" rx="4" />
+                  <text class="c-bar-value" x="64" y="43.67">128</text>
+                  <text class="c-bar-category" x="64" y="180">Blusas</text>
+                  <rect class="c-bar" x="148" y="78.75" width="96" height="81.25" rx="4" />
+                  <text class="c-bar-value" x="196" y="70.75">96</text>
+                  <text class="c-bar-category" x="196" y="180">Vestidos</text>
+                  <rect class="c-bar" x="280" y="97.37" width="96" height="62.63" rx="4" />
+                  <text class="c-bar-value" x="328" y="89.37">74</text>
+                  <text class="c-bar-category" x="328" y="180">Pantalones</text>
+                </svg>
+              </figure>
+            </div>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Anillos (capacidad de stock)</p>
+              <div class="c-donut-grid">
+                <figure class="c-donut">
+                  <svg viewBox="0 0 100 100" role="img" aria-label="Stock de Blusas: 82 por ciento, saludable">
+                    <circle class="c-donut-track" cx="50" cy="50" r="40" />
+                    <circle class="c-donut-arc c-donut-arc--ok" cx="50" cy="50" r="40" stroke-dasharray="206.1 251.3" transform="rotate(-90 50 50)" />
+                    <text class="c-donut-value" x="50" y="47">82%</text>
+                    <text class="c-donut-unit" x="50" y="63">stock</text>
+                  </svg>
+                  <figcaption>
+                    <p class="c-donut-label">Stock — Blusas</p>
+                    <p class="c-donut-status c-donut-status--ok">Saludable</p>
+                    <p class="c-donut-note">246 unidades disponibles</p>
+                  </figcaption>
+                </figure>
+                <figure class="c-donut">
+                  <svg viewBox="0 0 100 100" role="img" aria-label="Stock de Pantalones: 18 por ciento, crítico">
+                    <circle class="c-donut-track" cx="50" cy="50" r="40" />
+                    <circle class="c-donut-arc c-donut-arc--critical" cx="50" cy="50" r="40" stroke-dasharray="45.2 251.3" transform="rotate(-90 50 50)" />
+                    <text class="c-donut-value" x="50" y="47">18%</text>
+                    <text class="c-donut-unit" x="50" y="63">stock</text>
+                  </svg>
+                  <figcaption>
+                    <p class="c-donut-label">Stock — Pantalones</p>
+                    <p class="c-donut-status c-donut-status--critical">Crítico</p>
+                    <p class="c-donut-note">41 unidades disponibles</p>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Foco</dt>
+              <dd>No son interactivos: no reciben Tab ni tienen controles. Son visualizaciones de solo lectura con datos de ejemplo.</dd>
+              <dt>Lectores de pantalla</dt>
+              <dd>Cada gráfico es un <code>role="img"</code> con un <code>aria-label</code> que resume los datos. En las tarjetas de indicador, la etiqueta, el valor y la variación son texto real; el sparkline es un complemento visual.</dd>
+              <dt>Tendencia</dt>
+              <dd>La variación combina flecha, signo (+ / -) y color. Rojo y verde solos no se distinguen con daltonismo, así que el color nunca es el único portador del significado.</dd>
+              <dt>Color</dt>
+              <dd>Una medida usa un solo color de marca (<code>--color-primary</code>); los textos usan colores de texto, no el de la serie. Los estados de stock (Saludable / Crítico) siempre llevan una palabra visible junto al anillo.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. INPUTS -->
+      <section id="seccion-inputs" class="pg-section">
+        <h2>Inputs</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Texto con validación nativa</p>
+              <div class="c-field">
+                <label class="c-field-label" for="input-email">Correo electrónico</label>
+                <div class="c-field-control">
+                  <input class="c-input c-input--validated" id="input-email" type="email" autocomplete="email" required placeholder=" " />
+                  <span class="c-field-icon" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="c-field">
+                <label class="c-field-label" for="input-password">Contraseña</label>
+                <div class="c-field-control">
+                  <input class="c-input c-input--validated" id="input-password" type="password" autocomplete="new-password" required minlength="6" placeholder=" " />
+                  <span class="c-field-icon" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Textarea y select</p>
+              <div class="c-field">
+                <label class="c-field-label" for="input-notas">Notas internas</label>
+                <textarea class="c-input c-textarea" id="input-notas" rows="3" placeholder="Agregar una nota…"></textarea>
+              </div>
+              <div class="c-field">
+                <label class="c-field-label" for="input-orden">Ordenar por</label>
+                <select class="c-input" id="input-orden">
+                  <option value="name">Nombre</option>
+                  <option value="date">Fecha de creación</option>
+                  <option value="stock">Stock</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Deshabilitado</p>
+              <div class="c-field">
+                <label class="c-field-label" for="input-codigo">Código de producto</label>
+                <input class="c-input" id="input-codigo" type="text" value="PB-1042" disabled />
+              </div>
+            </div>
+
+            <div class="c-demo-block">
+              <p class="pg-demo-label">Búsqueda</p>
+              <form class="c-search" role="search" aria-label="Buscar en el backoffice">
+                <label class="c-visually-hidden" for="input-search">Buscar</label>
+                <input id="input-search" type="search" name="q" placeholder="Buscar…" autocomplete="off" />
+                <button type="submit" aria-label="Enviar búsqueda">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+                    <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </form>
+              <p class="c-form-feedback" role="status" aria-live="polite" data-search-status></p>
+            </div>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Etiquetas</dt>
+              <dd>Cada campo tiene un <code>&lt;label for&gt;</code> visible asociado por id. El buscador usa una etiqueta oculta visualmente (<code>c-visually-hidden</code>) que los lectores de pantalla sí leen.</dd>
+              <dt>Foco</dt>
+              <dd>Tab recorre los campos en el orden del documento. Al enfocar un campo su borde pasa a <code>--color-primary</code> (<code>:focus-visible</code>); el buscador muestra un contorno de 3px con <code>--color-focus</code> (<code>:focus-within</code>).</dd>
+              <dt>Validación</dt>
+              <dd>Un campo permanece neutro mientras está vacío. Al escribir, el navegador valida (<code>type</code>, <code>required</code>, <code>minlength</code>) y el borde y el ícono ✓ / ✕ reflejan <code>:valid</code> / <code>:invalid</code>. El ícono es decorativo (<code>aria-hidden</code>).</dd>
+              <dt>Select</dt>
+              <dd>Tab lo enfoca; las flechas ↑/↓ cambian la opción sin abrirlo y Alt+↓ o Espacio despliegan la lista, todo comportamiento nativo.</dd>
+              <dt>Deshabilitado</dt>
+              <dd>Con <code>disabled</code> el campo queda fuera del orden de Tab, no se puede editar y baja su opacidad.</dd>
+              <dt>Buscador</dt>
+              <dd>Enter o el botón de lupa envían la búsqueda. En este catálogo el envío se intercepta y el resultado se anuncia debajo del campo (<code>role="status"</code>).</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. MENÚS -->
+      <section id="seccion-menus" class="pg-section">
+        <h2>Menús</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+            <div class="pg-demo">
+              <div>
+                <button
+                  type="button"
+                  class="c-btn c-btn--secondary c-menu-account-toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="menu-account-text"
+                >
+                  Cuenta ▾
+                </button>
+                <ul class="c-menu-account" id="menu-account-text" hidden>
+                  <li><a href="mi-cuenta.html">Perfil</a></li>
+                  <li><a href="mi-cuenta.html">Configuración</a></li>
+                  <li><button type="button">Cerrar sesión</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  class="c-btn c-btn--icon c-menu-account-toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="menu-account-icon"
+                  aria-label="Más opciones"
+                >
+                  <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                    <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+                  </svg>
+                </button>
+                <ul class="c-menu-account" id="menu-account-icon" hidden>
+                  <li><a href="mi-cuenta.html">Perfil</a></li>
+                  <li><a href="mi-cuenta.html">Configuración</a></li>
+                  <li><button type="button">Cerrar sesión</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Apertura</dt>
+              <dd>Enter o Espacio sobre el trigger (o clic) abre el desplegable y pone <code>aria-expanded="true"</code> en el trigger.</dd>
+              <dt>Cierre</dt>
+              <dd>Escape lo cierra y devuelve el foco al trigger; un clic fuera del menú también lo cierra (sin devolver el foco).</dd>
+              <dt>Estado</dt>
+              <dd><code>aria-expanded</code> alterna entre <code>"true"</code> y <code>"false"</code> según el estado del menú asociado vía <code>aria-controls</code>.</dd>
+              <dt>Exclusividad</dt>
+              <dd>Abrir un trigger cierra cualquier otro menú de cuenta que estuviera abierto.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. TOASTS -->
+      <section id="seccion-toasts" class="pg-section">
+        <h2>Toasts</h2>
+        <div class="pg-section__grid">
+          <div class="pg-col pg-col--component">
+            <h3>Componente</h3>
+            <div class="pg-demo">
+              <button type="button" class="c-btn c-btn--secondary" data-toast-message="Producto actualizado correctamente." data-toast-variant="success">Mostrar toast de éxito</button>
+              <button type="button" class="c-btn c-btn--secondary" data-toast-message="No se pudo conectar con el servidor." data-toast-variant="error">Mostrar toast de error</button>
+            </div>
+            <div class="c-toast-container" aria-live="polite">
+              <div class="c-toast c-toast--success">Producto actualizado correctamente.</div>
+              <div class="c-toast c-toast--error">No se pudo conectar con el servidor.</div>
+            </div>
+          </div>
+
+          <div class="pg-col pg-col--behavior">
+            <h3>Comportamiento de teclado y foco</h3>
+            <dl>
+              <dt>Disparo</dt>
+              <dd>Los botones "Mostrar toast…" son <code>&lt;button&gt;</code> nativos (Tab, Enter o Espacio) y añaden un toast al contenedor sin mover el foco.</dd>
+              <dt>Foco</dt>
+              <dd>No son foco-interactivos: no reciben Tab, no tienen botones ni se pueden activar con teclado.</dd>
+              <dt>Anuncio</dt>
+              <dd>El contenedor tiene <code>aria-live="polite"</code>: cada toast que entra se anuncia solo, en cuanto el lector de pantalla termina lo que esté leyendo, sin robar el foco de la tarea en curso.</dd>
+              <dt>Desaparición</dt>
+              <dd>Cada toast se retira solo tras un tiempo fijo, sin intervención del usuario.</dd>
+              <dt>Límite</dt>
+              <dd>Máximo 3 toasts visibles a la vez; al añadirse uno de más, se descarta primero el más antiguo.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/playground.js" defer></script>
+  </body>
+</html>

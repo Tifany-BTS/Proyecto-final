@@ -1,0 +1,192 @@
+/* Campos de formulario del backoffice.
+   Mismas reglas visuales que .form-group / .site-search de styles.css, pero con
+   prefijo c- para que playground.css no dependa de styles.css. */
+
+.c-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Separa los grupos con etiqueta dentro de una columna de demo. */
+.c-demo-block + .c-demo-block {
+  margin-top: var(--space-1-5);
+}
+
+.c-field {
+  width: 100%;
+  max-width: 20rem;
+  margin-bottom: var(--space-1);
+}
+
+.c-field-label {
+  display: block;
+  margin-bottom: var(--space-0-375);
+  color: var(--color-text);
+  font-size: var(--font-size-base-tight);
+  font-weight: var(--font-weight-semibold);
+}
+
+.c-field-control {
+  position: relative;
+}
+
+.c-input {
+  width: 100%;
+  padding: var(--space-0-625) var(--space-2) var(--space-0-625) var(--space-0-75);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.c-textarea {
+  min-height: 4.5rem;
+  padding-right: var(--space-0-75);
+  resize: vertical;
+}
+
+.c-input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.c-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.c-input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+/* Validación nativa: el campo permanece neutro hasta que se escribe algo
+   (placeholder=" " en cada input), igual que en styles.css. */
+.c-field-icon {
+  position: absolute;
+  top: var(--space-0-625);
+  right: var(--space-0-75);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.c-input--validated:not(:placeholder-shown):invalid,
+.c-input--validated[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.c-input--validated:not(:placeholder-shown):invalid + .c-field-icon,
+.c-input--validated[aria-invalid="true"] + .c-field-icon {
+  color: var(--color-danger);
+}
+
+.c-input--validated:not(:placeholder-shown):invalid + .c-field-icon::before,
+.c-input--validated[aria-invalid="true"] + .c-field-icon::before {
+  content: "✕";
+}
+
+.c-input--validated:not(:placeholder-shown):valid:not([aria-invalid="true"]) {
+  border-color: var(--color-success);
+}
+
+.c-input--validated:not(:placeholder-shown):valid:not([aria-invalid="true"]) + .c-field-icon {
+  color: var(--color-success);
+}
+
+.c-input--validated:not(:placeholder-shown):valid:not([aria-invalid="true"]) + .c-field-icon::before {
+  content: "✓";
+}
+
+.c-field-error {
+  display: block;
+  margin-top: var(--space-0-375);
+  color: var(--color-danger);
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+}
+
+.c-field-error:empty {
+  display: none;
+}
+
+/* Buscador */
+
+.c-search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 20rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+}
+
+.c-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--space-0-5) var(--space-0-75);
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+}
+
+.c-search input:focus {
+  outline: none;
+}
+
+.c-search:focus-within {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.c-search button {
+  display: grid;
+  place-items: center;
+  padding: var(--space-0-5) var(--space-0-75);
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* Formulario con resumen al enviar */
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 20rem;
+}
+
+.c-form .c-field {
+  margin-bottom: var(--space-1);
+}
+
+.c-form-feedback {
+  margin-top: var(--space-1);
+  font-weight: var(--font-weight-semibold);
+}
+
+.c-form-feedback:empty {
+  display: none;
+}
+
+.c-form-feedback--success {
+  color: var(--color-success);
+}
+
+.c-form-feedback--error {
+  color: var(--color-danger);
+}

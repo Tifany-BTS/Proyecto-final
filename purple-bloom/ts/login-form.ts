@@ -109,7 +109,6 @@
 
     showFeedback("Credenciales válidas. Te llevamos a tu cuenta. (Simulación: no hay autenticación real.)", false);
     formEl.reset();
-    pbTrackBeforeNavigate("Inicio de sesión completado");
 
     window.setTimeout(() => {
       window.location.href = "mi-cuenta.html";

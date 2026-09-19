@@ -1,0 +1,260 @@
+// Not wrapped in an IIFE like the other scripts here: this file's only job
+// is to expose a shared product catalog as a script-level global so
+// cart.ts, product-detail.ts and catalog-filters.ts can all read the same
+// data without a module bundler (classic <script> tags share one top-level
+// scope, so a top-level const here is visible to the scripts loaded after it).
+interface PurpleBloomProduct {
+  id: string;
+  name: string;
+  price: number;
+  category: "Blusas" | "Vestidos" | "Pantalones";
+  description: string;
+  rating: 4 | 5;
+  material: string;
+  care: "mano" | "maquina" | "ambos";
+  imageSrc?: string;
+  imageAlt?: string;
+  swatch?: "" | "alt" | "alt2";
+  // Optional colour variants; the first one is the default and should match
+  // imageSrc. Each has its own photo, shown when its swatch is picked.
+  colors?: { name: string; imageSrc: string; imageAlt: string }[];
+}
+
+const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = [
+  {
+    id: "blusa-lavanda",
+    name: "Blusa Lavanda",
+    price: 49.99,
+    category: "Blusas",
+    description: "Blusa de seda en tono lavanda, corte relajado ideal para el día a día.",
+    rating: 5,
+    material: "100% seda",
+    care: "mano",
+    imageSrc: "img/blusa-lavanda.jpg",
+    imageAlt: "Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura",
+  },
+  {
+    id: "vestido-violeta",
+    name: "Vestido Violeta",
+    price: 79.99,
+    category: "Vestidos",
+    description: "Vestido midi con detalle floral, perfecto para ocasiones especiales.",
+    rating: 5,
+    material: "Poliéster y tul con bordado floral",
+    care: "mano",
+    imageSrc: "img/vestido-violeta.jpg",
+    imageAlt: "Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura",
+  },
+  {
+    id: "pantalon-berenjena",
+    name: "Pantalón Berenjena",
+    price: 59.99,
+    category: "Pantalones",
+    description: "Pantalón de corte recto en tono berenjena, versátil y cómodo.",
+    rating: 4,
+    material: "65% poliéster, 35% viscosa",
+    care: "ambos",
+    imageSrc: "img/pantalon-berenjena.jpg",
+    imageAlt: "Pantalón Berenjena: pantalón de corte recto en tono berenjena con pinzas",
+  },
+  {
+    id: "blusa-clasica",
+    name: "Blusa Clásica",
+    price: 39.99,
+    category: "Blusas",
+    description: "Blusa atemporal de corte simple, ideal para combinar con cualquier look.",
+    rating: 4,
+    material: "100% algodón",
+    care: "ambos",
+    imageSrc: "img/blusa-clasica.jpg",
+    imageAlt: "Blusa Clásica: camisa blanca de manga larga con botones y cuello camisero",
+  },
+  {
+    id: "vestido-elegante",
+    name: "Vestido Elegante",
+    price: 84.99,
+    category: "Vestidos",
+    description: "Vestido de líneas limpias pensado para ocasiones especiales.",
+    rating: 5,
+    material: "95% poliéster, 5% elastano",
+    care: "maquina",
+    imageSrc: "img/vestido-elegante.jpg",
+    imageAlt: "Vestido Elegante: vestido largo color crudo de manga larga con bordado y borde festoneado",
+  },
+  {
+    id: "pantalon-slim",
+    name: "Pantalón Slim",
+    price: 54.99,
+    category: "Pantalones",
+    description: "Pantalón de corte ajustado que estiliza la silueta.",
+    rating: 4,
+    material: "70% algodón, 28% poliéster, 2% elastano",
+    care: "maquina",
+    imageSrc: "img/pantalon-slim.jpg",
+    imageAlt: "Pantalón Slim: pantalón negro de tiro alto con pinzas y corte ajustado",
+  },
+  {
+    id: "blusa-estampada",
+    name: "Blusa Estampada",
+    price: 44.99,
+    category: "Blusas",
+    description: "Blusa con estampado ligero, un toque distinto para el día a día.",
+    rating: 5,
+    material: "100% viscosa",
+    care: "mano",
+    swatch: "",
+  },
+  {
+    id: "vestido-casual",
+    name: "Vestido Casual",
+    price: 69.99,
+    category: "Vestidos",
+    description: "Vestido cómodo de uso diario, fácil de combinar.",
+    rating: 4,
+    material: "100% poliéster",
+    care: "ambos",
+    imageSrc: "img/vestido-casual.jpg",
+    imageAlt: "Vestido Casual: vestido lila de tiras con estampado floral y lazo en la cintura",
+  },
+  {
+    id: "pantalon-wide-leg",
+    name: "Pantalón Wide Leg",
+    price: 59.99,
+    category: "Pantalones",
+    description: "Pantalón de pierna ancha con caída fluida y mucha comodidad.",
+    rating: 4,
+    material: "100% lino",
+    care: "maquina",
+    swatch: "alt2",
+  },
+  {
+    id: "blusa-menta",
+    name: "Blusa Menta",
+    price: 46.99,
+    category: "Blusas",
+    description: "Blusa cruzada en verde menta con lazo en la cintura, fresca y femenina.",
+    rating: 5,
+    material: "100% viscosa",
+    care: "mano",
+    imageSrc: "img/blusa-menta.jpg",
+    imageAlt: "Blusa Menta: blusa cruzada verde menta con manga corta y lazo en la cintura",
+  },
+  {
+    id: "blusa-rosa-palo",
+    name: "Blusa Rosa Palo",
+    price: 52.99,
+    category: "Blusas",
+    description: "Blusa de escote cruzado en rosa palo, un clásico suave para cualquier ocasión.",
+    rating: 4,
+    material: "100% seda",
+    care: "mano",
+    imageSrc: "img/blusa-rosa-palo.jpg",
+    imageAlt: "Blusa Rosa Palo: blusa cruzada rosa palo con manga corta y lazo en la cintura",
+  },
+  {
+    id: "blusa-celeste",
+    name: "Blusa Celeste",
+    price: 49.99,
+    category: "Blusas",
+    description: "Blusa ligera en azul celeste, cómoda para el día a día.",
+    rating: 4,
+    material: "65% algodón, 35% poliéster",
+    care: "ambos",
+    imageSrc: "img/blusa-celeste.jpg",
+    imageAlt: "Blusa Celeste: blusa cruzada azul celeste con manga corta y lazo en la cintura",
+  },
+  {
+    id: "vestido-esmeralda",
+    name: "Vestido Esmeralda",
+    price: 89.99,
+    category: "Vestidos",
+    description: "Vestido midi verde esmeralda con flores bordadas, ideal para eventos.",
+    rating: 5,
+    material: "Poliéster y tul con bordado floral",
+    care: "mano",
+    imageSrc: "img/vestido-esmeralda.jpg",
+    imageAlt: "Vestido Esmeralda: vestido midi verde esmeralda con bordado floral y lazo en la cintura",
+  },
+  {
+    id: "vestido-orquidea",
+    name: "Vestido Orquídea",
+    price: 74.99,
+    category: "Vestidos",
+    description: "Vestido midi en tono orquídea con detalle floral y falda con vuelo.",
+    rating: 5,
+    material: "Poliéster y tul con bordado floral",
+    care: "mano",
+    imageSrc: "img/vestido-orquidea.jpg",
+    imageAlt: "Vestido Orquídea: vestido midi color orquídea con bordado floral y lazo en la cintura",
+  },
+  {
+    id: "vestido-turquesa",
+    name: "Vestido Turquesa",
+    price: 64.99,
+    category: "Vestidos",
+    description: "Vestido de tiras turquesa con estampado floral, fresco para los días de calor.",
+    rating: 4,
+    material: "100% poliéster",
+    care: "ambos",
+    imageSrc: "img/vestido-turquesa.jpg",
+    imageAlt: "Vestido Turquesa: vestido turquesa de tiras con estampado floral y lazo en la cintura",
+  },
+  {
+    id: "pantalon-azul-noche",
+    name: "Pantalón Azul Noche",
+    price: 62.99,
+    category: "Pantalones",
+    description: "Pantalón de vestir azul noche con pinzas y caída elegante.",
+    rating: 5,
+    material: "70% poliéster, 28% viscosa, 2% elastano",
+    care: "maquina",
+    imageSrc: "img/pantalon-azul-noche.jpg",
+    imageAlt: "Pantalón Azul Noche: pantalón azul marino de corte recto con pinzas",
+  },
+  {
+    id: "pantalon-verde-bosque",
+    name: "Pantalón Verde Bosque",
+    price: 57.99,
+    category: "Pantalones",
+    description: "Pantalón recto en verde bosque, versátil para looks formales o casuales.",
+    rating: 4,
+    material: "65% poliéster, 35% viscosa",
+    care: "ambos",
+    imageSrc: "img/pantalon-verde-bosque.jpg",
+    imageAlt: "Pantalón Verde Bosque: pantalón verde oscuro de corte recto con pinzas",
+  },
+  {
+    id: "pantalon-borgona",
+    name: "Pantalón Borgoña",
+    price: 64.99,
+    category: "Pantalones",
+    description: "Pantalón borgoña de corte recto, con presencia y mucha comodidad.",
+    rating: 5,
+    material: "70% poliéster, 28% viscosa, 2% elastano",
+    care: "maquina",
+    imageSrc: "img/pantalon-borgona.jpg",
+    imageAlt: "Pantalón Borgoña: pantalón color vino de corte recto con pinzas",
+  },
+];
+
+function findPurpleBloomProduct(id: string): PurpleBloomProduct | undefined {
+  return PURPLE_BLOOM_PRODUCTS.find((product) => product.id === id);
+}
+
+// A product counts as "on offer" purely by its current price — there is no
+// separate discount/original-price field, so this stays correct on its own
+// if a price in the list above ever changes.
+const OFFER_PRICE_THRESHOLD = 50;
+const OFFER_DISCOUNT_PERCENT = 20;
+
+function isOnOffer(product: PurpleBloomProduct): boolean {
+  return product.price <= OFFER_PRICE_THRESHOLD;
+}
+
+// Reverse-computed from the flat OFFER_DISCOUNT_PERCENT rather than a stored
+// field, for the same reason isOnOffer avoids one: nothing to keep in sync
+// if a price above changes.
+function originalPriceIfOnOffer(product: PurpleBloomProduct): number | undefined {
+  if (!isOnOffer(product)) return undefined;
+  return product.price / (1 - OFFER_DISCOUNT_PERCENT / 100);
+}

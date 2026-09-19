@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidencia UX | Purple Bloom</title>
+  <meta name="description" content="Dónde están el affordance, la consistencia, el feedback y la jerarquía en el proyecto Purple Bloom.">
+  <style>
+    :root {
+      --bg: #faf7fd;
+      --surface: #ffffff;
+      --text: #2d2238;
+      --muted: #5c4a6a;
+      --heading: #4a2d73;
+      --primary: #6b3fa0;
+      --accent: #e8d5f5;
+      --border: #ddd0ea;
+      --code-bg: #f1e8fa;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16101f;
+        --surface: #211a2b;
+        --text: #efe7f7;
+        --muted: #b6a6c7;
+        --heading: #ddc2f5;
+        --primary: #b98ee8;
+        --accent: #362646;
+        --border: #443453;
+        --code-bg: #2c2138;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      width: min(100% - 2rem, 62rem);
+      margin-inline: auto;
+      padding-block: 2rem 3rem;
+    }
+
+    header { margin-bottom: 1.75rem; }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      line-height: 1.15;
+      color: var(--heading);
+    }
+
+    .sub { margin: 0; color: var(--muted); }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chips a {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .chips a:hover,
+    .chips a:focus-visible {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    section {
+      margin-bottom: 1.5rem;
+      padding: 1.25rem 1.25rem 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+    }
+
+    h2 {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin: 0 0 0.25rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      color: var(--heading);
+    }
+
+    h2 .num {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+    }
+
+    .def {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    ul.points {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    ul.points li {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+      padding: 0.7rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    ul.points li strong { color: var(--heading); }
+
+    .where {
+      justify-self: start;
+      padding: 0.1rem 0.5rem;
+      border-radius: 0.375rem;
+      background: var(--code-bg);
+      color: var(--muted);
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.78rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    @media (min-width: 720px) {
+      ul.points li {
+        grid-template-columns: 1fr auto;
+        align-items: baseline;
+        gap: 1rem;
+      }
+
+      .where { justify-self: end; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Purple Bloom · Principios de interacción</h1>
+      <p class="sub">Tienda de moda femenina y su backoffice. Dónde está cada principio en el proyecto, con archivo y pantalla.</p>
+      <ul class="chips">
+        <li><a href="#affordance">Affordance</a></li>
+        <li><a href="#consistencia">Consistencia</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+        <li><a href="#jerarquia">Jerarquía</a></li>
+      </ul>
+    </header>
+
+    <main>
+      <section id="affordance" aria-labelledby="affordance-h">
+        <h2 id="affordance-h"><span class="num">01</span> Affordance</h2>
+        <p class="def">El elemento se ve como lo que hace.</p>
+        <ul class="points">
+          <li><span><strong>Botón "Añadir al carrito":</strong> pastilla morada llena, ancho completo en la tarjeta.</span><span class="where">catalogo.html · .btn--primary</span></li>
+          <li><span><strong>Tallas S / M / L / XL:</strong> chips con borde; al pasar el mouse resaltan, al elegir se llenan de morado.</span><span class="where">card-size.ts · .card-size__chip</span></li>
+          <li><span><strong>Estrellas de calificación:</strong> se iluminan hasta donde apuntas y muestran la etiqueta ("Bueno").</span><span class="where">rating-prompt.ts</span></li>
+          <li><span><strong>Cantidad − / +:</strong> botones cuadrados con fondo propio, se hunden al pulsar.</span><span class="where">carrito.html · .cart-item__qty-btn</span></li>
+          <li><span><strong>"Quitar":</strong> texto subrayado con ícono de papelera; en hover se pone rojo.</span><span class="where">cart.ts · .cart-item__remove</span></li>
+          <li><span><strong>Método de entrega:</strong> tarjetas con círculo de selección, la elegida se resalta.</span><span class="where">carrito.html · .delivery-option</span></li>
+          <li><span><strong>Favoritos:</strong> ícono de corazón con nombre accesible en cada tarjeta.</span><span class="where">.product-card__favorite</span></li>
+          <li><span><strong>Carrusel "Lo más elegido":</strong> flechas y puntos visibles; se detiene al pasar el mouse.</span><span class="where">favorites-carousel.ts</span></li>
+          <li><span><strong>Foco de teclado:</strong> anillo morado visible en todo lo pulsable, más "Saltar al contenido".</span><span class="where">styles.css · :focus-visible</span></li>
+          <li><span><strong>Backoffice · botones:</strong> primario lleno, secundario con borde, destructivo en rojo; deshabilitado a media opacidad.</span><span class="where">css/botones.css · .c-btn--*</span></li>
+          <li><span><strong>Backoffice · menú lateral:</strong> las secciones sin construir se ven apagadas y con "Próximamente".</span><span class="where">backoffice.html · .bo-nav__link:disabled</span></li>
+          <li><span><strong>Backoffice · acciones de pedido:</strong> ojo y papelera con borde y nombre accesible ("Eliminar pedido #10482").</span><span class="where">backoffice.html · .c-table-actions</span></li>
+          <li><span><strong>Backoffice · modo oscuro:</strong> interruptor con pulgar que se desliza y se llena de morado.</span><span class="where">backoffice-perfil.html · .c-switch</span></li>
+        </ul>
+      </section>
+
+      <section id="consistencia" aria-labelledby="consistencia-h">
+        <h2 id="consistencia-h"><span class="num">02</span> Consistencia</h2>
+        <p class="def">Lo mismo se ve y se comporta igual en todo el sitio.</p>
+        <ul class="points">
+          <li><span><strong>Tokens de diseño:</strong> colores, espacios y tipografías salen de variables, sin valores sueltos.</span><span class="where">css/variable.css</span></li>
+          <li><span><strong>Modo claro y oscuro:</strong> mismos tokens redefinidos; el botón sol/luna está en las 14 páginas.</span><span class="where">theme.ts</span></li>
+          <li><span><strong>Misma tarjeta de producto:</strong> catálogo, inicio, ofertas y "Te recomendamos" usan .product-card.</span><span class="where">styles.css · .product-card</span></li>
+          <li><span><strong>Un solo botón principal:</strong> morado y con la misma esquina en todas las CTA.</span><span class="where">.btn--primary</span></li>
+          <li><span><strong>Cabecera y pie iguales:</strong> logo de flor, menú y botón de tema en cada página.</span><span class="where">*.html · .site-header</span></li>
+          <li><span><strong>Precios en dólares:</strong> mismo formato <code>$39.99</code> en tarjetas, ficha y carrito.</span><span class="where">cart.ts · product-detail.ts</span></li>
+          <li><span><strong>Tallas en todas las tarjetas:</strong> un solo script las agrega y valida igual en cada página.</span><span class="where">card-size.ts</span></li>
+          <li><span><strong>Formularios con el mismo patrón:</strong> valida al salir del campo, error rojo debajo, resumen al enviar.</span><span class="where">login-form.ts · register-form.ts · contact-form.ts</span></li>
+          <li><span><strong>Movimiento uniforme:</strong> misma curva y duración (160 ms) en hover y pulsación.</span><span class="where">--ease-out</span></li>
+          <li><span><strong>Backoffice · mismos tokens:</strong> colores, espacios y radios salen de variable.css, sin valores sueltos.</span><span class="where">css/backoffice.css</span></li>
+          <li><span><strong>Backoffice · componentes reutilizados:</strong> Dashboard y Perfil arman botones, alertas, menú, diálogo y toasts del catálogo.</span><span class="where">playground.html · c-*</span></li>
+          <li><span><strong>Backoffice · formularios:</strong> valida al salir del campo, error rojo debajo y resumen al enviar, como el login.</span><span class="where">ts/backoffice.ts · ts/login-form.ts</span></li>
+          <li><span><strong>Backoffice · estados de pedido:</strong> siempre punto de color más palabra (Completado, Enviado, Pendiente, Cancelado).</span><span class="where">.c-badge</span></li>
+        </ul>
+      </section>
+
+      <section id="feedback" aria-labelledby="feedback-h">
+        <h2 id="feedback-h"><span class="num">03</span> Feedback</h2>
+        <p class="def">El sitio responde a cada acción.</p>
+        <ul class="points">
+          <li><span><strong>Al añadir al carrito:</strong> aparece el panel "¿Qué te parece esta prenda?" con estrellas animadas.</span><span class="where">rating-prompt.ts</span></li>
+          <li><span><strong>Al calificar:</strong> las estrellas giran, sale una ráfaga de pétalos y dice "¡Gracias por tu calificación!".</span><span class="where">rating-prompt.ts · petal-burst.ts</span></li>
+          <li><span><strong>Estrellas de la tarjeta:</strong> se recalculan y brillan tras cada calificación (ej. 4,5 (1)).</span><span class="where">rating-display.ts</span></li>
+          <li><span><strong>Contador del carrito:</strong> el globo con el número rebota cada vez que cambia.</span><span class="where">.cart-fab__count--bump</span></li>
+          <li><span><strong>Sin talla:</strong> mensaje rojo "Elige una talla…", chips en rojo, sacudida y foco en la talla.</span><span class="where">card-size.ts · product-detail.ts</span></li>
+          <li><span><strong>Formularios:</strong> error en línea, resumen en zona viva y foco al primer campo inválido.</span><span class="where">.field-error · .form-feedback</span></li>
+          <li><span><strong>Envío correcto:</strong> mensaje verde de éxito y pétalos sobre el botón.</span><span class="where">cart.ts · login-form.ts</span></li>
+          <li><span><strong>Favoritos sin sesión:</strong> aviso emergente que explica por qué no se guardó.</span><span class="where">favorites.ts · #toast</span></li>
+          <li><span><strong>Carrito vacío:</strong> ilustración y enlace al catálogo; el botón de pagar queda deshabilitado.</span><span class="where">cart.ts · #checkout-submit</span></li>
+          <li><span><strong>Entrega:</strong> al elegir "Retiro en tienda" se oculta la dirección y aparece una nota.</span><span class="where">cart.ts · syncDelivery()</span></li>
+          <li><span><strong>Carga de página:</strong> pantalla con la flor mientras el sitio termina de cargar.</span><span class="where">page-loader.ts</span></li>
+          <li><span><strong>Backoffice · eliminar pedido:</strong> diálogo de confirmación, la fila desaparece, toast verde y el foco pasa a la fila siguiente.</span><span class="where">ts/backoffice.ts · initOrderDelete()</span></li>
+          <li><span><strong>Backoffice · perfil:</strong> error en línea, resumen en zona viva, foco al primer campo inválido y aviso de contraseñas distintas en vivo.</span><span class="where">.c-field-error · .c-form-feedback</span></li>
+          <li><span><strong>Backoffice · toasts:</strong> máximo 3 a la vez; cada uno se retira solo a los 5 s.</span><span class="where">ts/backoffice.ts · showToast()</span></li>
+          <li><span><strong>Backoffice · menú de cuenta:</strong> se abre y cierra con <code>aria-expanded</code>; Escape o clic afuera lo cierran.</span><span class="where">ts/backoffice.ts · initMenus()</span></li>
+        </ul>
+      </section>
+
+      <section id="jerarquia" aria-labelledby="jerarquia-h">
+        <h2 id="jerarquia-h"><span class="num">04</span> Jerarquía</h2>
+        <p class="def">Lo importante se ve primero.</p>
+        <ul class="points">
+          <li><span><strong>Títulos:</strong> h1 grande en serif morado; subtítulos en gris suave y más pequeños.</span><span class="where">.section-header h1</span></li>
+          <li><span><strong>Tarjeta de producto:</strong> foto grande, nombre, estrellas, precio y un solo botón lleno.</span><span class="where">catalogo.html</span></li>
+          <li><span><strong>Precio:</strong> en negrita y morado; el anterior tachado y el "-20%" en etiqueta pequeña.</span><span class="where">.product-card__price-row</span></li>
+          <li><span><strong>Acción secundaria:</strong> favorito como ícono discreto, sin competir con el botón principal.</span><span class="where">.product-card__favorite</span></li>
+          <li><span><strong>Ficha de producto:</strong> nombre → código → precio grande → talla → botón de compra.</span><span class="where">producto.html</span></li>
+          <li><span><strong>Botón de compra en celular:</strong> barra fija abajo, siempre a la vista.</span><span class="where">.product-detail__actions</span></li>
+          <li><span><strong>Carrito:</strong> encabezado Producto / Cantidad / Precio; precio de línea en negrita; Subtotal al final.</span><span class="where">carrito.html · .cart-table</span></li>
+          <li><span><strong>Total y entrega:</strong> el Total va primero y grande, luego el método de entrega y el formulario.</span><span class="where">.cart-summary</span></li>
+          <li><span><strong>Inicio:</strong> el hero abre con un título grande y una frase corta sobre la foto.</span><span class="where">index.html · .hero__content</span></li>
+          <li><span><strong>Etiqueta "Oferta":</strong> pequeña sobre la foto; llama la atención sin tapar la prenda.</span><span class="where">.product-card__badge</span></li>
+          <li><span><strong>Misión, Visión y Objetivo:</strong> tarjetas compactas, menos peso que las secciones principales.</span><span class="where">.mission__card</span></li>
+          <li><span><strong>Backoffice · Panel principal:</strong> alerta de stock, luego 3 indicadores, gráficos y al final la tabla de pedidos.</span><span class="where">backoffice.html</span></li>
+          <li><span><strong>Backoffice · indicadores:</strong> etiqueta pequeña, valor grande en morado y variación con flecha y signo.</span><span class="where">css/graficos.css · .c-stat</span></li>
+          <li><span><strong>Backoffice · Perfil:</strong> orden de uso: Datos, Seguridad, Preferencias; un solo botón lleno por tarjeta.</span><span class="where">backoffice-perfil.html</span></li>
+          <li><span><strong>Backoffice · barra superior:</strong> "+ Nuevo producto" es el único botón lleno; buscador y cuenta quedan como secundarios.</span><span class="where">backoffice.html · .bo-topbar</span></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Proyecto Purple Bloom · sitio estático (HTML, CSS y TypeScript). Los archivos indicados están en el repositorio del proyecto.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -104,7 +104,16 @@ function findPurpleBloomProduct(id: string): PurpleBloomProduct | undefined {
 // separate discount/original-price field, so this stays correct on its own
 // if a price in the list above ever changes.
 const OFFER_PRICE_THRESHOLD = 50;
+const OFFER_DISCOUNT_PERCENT = 20;
 
 function isOnOffer(product: PurpleBloomProduct): boolean {
   return product.price <= OFFER_PRICE_THRESHOLD;
+}
+
+// Reverse-computed from the flat OFFER_DISCOUNT_PERCENT rather than a stored
+// field, for the same reason isOnOffer avoids one: nothing to keep in sync
+// if a price above changes.
+function originalPriceIfOnOffer(product: PurpleBloomProduct): number | undefined {
+  if (!isOnOffer(product)) return undefined;
+  return product.price / (1 - OFFER_DISCOUNT_PERCENT / 100);
 }

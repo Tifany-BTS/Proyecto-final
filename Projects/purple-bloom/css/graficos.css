@@ -1,0 +1,210 @@
+/* Gráficos del backoffice: tarjetas de indicador con sparkline, barras y anillos.
+   Un solo color de marca por medida (nunca color por rango); los textos usan
+   colores de texto, no el color de la serie; la tendencia siempre lleva flecha
+   y signo además del color (rojo/verde solos no se distinguen con daltonismo). */
+
+.c-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-1);
+}
+
+.c-stat,
+.c-chart,
+.c-donut {
+  padding: var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.c-chart,
+.c-donut {
+  margin: 0;
+}
+
+/* Tarjeta de indicador */
+
+.c-stat-label {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.c-stat-value {
+  margin: var(--space-0-375) 0 var(--space-0-25);
+  color: var(--color-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.c-stat-trend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-25);
+  margin: 0;
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+}
+
+.c-stat-trend--up {
+  color: var(--color-success);
+}
+
+.c-stat-trend--down {
+  color: var(--color-danger);
+}
+
+.c-stat-trend--down .c-stat-trend-arrow {
+  transform: rotate(180deg);
+}
+
+.c-stat-trend-arrow {
+  flex-shrink: 0;
+}
+
+.c-stat-trend-vs {
+  color: var(--color-text-muted);
+  font-weight: normal;
+}
+
+.c-sparkline {
+  display: block;
+  width: 100%;
+  height: 2rem;
+  margin-top: var(--space-0-75);
+  overflow: visible;
+}
+
+.c-sparkline polyline {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Barras */
+
+.c-chart-title,
+.c-donut-label {
+  margin: 0 0 var(--space-0-75);
+  color: var(--color-heading);
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-bold);
+}
+
+.c-chart svg {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+}
+
+.c-chart-baseline {
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.c-bar {
+  fill: var(--color-primary);
+}
+
+.c-bar-value,
+.c-bar-category {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  text-anchor: middle;
+}
+
+.c-bar-value {
+  fill: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.c-bar-category {
+  fill: var(--color-text-muted);
+}
+
+/* Anillos */
+
+.c-donut-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-1);
+}
+
+.c-donut {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.c-donut svg {
+  flex-shrink: 0;
+  width: 5.5rem;
+  height: 5.5rem;
+}
+
+.c-donut-track {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 10;
+}
+
+.c-donut-arc {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+.c-donut-arc--ok {
+  stroke: var(--semantic-success);
+}
+
+.c-donut-arc--critical {
+  stroke: var(--semantic-error);
+}
+
+.c-donut-value {
+  fill: var(--color-heading);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+}
+
+.c-donut-unit {
+  fill: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  text-anchor: middle;
+}
+
+.c-donut-label {
+  margin-bottom: 0;
+}
+
+.c-donut-status {
+  margin: var(--space-0-25) 0 0;
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-bold);
+}
+
+.c-donut-status--ok {
+  color: var(--color-success);
+}
+
+.c-donut-status--critical {
+  color: var(--color-danger);
+}
+
+.c-donut-note {
+  margin: var(--space-0-25) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

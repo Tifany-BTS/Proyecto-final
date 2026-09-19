@@ -8,6 +8,9 @@
     nav.classList.add("site-nav--open");
     toggle.setAttribute("aria-expanded", "true");
     backdrop.hidden = false;
+    // Force a frame between removing [hidden] and adding the visible class,
+    // so the opacity transition has a starting value to animate from.
+    requestAnimationFrame(() => backdrop.classList.add("nav-backdrop--visible"));
     document.body.classList.add("nav-open");
   }
 
@@ -15,7 +18,14 @@
     if (!toggle || !nav || !backdrop) return;
     nav.classList.remove("site-nav--open");
     toggle.setAttribute("aria-expanded", "false");
-    backdrop.hidden = true;
+    backdrop.classList.remove("nav-backdrop--visible");
+    backdrop.addEventListener(
+      "transitionend",
+      () => {
+        if (!isNavOpen()) backdrop.hidden = true;
+      },
+      { once: true }
+    );
     document.body.classList.remove("nav-open");
   }
 

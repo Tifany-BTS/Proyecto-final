@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Noticias — piel editorial/minimalista, aplicada solo a esta página.
+   El header, el nav y el footer siguen el sistema del resto del sitio;
+   estas reglas reescriben únicamente el contenido de <main> (.news).
+   Paleta y radios propios (no los tokens de variable.css) porque son
+   deliberadamente distintos al resto del sitio para esta página.
+   Banner de foto a todo lo ancho (.news-hero) con las 3 tarjetas de
+   noticias (.news-shelf) superpuestas sobre su borde inferior, inspirado
+   en la referencia tipo "Sommer-Sale" que compartió el usuario.
+   ========================================================================== */
+
+.noticias-page {
+  --news-canvas: #fbfbfa;
+  --news-surface: #ffffff;
+  --news-border: #eaeaea;
+  --news-text: #2f3437;
+  --news-text-muted: #787774;
+  --news-accent-bg: #f3ecfb;
+  --news-accent-text: #6b3fa0;
+  --news-shadow: 0 20px 48px rgb(47 52 55 / 0.16);
+  --news-hero-title-size: clamp(2.25rem, 6vw, 4rem);
+  background: var(--news-canvas);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .noticias-page {
+    --news-canvas: #17151a;
+    --news-surface: #1e1b22;
+    --news-border: #33303a;
+    --news-text: #edeae6;
+    --news-text-muted: #a39f9a;
+    --news-accent-bg: #2a2130;
+    --news-accent-text: #c9a8ed;
+  }
+}
+
+:root[data-theme="dark"] .noticias-page {
+  --news-canvas: #17151a;
+  --news-surface: #1e1b22;
+  --news-border: #33303a;
+  --news-text: #edeae6;
+  --news-text-muted: #a39f9a;
+  --news-accent-bg: #2a2130;
+  --news-accent-text: #c9a8ed;
+}
+
+.noticias-page .news {
+  padding-bottom: calc(var(--space-4) * 1.5);
+}
+
+/* --- News hero banner ---
+   Full-bleed photo banner with the page title, echoing the homepage hero
+   (same --hero-overlay token for photo/text contrast). The card shelf below
+   overlaps its bottom edge — see .news-shelf's negative margin-top. */
+.news-hero__media {
+  display: flex;
+  align-items: center;
+  min-height: clamp(18rem, 42vw, 26rem);
+  padding-block: var(--space-3) var(--space-4);
+  background: var(--hero-overlay), url("../img/hero-novedades-sm.jpg") center / cover no-repeat;
+  color: var(--color-on-primary);
+}
+
+@media (min-width: 768px) {
+  .news-hero__media {
+    background: var(--hero-overlay), url("../img/hero-novedades.jpg") center / cover no-repeat;
+  }
+}
+
+.news-hero__title {
+  margin: 0 0 var(--space-0-75);
+  max-width: 40rem;
+  font-family: var(--font-display);
+  font-size: var(--news-hero-title-size);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.news-hero__lead {
+  margin: 0;
+  max-width: 34rem;
+  font-size: var(--font-size-hero-body);
+  opacity: 0.92;
+}
+
+/* --- News shelf: the 3 cards overlapping the hero photo --- */
+.news-shelf {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  margin-top: calc(var(--space-4) * -1);
+  background: var(--news-surface);
+  border-radius: 12px;
+  box-shadow: var(--news-shadow);
+  overflow: hidden;
+}
+
+.noticias-page .news-post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-1-25);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--news-border);
+  border-radius: 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.noticias-page .news-post:last-child {
+  border-bottom: none;
+}
+
+.noticias-page .news-post__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: 8px;
+  filter: saturate(0.85);
+}
+
+.noticias-page .news-post--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.noticias-page .news-post__body {
+  padding-top: 0;
+}
+
+.noticias-page .news-post__category {
+  margin: 0 0 var(--space-0-5);
+  color: var(--news-accent-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.noticias-page .news-post__title {
+  margin: 0 0 var(--space-0-75);
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--news-text);
+}
+
+.noticias-page .news-post__excerpt {
+  margin: 0 0 var(--space-0-5);
+  color: var(--news-text-muted);
+  line-height: 1.5;
+}
+
+.noticias-page .news-post__byline {
+  margin: 0;
+  color: var(--news-text-muted);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.noticias-page .content-note {
+  margin-top: var(--space-1);
+  color: var(--news-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .noticias-page .news-post {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Stacked (photo on top) on phones and in the narrow 3-up columns of
+   tablets; side-by-side thumbnail + text where there's room: one wide
+   column at 480-767px and the roomier 3-up columns from 1024px. */
+@media (min-width: 480px) {
+  .noticias-page .news-post {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .noticias-page .news-post__image {
+    width: 6rem;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .news-shelf {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .noticias-page .news-post {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .noticias-page .news-post__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .noticias-page .news-post {
+    border-bottom: none;
+    border-right: 1px solid var(--news-border);
+  }
+
+  .noticias-page .news-post:last-child {
+    border-right: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .noticias-page .news-post {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .noticias-page .news-post__image {
+    width: 6rem;
+    aspect-ratio: 1 / 1;
+  }
+}

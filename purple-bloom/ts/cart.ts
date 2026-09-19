@@ -35,13 +35,6 @@
     saveCart(lines);
     updateBadges();
     renderCartPage();
-
-    const product = findPurpleBloomProduct(id);
-    pbTrack("Producto agregado al carrito", {
-      productId: id,
-      productName: product?.name,
-      price: product?.price,
-    });
   }
 
   function setQty(id: string, qty: number): void {
@@ -84,8 +77,16 @@
     const count = cartCount(lines);
 
     document.querySelectorAll<HTMLElement>(".cart-fab__count").forEach((badge) => {
+      const previousCount = badge.dataset.count;
       badge.textContent = String(count);
       badge.hidden = count === 0;
+      badge.dataset.count = String(count);
+
+      if (previousCount !== undefined && previousCount !== String(count) && count > 0) {
+        badge.classList.remove("cart-fab__count--bump");
+        void badge.offsetWidth; // restart the animation if it's already running
+        badge.classList.add("cart-fab__count--bump");
+      }
     });
 
     const liveRegion = document.getElementById("carrito");
@@ -264,12 +265,6 @@
         firstInvalid?.focus();
         return;
       }
-
-      const purchasedLines = getCart();
-      pbTrack("Checkout completado", {
-        items: cartCount(purchasedLines),
-        total: cartTotal(purchasedLines),
-      });
 
       saveCart([]);
       updateBadges();
