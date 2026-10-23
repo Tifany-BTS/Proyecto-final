@@ -1,0 +1,59 @@
+{
+  "project": {
+    "name": "purple-bloomahk init",
+    "description": "Aplicacion web de comercio electronico B2C de moda femenina con catalogo, carrito y cuentas de usuario.",
+    "docsPath": "./docs"
+  },
+  "provider": "cursor",
+  "agentPreferences": {
+    "cursor": {
+      "lead": {
+        "model": "inherit"
+      },
+      "explorer": {
+        "model": "inherit"
+      },
+      "consultant": {
+        "model": "inherit"
+      },
+      "builder": {
+        "model": "inherit"
+      },
+      "reviewer": {
+        "model": "inherit"
+      }
+    }
+  },
+  "database": {
+    "type": "sqlite"
+  },
+  "storage": {
+    "dir": ".harness",
+    "tasks": {
+      "adapter": "mcp"
+    },
+    "sections": {
+      "toolsUsed": true,
+      "filesModified": true,
+      "result": true,
+      "blockers": true,
+      "nextSteps": false
+    },
+    "scope": "local",
+    "projectId": "a82e9727-aadf-4425-94ab-956f320f62a1"
+  },
+  "health": {
+    "scriptPath": "./health.bat",
+    "required": true
+  },
+  "tools": {
+    "mcp": {
+      "enabled": true,
+      "port": 3742
+    },
+    "scripts": {
+      "enabled": true,
+      "outputDir": "./.harness/scripts"
+    }
+  }
+}

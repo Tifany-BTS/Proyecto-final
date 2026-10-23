@@ -17,13 +17,13 @@
   <meta name="description" content="Purple Bloom es la tienda online de moda femenina: descubre blusas, vestidos y pantalones de temporada, explora tendencias y guarda tus piezas favoritas.">
   <meta property="og:title" content="Purple Bloom | Moda femenina: blusas, vestidos y pantalones">
   <meta property="og:description" content="Purple Bloom es la tienda online de moda femenina: descubre blusas, vestidos y pantalones de temporada, explora tendencias y guarda tus piezas favoritas.">
-  <meta property="og:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <meta property="og:image" content="https://tu-dominio.com/img/hero-coleccion-pasarela.jpg">
   <meta property="og:url" content="https://tu-dominio.com/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Purple Bloom | Moda femenina: blusas, vestidos y pantalones">
   <meta name="twitter:description" content="Purple Bloom es la tienda online de moda femenina: descubre blusas, vestidos y pantalones de temporada, explora tendencias y guarda tus piezas favoritas.">
-  <meta name="twitter:image" content="https://tu-dominio.com/img/hero-novedades.jpg">
+  <meta name="twitter:image" content="https://tu-dominio.com/img/hero-coleccion-pasarela.jpg">
   <title>Purple Bloom | Moda femenina: blusas, vestidos y pantalones</title>
   <link rel="canonical" href="https://tu-dominio.com/">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
@@ -99,6 +99,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
         </ul>
       </nav>
 
@@ -132,22 +133,25 @@
         <div class="hero__slides" role="group" aria-label="Destacados de la marca">
           <article class="hero__slide" aria-labelledby="slide-1-title">
             <div class="hero__content">
-              <h2 id="slide-1-title"><a href="noticias.html">Novedades Purple Bloom</a></h2>
-              <p>Descubre las últimas noticias sobre la marca, colecciones de temporada y lanzamientos exclusivos para mujer.</p>
+              <h2 id="slide-1-title">Novedades Purple Bloom</h2>
+              <p>Colecciones, tendencias y lanzamientos exclusivos.</p>
+              <a href="noticias.html" class="btn btn--outline hero__cta">Ver novedades</a>
             </div>
           </article>
 
           <article class="hero__slide" aria-labelledby="slide-2-title">
             <div class="hero__content">
-              <h2 id="slide-2-title"><a href="tendencias.html">Tendencias de moda</a></h2>
-              <p>Blusas fluidas, vestidos midi y pantalones de corte moderno: inspírate con las tendencias que marcan esta temporada.</p>
+              <h2 id="slide-2-title">Tendencias de moda</h2>
+              <p>Lo que se lleva esta temporada.</p>
+              <a href="tendencias.html" class="btn btn--outline hero__cta">Ver tendencias</a>
             </div>
           </article>
 
           <article class="hero__slide" aria-labelledby="slide-3-title">
             <div class="hero__content">
-              <h2 id="slide-3-title"><a href="ofertas.html">Ofertas especiales</a></h2>
-              <p>Aprovecha descuentos en piezas seleccionadas. Calidad, estilo y precios pensados para tu guardarropa.</p>
+              <h2 id="slide-3-title">Ofertas especiales</h2>
+              <p>Descuentos en piezas seleccionadas.</p>
+              <a href="ofertas.html" class="btn btn--outline hero__cta">Ver ofertas</a>
             </div>
           </article>
         </div>
@@ -169,91 +173,55 @@
       </div>
     </section>
 
-    <!-- Introducción -->
+    <!-- Introducción: declaración de marca (no un "quiénes somos" clásico),
+         a dos columnas — inspirada en la referencia que compartió el usuario. -->
     <section class="intro" aria-labelledby="intro-heading">
       <div class="container intro__layout">
         <div class="intro__text">
-          <p class="intro__eyebrow">Quiénes somos</p>
-          <h2 id="intro-heading">Moda femenina que te hace <span class="intro__highlight">brillar</span>.</h2>
-          <p>
-            Purple Bloom es una plataforma SaaS diseñada para marcas de moda femenina que buscan vender en línea con elegancia y simplicidad.
-            Conectamos diseño, catálogo y experiencia de compra en un solo lugar, pensado exclusivamente para ropa de mujer.
-          </p>
+          <p class="intro__eyebrow"><span class="intro__eyebrow-bar" aria-hidden="true"></span>Hola, bienvenida</p>
+          <h2 id="intro-heading">Creamos moda que te hace <span class="intro__highlight">brillar</span>.</h2>
+          <p class="intro__lead">Piezas pensadas con color e intención, para que encuentres lo tuyo sin esfuerzo.</p>
+          <p class="intro__tagline">Diseño · Catálogo · Experiencia de compra</p>
+          <div class="intro__cta">
+            <a href="catalogo.html" class="btn btn--outline btn--arrow intro__cta-btn">
+              Explora el catálogo
+              <svg class="btn__arrow" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
         </div>
-        <div class="intro__media">
-          <video class="intro__video" id="intro-video" src="video/quienes-somos.mp4" poster="img/quienes-somos-poster.jpg" muted loop playsinline autoplay></video>
-          <button type="button" class="intro__video-toggle" id="intro-video-toggle" aria-label="Pausar video" aria-pressed="true">
-            <svg class="intro__video-icon intro__video-icon--pause" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="5" width="4" height="14" rx="1"/>
-              <rect x="14" y="5" width="4" height="14" rx="1"/>
-            </svg>
-            <svg class="intro__video-icon intro__video-icon--play" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </button>
-        </div>
-      </div>
 
-      <!-- Misión, visión y objetivo: dentro de "Quiénes somos", estilo compacto -->
-      <div class="container intro__essence">
-        <div class="mission__grid">
-          <article class="mission__card">
-            <div class="mission__top">
-              <div class="mission__icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="currentColor">
-                  <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z"/>
-                  <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z" transform="rotate(90 32 32)"/>
-                  <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z" transform="rotate(180 32 32)"/>
-                  <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z" transform="rotate(270 32 32)"/>
-                  <path d="M32,32 L28,20 32,12 36,20 Z" transform="rotate(45 32 32)"/>
-                  <path d="M32,32 L28,20 32,12 36,20 Z" transform="rotate(135 32 32)"/>
-                  <path d="M32,32 L28,20 32,12 36,20 Z" transform="rotate(225 32 32)"/>
-                  <path d="M32,32 L28,20 32,12 36,20 Z" transform="rotate(315 32 32)"/>
-                  <circle cx="32" cy="32" r="2.2"/>
-                </svg>
-              </div>
-              <h2>Misión</h2>
-            </div>
-            <p>Empoderar a las marcas de moda femenina con herramientas digitales accesibles, hermosas y fáciles de usar.</p>
-          </article>
-          <article class="mission__card">
-            <div class="mission__top">
-              <div class="mission__icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none">
-                  <path d="M8,32 C20,10 44,10 56,32 C44,54 20,54 8,32 Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-                  <g fill="currentColor" stroke="none">
-                    <path d="M32,32 C29.5,29 28,26 32,23 C36,26 34.5,29 32,32 Z"/>
-                    <path d="M32,32 C29.5,29 28,26 32,23 C36,26 34.5,29 32,32 Z" transform="rotate(90 32 32)"/>
-                    <path d="M32,32 C29.5,29 28,26 32,23 C36,26 34.5,29 32,32 Z" transform="rotate(180 32 32)"/>
-                    <path d="M32,32 C29.5,29 28,26 32,23 C36,26 34.5,29 32,32 Z" transform="rotate(270 32 32)"/>
-                  </g>
-                </svg>
-              </div>
-              <h2>Visión</h2>
-            </div>
-            <p>Ser la plataforma de referencia para marcas que celebran la moda de mujer con identidad propia y alcance global.</p>
-          </article>
-          <article class="mission__card">
-            <div class="mission__top">
-              <div class="mission__icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none">
-                  <circle cx="32" cy="32" r="24" stroke="currentColor" stroke-width="3"/>
-                  <circle cx="32" cy="32" r="15" stroke="currentColor" stroke-width="3"/>
-                  <circle cx="32" cy="32" r="6" fill="currentColor" stroke="none"/>
-                  <path d="M14,50 L46,18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M36,18 L46,18 L46,28" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h2>Objetivo</h2>
-            </div>
-            <p>Facilitar la venta en línea de blusas, vestidos y pantalones con una experiencia intuitiva para clientes y administradores.</p>
-          </article>
+        <div class="intro__features">
+          <p class="intro__features-lead">Purple Bloom conecta diseño, catálogo y experiencia de compra en un solo lugar, pensado exclusivamente para moda femenina.</p>
+          <ul class="intro__feature-grid">
+            <li class="intro__feature">
+              <p class="intro__feature-number">01</p>
+              <h3 class="intro__feature-title">Asesoría &amp; Estilo</h3>
+              <p class="intro__feature-desc">Sugerencias a tu medida al iniciar sesión.</p>
+            </li>
+            <li class="intro__feature">
+              <p class="intro__feature-number">02</p>
+              <h3 class="intro__feature-title">Compras sin esfuerzo</h3>
+              <p class="intro__feature-desc">Direcciones guardadas y seguimiento en tiempo real.</p>
+            </li>
+            <li class="intro__feature">
+              <p class="intro__feature-number">03</p>
+              <h3 class="intro__feature-title">Club VIP Moda</h3>
+              <p class="intro__feature-desc">Puntos que se canjean por beneficios reales.</p>
+            </li>
+            <li class="intro__feature">
+              <p class="intro__feature-number">04</p>
+              <h3 class="intro__feature-title">Asistente de color</h3>
+              <p class="intro__feature-desc">Combina tus prendas con inteligencia artificial.</p>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
 
     <!-- Destacados: vitrina editorial, distinta de la lista personal de favoritos (mi-cuenta.html) -->
-    <section id="destacados" class="favorites section--watermark" aria-labelledby="favorites-heading">
+    <section id="destacados" class="favorites section--watermark surface-ivory surface-sky" aria-labelledby="favorites-heading">
       <div class="container">
         <header class="section-header">
           <h2 id="favorites-heading">Lo más elegido</h2>
@@ -267,20 +235,6 @@
             </svg>
           </button>
           <div class="favorites__grid" id="favorites-track" role="list">
-          <article class="product-card" inert aria-hidden="true">
-            <div class="product-card__image product-card__image--alt2" aria-hidden="true"></div>
-            <h3>Pantalón Wide Leg</h3>
-            <p class="product-card__rating"><span>★★★★☆</span></p>
-            <p class="product-card__desc">Pantalón de pierna ancha con caída fluida y mucha comodidad.</p>
-            <p class="product-card__price">$59.99</p>
-            <button type="button" class="btn btn--primary" tabindex="-1">Añadir al carrito</button>
-            <button type="button" class="product-card__favorite" tabindex="-1">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </article>
-
           <article class="product-card" role="listitem" aria-labelledby="fav-1-name">
             <span class="product-card__badge">Oferta</span>
             <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
@@ -288,9 +242,9 @@
             <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
             <p class="product-card__desc">Blusa de seda en tono lavanda, corte relajado ideal para el día a día.</p>
             <div class="product-card__price-row">
-              <p class="product-card__price" aria-label="Precio: 49 dólares con 99">$49.99</p>
-              <span class="product-card__original-price">$62.49</span>
-              <span class="product-card__discount">-20%</span>
+              <p class="product-card__price"><span class="visually-hidden">Precio: </span>$49.99</p>
+              <span class="product-card__original-price"><span class="visually-hidden">Precio anterior: </span>$62.49</span>
+              <span class="product-card__discount"><span class="visually-hidden">Descuento: </span>-20%</span>
             </div>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-lavanda" aria-label="Añadir Blusa Lavanda al carrito">
               Añadir al carrito
@@ -307,7 +261,7 @@
             <h3 id="fav-2-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h3>
             <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
             <p class="product-card__desc">Vestido midi con detalle floral, perfecto para ocasiones especiales.</p>
-            <p class="product-card__price" aria-label="Precio: 79 dólares con 99">$79.99</p>
+            <p class="product-card__price"><span class="visually-hidden">Precio: </span>$79.99</p>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-violeta" aria-label="Añadir Vestido Violeta al carrito">
               Añadir al carrito
             </button>
@@ -323,7 +277,7 @@
             <h3 id="fav-3-name"><a href="producto.html?id=pantalon-berenjena">Pantalón Berenjena</a></h3>
             <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
             <p class="product-card__desc">Pantalón de corte recto en tono berenjena, versátil y cómodo.</p>
-            <p class="product-card__price" aria-label="Precio: 59 dólares con 99">$59.99</p>
+            <p class="product-card__price"><span class="visually-hidden">Precio: </span>$59.99</p>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-berenjena" aria-label="Añadir Pantalón Berenjena al carrito">
               Añadir al carrito
             </button>
@@ -341,9 +295,9 @@
             <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
             <p class="product-card__desc">Blusa atemporal de corte simple, ideal para combinar con cualquier look.</p>
             <div class="product-card__price-row">
-              <p class="product-card__price">$39.99</p>
-              <span class="product-card__original-price">$49.99</span>
-              <span class="product-card__discount">-20%</span>
+              <p class="product-card__price"><span class="visually-hidden">Precio: </span>$39.99</p>
+              <span class="product-card__original-price"><span class="visually-hidden">Precio anterior: </span>$49.99</span>
+              <span class="product-card__discount"><span class="visually-hidden">Descuento: </span>-20%</span>
             </div>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-clasica" aria-label="Añadir Blusa Clásica al carrito">
               Añadir al carrito
@@ -360,7 +314,7 @@
             <h3 id="fav-5-name"><a href="producto.html?id=vestido-elegante">Vestido Elegante</a></h3>
             <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
             <p class="product-card__desc">Vestido de líneas limpias pensado para ocasiones especiales.</p>
-            <p class="product-card__price">$84.99</p>
+            <p class="product-card__price"><span class="visually-hidden">Precio: </span>$84.99</p>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-elegante" aria-label="Añadir Vestido Elegante al carrito">
               Añadir al carrito
             </button>
@@ -376,7 +330,7 @@
             <h3 id="fav-6-name"><a href="producto.html?id=pantalon-slim">Pantalón Slim</a></h3>
             <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
             <p class="product-card__desc">Pantalón de corte ajustado que estiliza la silueta.</p>
-            <p class="product-card__price">$54.99</p>
+            <p class="product-card__price"><span class="visually-hidden">Precio: </span>$54.99</p>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-slim" aria-label="Añadir Pantalón Slim al carrito">
               Añadir al carrito
             </button>
@@ -394,9 +348,9 @@
             <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
             <p class="product-card__desc">Blusa con estampado ligero, un toque distinto para el día a día.</p>
             <div class="product-card__price-row">
-              <p class="product-card__price">$44.99</p>
-              <span class="product-card__original-price">$56.24</span>
-              <span class="product-card__discount">-20%</span>
+              <p class="product-card__price"><span class="visually-hidden">Precio: </span>$44.99</p>
+              <span class="product-card__original-price"><span class="visually-hidden">Precio anterior: </span>$56.24</span>
+              <span class="product-card__discount"><span class="visually-hidden">Descuento: </span>-20%</span>
             </div>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-estampada" aria-label="Añadir Blusa Estampada al carrito">
               Añadir al carrito
@@ -413,7 +367,7 @@
             <h3 id="fav-8-name"><a href="producto.html?id=vestido-casual">Vestido Casual</a></h3>
             <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
             <p class="product-card__desc">Vestido cómodo de uso diario, fácil de combinar.</p>
-            <p class="product-card__price">$69.99</p>
+            <p class="product-card__price"><span class="visually-hidden">Precio: </span>$69.99</p>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-casual" aria-label="Añadir Vestido Casual al carrito">
               Añadir al carrito
             </button>
@@ -429,30 +383,11 @@
             <h3 id="fav-9-name"><a href="producto.html?id=pantalon-wide-leg">Pantalón Wide Leg</a></h3>
             <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
             <p class="product-card__desc">Pantalón de pierna ancha con caída fluida y mucha comodidad.</p>
-            <p class="product-card__price">$59.99</p>
+            <p class="product-card__price"><span class="visually-hidden">Precio: </span>$59.99</p>
             <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-wide-leg" aria-label="Añadir Pantalón Wide Leg al carrito">
               Añadir al carrito
             </button>
             <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Wide Leg a favoritos">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </article>
-
-          <article class="product-card" inert aria-hidden="true">
-            <span class="product-card__badge">Oferta</span>
-            <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="" width="800" height="533" loading="lazy">
-            <h3>Blusa Lavanda</h3>
-            <p class="product-card__rating"><span>★★★★★</span></p>
-            <p class="product-card__desc">Blusa de seda en tono lavanda, corte relajado ideal para el día a día.</p>
-            <div class="product-card__price-row">
-              <p class="product-card__price">$49.99</p>
-              <span class="product-card__original-price">$62.49</span>
-              <span class="product-card__discount">-20%</span>
-            </div>
-            <button type="button" class="btn btn--primary" tabindex="-1">Añadir al carrito</button>
-            <button type="button" class="product-card__favorite" tabindex="-1">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -466,70 +401,87 @@
           </button>
         </div>
 
-        <div class="favorites__dots" role="tablist" aria-label="Seleccionar producto destacado">
-          <button type="button" class="favorites__dot" data-index="0" role="tab" aria-label="Producto 1"></button>
-          <button type="button" class="favorites__dot" data-index="1" role="tab" aria-label="Producto 2"></button>
-          <button type="button" class="favorites__dot" data-index="2" role="tab" aria-label="Producto 3"></button>
-          <button type="button" class="favorites__dot" data-index="3" role="tab" aria-label="Producto 4"></button>
-          <button type="button" class="favorites__dot" data-index="4" role="tab" aria-label="Producto 5"></button>
-          <button type="button" class="favorites__dot" data-index="5" role="tab" aria-label="Producto 6"></button>
-          <button type="button" class="favorites__dot" data-index="6" role="tab" aria-label="Producto 7"></button>
-          <button type="button" class="favorites__dot" data-index="7" role="tab" aria-label="Producto 8"></button>
-          <button type="button" class="favorites__dot" data-index="8" role="tab" aria-label="Producto 9"></button>
+        <div class="favorites__controls">
+          <button type="button" class="favorites__pause" data-action="favorites-pause" aria-label="Pausar carrusel">
+            <svg class="favorites__pause-icon favorites__pause-icon--pause" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="5" width="4" height="14" rx="1"/>
+              <rect x="14" y="5" width="4" height="14" rx="1"/>
+            </svg>
+            <svg class="favorites__pause-icon favorites__pause-icon--play" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/>
+            </svg>
+          </button>
+
+          <div class="favorites__dots" role="group" aria-label="Seleccionar producto destacado">
+            <button type="button" class="favorites__dot" data-index="0" aria-label="Producto 1"></button>
+            <button type="button" class="favorites__dot" data-index="1" aria-label="Producto 2"></button>
+            <button type="button" class="favorites__dot" data-index="2" aria-label="Producto 3"></button>
+            <button type="button" class="favorites__dot" data-index="3" aria-label="Producto 4"></button>
+            <button type="button" class="favorites__dot" data-index="4" aria-label="Producto 5"></button>
+            <button type="button" class="favorites__dot" data-index="5" aria-label="Producto 6"></button>
+            <button type="button" class="favorites__dot" data-index="6" aria-label="Producto 7"></button>
+            <button type="button" class="favorites__dot" data-index="7" aria-label="Producto 8"></button>
+            <button type="button" class="favorites__dot" data-index="8" aria-label="Producto 9"></button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Propuesta de valor / beneficios -->
-    <section class="benefits" aria-labelledby="benefits-heading">
-      <div class="container">
-        <div class="mission__grid">
-          <article class="mission__card">
-            <div class="mission__top">
-              <div class="mission__icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none">
-                  <path d="M14,26 L32,16 L50,26 L50,50 L32,60 L14,50 Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-                  <path d="M14,26 L32,36 L50,26" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-                  <path d="M32,36 L32,60" stroke="currentColor" stroke-width="3"/>
-                </svg>
-              </div>
-              <h2 id="benefits-heading">Envíos Exclusivos</h2>
-            </div>
-            <p>Empaques sostenibles con la esencia de la marca.</p>
-          </article>
-          <article class="mission__card">
-            <div class="mission__top">
-              <div class="mission__icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none">
-                  <rect x="12" y="14" width="40" height="28" rx="8" stroke="currentColor" stroke-width="3"/>
-                  <path d="M20,42 L14,54 L28,42 Z" fill="currentColor" stroke="none"/>
-                  <circle cx="24" cy="28" r="2.4" fill="currentColor" stroke="none"/>
-                  <circle cx="32" cy="28" r="2.4" fill="currentColor" stroke="none"/>
-                  <circle cx="40" cy="28" r="2.4" fill="currentColor" stroke="none"/>
-                </svg>
-              </div>
-              <h2>Atención Personalizada</h2>
-            </div>
-            <p>Asesoría de imagen y estilismo en línea.</p>
-          </article>
-          <article class="mission__card">
-            <div class="mission__top">
-              <div class="mission__icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none">
-                  <path d="M32,6 L54,14 L54,32 C54,48 44,58 32,60 C20,58 10,48 10,32 L10,14 Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-                  <path d="M22,32 L29,40 L44,22" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h2>Calidad Garantizada</h2>
-            </div>
-            <p>Tejidos seleccionados y confección de alta gama.</p>
-          </article>
+    <!-- "Así diseñamos": quiénes diseñan y cómo, inspirada en una referencia
+         que compartió el usuario. -->
+    <section class="news-studio" aria-labelledby="news-studio-heading">
+      <div class="container news-studio__layout">
+        <div class="news-studio__brand">
+          <h2 id="news-studio-heading" class="news-studio__title">Purple <span class="news-studio__title-accent">Bloom</span></h2>
+          <img class="news-studio__photo" src="img/taller-diseno.jpg" alt="El equipo de diseño de Purple Bloom bocetando y eligiendo telas en el taller" width="900" height="1200" loading="lazy">
         </div>
+
+        <div class="news-studio__process">
+          <h3 class="news-studio__subhead">Color, textura y oficio hechos a mano</h3>
+          <p>Cada colección empieza en un boceto: una silueta, una paleta de color, una idea de cómo debería caer la tela sobre el cuerpo.</p>
+          <p>De ahí pasa a la mesa de corte. Elegimos cada textura a mano, probamos combinaciones de color y ajustamos el patrón hasta que la prenda se siente tan bien como se ve.</p>
+          <p>Del boceto a la percha: cada pieza de Purple Bloom pasa por manos reales antes de llegar a tu clóset.</p>
+        </div>
+
+        <ul class="news-studio__team">
+          <li class="news-studio__member">
+            <div class="news-studio__avatar" aria-hidden="true">VR</div>
+            <div>
+              <h4 class="news-studio__member-name">Valentina Ríos</h4>
+              <p class="news-studio__member-role">Diseñadora principal</p>
+              <p class="news-studio__member-desc">Lidera cada colección desde el primer boceto hasta la pasarela.</p>
+            </div>
+          </li>
+          <li class="news-studio__member">
+            <div class="news-studio__avatar" aria-hidden="true">MF</div>
+            <div>
+              <h4 class="news-studio__member-name">Mateo Fernández</h4>
+              <p class="news-studio__member-role">Diseñador de tejidos</p>
+              <p class="news-studio__member-desc">Selecciona las telas y texturas que definen cada temporada.</p>
+            </div>
+          </li>
+          <li class="news-studio__member">
+            <div class="news-studio__avatar" aria-hidden="true">CD</div>
+            <div>
+              <h4 class="news-studio__member-name">Camila Duarte</h4>
+              <p class="news-studio__member-role">Diseñadora de color</p>
+              <p class="news-studio__member-desc">Define las paletas que inspiran cada colección de Purple Bloom.</p>
+            </div>
+          </li>
+          <li class="news-studio__member">
+            <div class="news-studio__avatar" aria-hidden="true">JS</div>
+            <div>
+              <h4 class="news-studio__member-name">Joaquín Silva</h4>
+              <p class="news-studio__member-role">Patronista</p>
+              <p class="news-studio__member-desc">Convierte cada boceto en un patrón que se ajusta a cada cuerpo.</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
 
     <!-- Formulario de contacto -->
-    <section id="contacto" class="contact-section" aria-labelledby="contact-form-heading">
+    <section id="contacto" class="contact-section surface-ivory surface-sky" aria-labelledby="contact-form-heading">
       <div class="container">
         <div class="contact-section__panel">
           <div class="contact-section__card">
@@ -614,6 +566,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="iniciar-sesion.html">Iniciar sesión</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="privacidad.html">Política de privacidad</a></li>
           <li><a href="terminos.html">Términos y condiciones</a></li>
         </ul>
@@ -648,11 +601,11 @@
 
   <script src="js/analytics.js" defer></script>
   <script src="js/theme.js" defer></script>
+  <script src="js/session.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/header-scroll.js" defer></script>
   <script src="js/page-loader.js" defer></script>
   <script src="js/petal-burst.js" defer></script>
-  <script src="js/intro-video.js" defer></script>
   <script src="js/contact-form.js" defer></script>
   <script src="js/products-data.js" defer></script>
   <script src="js/cart.js" defer></script>

@@ -19,6 +19,7 @@
   <link rel="canonical" href="https://tu-dominio.com/tendencias.html">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tendencias.css">
   <script>
     (function () {
       var t = localStorage.getItem("theme");
@@ -38,7 +39,7 @@
 
 </script>
 </head>
-<body>
+<body class="tendencias-page">
   <div id="page-loader" class="page-loader" aria-hidden="true">
     <svg class="page-loader__flower" viewBox="0 0 64 64" width="56" height="56" fill="currentColor">
       <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z"/>
@@ -90,6 +91,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
         </ul>
       </nav>
 
@@ -111,59 +113,91 @@
   </header>
 
   <main id="contenido-principal">
-    <section class="favorites" aria-labelledby="trends-heading">
+    <section class="trends" aria-labelledby="trends-heading">
       <div class="container">
         <header class="section-header">
           <h1 id="trends-heading">Tendencias de moda</h1>
-          <p>Blusas fluidas, vestidos midi y pantalones de corte moderno: inspirate con las tendencias que marcan esta temporada.</p>
+          <p>Entrevistas, guías de estilo y lo último en moda. Inspirate con las tendencias que marcan esta temporada.</p>
         </header>
+      </div>
 
-        <div class="favorites__grid" role="list">
-          <article class="product-card" role="listitem" aria-labelledby="trend-1-name">
-            <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
-            <h2 id="trend-1-name"><a href="producto.html?id=blusa-lavanda">Blusa Lavanda</a></h2>
-            <p class="product-card__desc">Blusa de seda en tono lavanda, corte relajado ideal para el día a día.</p>
-            <div class="product-card__price-row">
-              <p class="product-card__price">$49.99</p>
-              <span class="product-card__original-price">$62.49</span>
-              <span class="product-card__discount">-20%</span>
-            </div>
-            <a href="producto.html?id=blusa-lavanda" class="btn btn--primary">Ver producto</a>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Lavanda a favoritos">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </button>
+      <div class="trends-newsletter">
+        <div class="container trends-newsletter__inner">
+          <p>Suscríbete a nuestra newsletter para recibir lo mejor de Purple Bloom en tu correo electrónico.</p>
+          <a href="iniciar-sesion.html" class="trends-newsletter__cta">Iniciar sesión</a>
+        </div>
+      </div>
+
+      <div class="container">
+        <h2 class="trends-section-title">Tendencias Otoño-Invierno 2026</h2>
+
+        <div class="trends-grid">
+          <article class="trend-card trend-card--feature">
+            <img class="trend-card__image" src="img/tendencias.jpg" alt="" width="1200" height="1500" loading="lazy">
+            <p class="trend-card__category">Moda</p>
+            <h3 class="trend-card__title">Moda Otoño-Invierno 2026: ¿Qué se llevará esta temporada?</h3>
+            <p class="trend-card__byline">Por Purple Bloom <span aria-hidden="true">·</span> <time datetime="2026-09-02">2 de septiembre de 2026</time></p>
           </article>
 
-          <article class="product-card" role="listitem" aria-labelledby="trend-2-name">
-            <img class="product-card__image" src="img/vestido-violeta.jpg" alt="Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura" width="800" height="533" loading="lazy">
-            <h2 id="trend-2-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h2>
-            <p class="product-card__desc">Vestido midi con detalle floral, perfecto para ocasiones especiales.</p>
-            <p class="product-card__price">$79.99</p>
-            <a href="producto.html?id=vestido-violeta" class="btn btn--primary">Ver producto</a>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Violeta a favoritos">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </button>
+          <article class="trend-card">
+            <img class="trend-card__image" src="img/blusa-lavanda.jpg" alt="" width="800" height="533" loading="lazy">
+            <p class="trend-card__category">Moda</p>
+            <h3 class="trend-card__title">Blusas en tendencia de Otoño-Invierno 2026: fluidas, de seda y más</h3>
+            <p class="trend-card__byline">Por Purple Bloom <span aria-hidden="true">·</span> <time datetime="2026-09-07">7 de septiembre de 2026</time></p>
           </article>
 
-          <article class="product-card" role="listitem" aria-labelledby="trend-3-name">
-            <img class="product-card__image" src="img/pantalon-berenjena.jpg" alt="Pantalón Berenjena: pantalón de corte recto en tono berenjena con pinzas" width="800" height="533" loading="lazy">
-            <h2 id="trend-3-name"><a href="producto.html?id=pantalon-berenjena">Pantalón Berenjena</a></h2>
-            <p class="product-card__desc">Pantalón de corte recto en tono berenjena, versátil y cómodo.</p>
-            <p class="product-card__price">$59.99</p>
-            <a href="producto.html?id=pantalon-berenjena" class="btn btn--primary">Ver producto</a>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Berenjena a favoritos">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </button>
+          <article class="trend-card">
+            <img class="trend-card__image" src="img/vestido-violeta.jpg" alt="" width="800" height="533" loading="lazy">
+            <p class="trend-card__category">Moda</p>
+            <h3 class="trend-card__title">Vestidos en tendencia de Otoño-Invierno 2026: midi, bordados y más</h3>
+            <p class="trend-card__byline">Por Purple Bloom <span aria-hidden="true">·</span> <time datetime="2026-09-09">9 de septiembre de 2026</time></p>
+          </article>
+
+          <article class="trend-card">
+            <img class="trend-card__image" src="img/pantalon-berenjena.jpg" alt="" width="800" height="533" loading="lazy">
+            <p class="trend-card__category">Moda</p>
+            <h3 class="trend-card__title">Pantalones en tendencia de Otoño-Invierno 2026: rectos, wide leg y más</h3>
+            <p class="trend-card__byline">Por Purple Bloom <span aria-hidden="true">·</span> <time datetime="2026-09-08">8 de septiembre de 2026</time></p>
+          </article>
+
+          <article class="trend-card">
+            <img class="trend-card__image" src="img/vestido-orquidea.jpg" alt="" width="800" height="533" loading="lazy">
+            <p class="trend-card__category">Moda</p>
+            <h3 class="trend-card__title">Colores de la temporada: lavanda, violeta y berenjena</h3>
+            <p class="trend-card__byline">Por Purple Bloom <span aria-hidden="true">·</span> <time datetime="2026-09-05">5 de septiembre de 2026</time></p>
           </article>
         </div>
 
-        <p class="content-note">Selección de ejemplo a partir del catálogo actual: no representa un ranking real de tendencias.</p>
+        <p class="content-note">Contenido de ejemplo: esta sección todavía no se conecta a un sistema real de noticias.</p>
+      </div>
+
+      <div class="container">
+        <div class="trends-inspo">
+          <div class="trends-inspo__header">
+            <h2 class="trends-section-title trends-section-title--tight">Inspiración de estilo</h2>
+            <div class="trends-inspo__arrows">
+              <button type="button" class="trends-inspo__arrow" data-action="inspo-prev" aria-label="Ver anterior">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="trends-inspo__arrow" data-action="inspo-next" aria-label="Ver siguiente">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <ul class="trends-inspo__track" id="trends-inspo-track">
+            <li><img src="img/vestido-turquesa.jpg" alt="Vestido turquesa de tiras con estampado floral" width="480" height="600" loading="lazy"></li>
+            <li><img src="img/blusa-menta.jpg" alt="Blusa cruzada verde menta con manga corta" width="480" height="600" loading="lazy"></li>
+            <li><img src="img/pantalon-verde-bosque.jpg" alt="Pantalón verde bosque de corte recto" width="480" height="600" loading="lazy"></li>
+            <li><img src="img/vestido-esmeralda.jpg" alt="Vestido midi verde esmeralda con bordado floral" width="480" height="600" loading="lazy"></li>
+            <li><img src="img/blusa-rosa-palo.jpg" alt="Blusa cruzada rosa palo con manga corta" width="480" height="600" loading="lazy"></li>
+            <li><img src="img/pantalon-azul-noche.jpg" alt="Pantalón azul marino de corte recto" width="480" height="600" loading="lazy"></li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
@@ -177,6 +211,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="privacidad.html">Política de privacidad</a></li>
           <li><a href="terminos.html">Términos y condiciones</a></li>
         </ul>
@@ -206,10 +241,11 @@
 
   <script src="js/analytics.js" defer></script>
   <script src="js/theme.js" defer></script>
+  <script src="js/session.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/header-scroll.js" defer></script>
   <script src="js/page-loader.js" defer></script>
   <script src="js/petal-burst.js" defer></script>
-  <script src="js/favorites.js" defer></script>
+  <script src="js/tendencias.js" defer></script>
 </body>
 </html>

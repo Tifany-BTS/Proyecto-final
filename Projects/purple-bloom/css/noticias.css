@@ -2,69 +2,221 @@
    Noticias — piel editorial/minimalista, aplicada solo a esta página.
    El header, el nav y el footer siguen el sistema del resto del sitio;
    estas reglas reescriben únicamente el contenido de <main> (.news).
-   Paleta y radios propios (no los tokens de variable.css) porque son
-   deliberadamente distintos al resto del sitio para esta página.
-   Banner de foto a todo lo ancho (.news-hero) con las 3 tarjetas de
-   noticias (.news-shelf) superpuestas sobre su borde inferior, inspirado
-   en la referencia tipo "Sommer-Sale" que compartió el usuario.
+   Colores: la paleta berenjena + dorado del resto del sitio (ver
+   .noticias-page abajo); los radios siguen siendo propios de esta página.
+   Banner de foto a todo lo ancho (.news-hero) con las secciones de
+   noticias (.news-sections) superpuestas sobre su borde inferior — grilla
+   "Noticias" + "Los más vistos" arriba y dos bandas a todo el ancho
+   (Colecciones de temporada / Lanzamientos) debajo, según el wireframe
+   que compartió el usuario.
    ========================================================================== */
 
+/* Paleta berenjena de la bienvenida de index.html en toda la página, de
+   arriba a abajo (antes era una piel editorial gris/blanca propia). Apunta
+   a los tokens --aubergine-* / --gold de variable.css, que ya traen su
+   versión de modo oscuro, así que no hace falta redefinir nada por tema. */
 .noticias-page {
-  --news-canvas: #fbfbfa;
-  --news-surface: #ffffff;
-  --news-border: #eaeaea;
-  --news-text: #2f3437;
-  --news-text-muted: #787774;
-  --news-accent-bg: #f3ecfb;
-  --news-accent-text: #6b3fa0;
-  --news-shadow: 0 20px 48px rgb(47 52 55 / 0.16);
+  --news-canvas: var(--aubergine-bg);
+  --news-surface: var(--aubergine-surface);
+  --news-border: var(--aubergine-border);
+  --news-text: var(--aubergine-text);
+  --news-text-muted: var(--aubergine-text-muted);
+  --news-accent-bg: var(--aubergine-accent);
+  --news-accent-text: var(--gold-soft);
+  --news-shadow: var(--aubergine-shadow-lg);
   --news-hero-title-size: clamp(2.25rem, 6vw, 4rem);
   background: var(--news-canvas);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .noticias-page {
-    --news-canvas: #17151a;
-    --news-surface: #1e1b22;
-    --news-border: #33303a;
-    --news-text: #edeae6;
-    --news-text-muted: #a39f9a;
-    --news-accent-bg: #2a2130;
-    --news-accent-text: #c9a8ed;
+.noticias-page .news {
+  padding-bottom: calc(var(--space-4) * 1.5);
+  /* Degradado vertical suave para que la sección no sea un bloque plano. */
+  background: linear-gradient(180deg, var(--aubergine-surface) 0%, var(--aubergine-bg) 60%);
+}
+
+/* --- Ticker de titulares ---
+   Marquesina estilo "bolsa de valores"/rótulo de pasarela en la parte
+   superior de la sección, antes incluso del hero: franja angosta con
+   titulares cortos que se desplazan de derecha a izquierda en loop
+   continuo. Usa los tokens *fijos* de variable.css (--color-primary-dark,
+   --color-on-primary, --overlay-on-dark-*), no los --news-* de esta
+   página, por el mismo motivo que el footer/hero: es una franja de marca
+   permanentemente oscura que nunca invierte con el tema (ver el comentario
+   de esos tokens en variable.css).
+   Loop sin cortes: la lista de titulares está duplicada en el DOM (la
+   segunda copia lleva aria-hidden) y la pista anima de 0% a -50% — al
+   llegar a -50% la segunda copia ocupa exactamente el lugar de la primera,
+   así que el salto de vuelta a 0% es invisible.
+   Contenido en movimiento automático y continuo (>5s): WCAG 2.2.2 exige
+   una forma de pausarlo, de ahí el botón (aria-pressed + iconos que
+   alternan por atributo, mismo patrón que .theme-toggle). */
+.news-ticker {
+  display: flex;
+  align-items: stretch;
+  /* Mismo degradado berenjena que la bienvenida de index.html (.intro). */
+  background: var(--intro-bg);
+  color: var(--color-on-primary);
+}
+
+.news-ticker__toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  padding: 0;
+  border: none;
+  border-right: 1px solid var(--overlay-on-dark-20);
+  background: var(--overlay-on-dark-20);
+  color: inherit;
+  cursor: pointer;
+  transition: background 160ms var(--ease-out);
+}
+
+.news-ticker__toggle:hover,
+.news-ticker__toggle:focus-visible {
+  background: var(--overlay-on-dark-35);
+}
+
+.news-ticker__icon {
+  grid-area: 1 / 1;
+  transition: opacity 160ms var(--ease-out);
+}
+
+.news-ticker__toggle[aria-pressed="false"] .news-ticker__icon--pause {
+  opacity: 0;
+}
+
+.news-ticker__toggle[aria-pressed="true"] .news-ticker__icon--play {
+  opacity: 0;
+}
+
+.news-ticker__viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.news-ticker__track {
+  display: flex;
+  width: max-content;
+  animation: news-ticker-scroll 34s linear infinite;
+}
+
+/* El botón pausa/reanuda vía esta clase; hover/foco sobre la franja
+   también pausa para quien usa mouse, sin depender solo del botón — pero
+   si el botón ya la pausó, sacar el mouse la deja pausada igual, porque
+   esta regla no es la única que aplica animation-play-state (ver más abajo
+   el orden: --paused gana siempre que está presente). */
+.news-ticker:hover .news-ticker__track,
+.news-ticker:focus-within .news-ticker__track {
+  animation-play-state: paused;
+}
+
+.news-ticker__track--paused {
+  animation-play-state: paused;
+}
+
+@keyframes news-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
-:root[data-theme="dark"] .noticias-page {
-  --news-canvas: #17151a;
-  --news-surface: #1e1b22;
-  --news-border: #33303a;
-  --news-text: #edeae6;
-  --news-text-muted: #a39f9a;
-  --news-accent-bg: #2a2130;
-  --news-accent-text: #c9a8ed;
+.news-ticker__list {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0 var(--space-1);
+  list-style: none;
 }
 
-.noticias-page .news {
-  padding-bottom: calc(var(--space-4) * 1.5);
+.news-ticker__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
+}
+
+.news-ticker__list li span {
+  color: var(--gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-ticker__track {
+    animation: none;
+  }
+
+  .news-ticker__toggle {
+    display: none;
+  }
+
+  .news-ticker__list[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 /* --- News hero banner ---
-   Full-bleed photo banner with the page title, echoing the homepage hero
-   (same --hero-overlay token for photo/text contrast). The card shelf below
-   overlaps its bottom edge — see .news-shelf's negative margin-top. */
+   Full-bleed banner with the page title, echoing the homepage hero (same
+   --hero-overlay token for contrast). The sections below overlap its
+   bottom edge — see .news-sections' negative margin-top.
+   The photo (hero-novedades) stays as the element's own background: it's
+   what shows through as poster before the video below has a frame ready,
+   and it's the only thing shown when prefers-reduced-motion asks to skip
+   the video. --hero-overlay moves to a ::after layer instead of living in
+   this background, because it now needs to sit *above* the video element
+   (a sibling), not baked into a background it would otherwise hide. */
 .news-hero__media {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   min-height: clamp(18rem, 42vw, 26rem);
   padding-block: var(--space-3) var(--space-4);
-  background: var(--hero-overlay), url("../img/hero-novedades-sm.jpg") center / cover no-repeat;
+  background: url("../img/hero-novedades-sm.jpg") center / cover no-repeat;
   color: var(--color-on-primary);
 }
 
 @media (min-width: 768px) {
   .news-hero__media {
-    background: var(--hero-overlay), url("../img/hero-novedades.jpg") center / cover no-repeat;
+    background: url("../img/hero-novedades.jpg") center / cover no-repeat;
   }
+}
+
+.news-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--news-hero-overlay);
+  pointer-events: none;
+}
+
+.news-hero__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-hero__video {
+    display: none;
+  }
+}
+
+.news-hero__media > .container {
+  position: relative;
+  z-index: 2;
 }
 
 .news-hero__title {
@@ -83,23 +235,201 @@
   opacity: 0.92;
 }
 
-/* --- News shelf: the 3 cards overlapping the hero photo --- */
-.news-shelf {
+/* --- News sections: below the hero. Wireframe from the user: a big
+   "Noticias" box + a smaller "Los más vistos" sidebar on top, then two
+   full-width bands ("Colecciones de temporada", "Lanzamientos"). Mobile-first
+   stack in that same reading order; the 2-column layout with side-by-side
+   main/aside only kicks in from 1024px. --- */
+.news-sections {
   position: relative;
   z-index: 1;
   display: grid;
-  margin-top: calc(var(--space-4) * -1);
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.news-main,
+.news-aside {
+  background: var(--news-surface);
+  border-radius: 12px;
+  box-shadow: var(--news-shadow);
+  padding: var(--space-1-25);
+}
+
+.news-sections__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--news-text);
+}
+
+/* --- "Inicia sesión" CTA: adaptado de una referencia de newsletter de
+   Vogue que compartió el usuario (barra vertical + titular grande +
+   campo/botón en una sola fila + letra chica), pero para invitar a
+   iniciar sesión en vez de suscribirse. El submit es real: manda el correo
+   como querystring a iniciar-sesion.html, que lo precarga (ver
+   ts/login-form.ts) en vez de perder lo que la persona ya escribió.
+   Vive justo debajo del hero y toma el mismo tratamiento de tarjeta
+   flotante que antes tenía .news-sections (margen negativo para superponerse
+   al video, fondo propio, sombra) — .news-sections quedó con margen
+   positivo normal porque ahora es a esta tarjeta a la que sigue, no al hero. */
+.news-signin {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin: calc(var(--space-4) * -1) 0 0;
+  padding: var(--space-1-5);
+  /* Panel de la bienvenida de index.html: degradado berenjena, título
+     blanco, acento dorado y botón translúcido como "Explora el catálogo". */
+  background: var(--intro-bg);
+  border-radius: 12px;
+  box-shadow: var(--aubergine-shadow-lg);
+  color: var(--color-on-primary);
+}
+
+.news-signin__heading-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1-25);
+}
+
+.news-signin__bar {
+  flex-shrink: 0;
+  width: 4px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.news-signin__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--color-on-primary);
+}
+
+.news-signin__lead {
+  margin: 0 0 var(--space-1-25);
+  max-width: 34rem;
+  color: var(--overlay-on-dark-70);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.5;
+}
+
+/* Botón único, sin formulario de correo ni letra chica — versión reducida
+   a título + bajada de una línea + botón, pedida por el usuario a partir
+   de una referencia con esa misma estructura mínima. Mismo tratamiento
+   visual que tenía antes el botón del formulario (relleno sólido en
+   --news-text, texto en mayúsculas), ahora como link independiente. */
+.news-signin__cta {
+  display: inline-block;
+  padding: var(--space-0-75) var(--space-2);
+  border: 2px solid var(--color-on-primary);
+  border-radius: var(--radius);
+  background: var(--overlay-on-dark-20);
+  color: var(--color-on-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: background var(--transition);
+}
+
+.news-signin__cta:hover,
+.news-signin__cta:focus-visible {
+  background: var(--overlay-on-dark-35);
+}
+
+/* --- Full-width promo bands (Colecciones de temporada / Lanzamientos) --- */
+.news-band {
+  display: flex;
+  flex-direction: column;
   background: var(--news-surface);
   border-radius: 12px;
   box-shadow: var(--news-shadow);
   overflow: hidden;
 }
 
+.news-band__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.news-band__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-0-75);
+  padding: var(--space-1-5);
+}
+
+.news-band__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  color: var(--news-text);
+}
+
+@media (min-width: 768px) {
+  .news-band {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .news-band__image {
+    width: 40%;
+    aspect-ratio: auto;
+  }
+
+  .news-band__body {
+    justify-content: center;
+    width: 60%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .news-sections {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "main aside"
+      "banda1 banda1"
+      "banda2 banda2";
+    /* Sin esto, grid estira .news-aside (align-items:stretch es el default)
+       a la misma altura que .news-main en su fila — que hoy es bastante más
+       alta por la noticia destacada — dejando un bloque blanco vacío debajo
+       de las 4 tarjetas de "Lo más visto". Cada columna toma solo el alto
+       que necesita su propio contenido. */
+    align-items: start;
+  }
+
+  .news-main {
+    grid-area: main;
+  }
+
+  .news-aside {
+    grid-area: aside;
+  }
+
+  .news-band:nth-of-type(1) {
+    grid-area: banda1;
+  }
+
+  .news-band:nth-of-type(2) {
+    grid-area: banda2;
+  }
+}
+
 .noticias-page .news-post {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-1-25);
+  padding: 0 0 var(--space-1-25);
+  margin-bottom: var(--space-1-25);
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--news-border);
@@ -110,6 +440,8 @@
 }
 
 .noticias-page .news-post:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
   border-bottom: none;
 }
 
@@ -149,6 +481,80 @@
   color: var(--news-text);
 }
 
+.noticias-page .news-post__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.noticias-page .news-post__title a:hover {
+  color: var(--news-accent-text);
+}
+
+/* --- "Lo más visto" (sidebar): same news-post building block, just always
+   row layout (thumbnail + text side by side) with a smaller thumbnail and
+   no excerpt — the format the user's reference image shows, regardless of
+   viewport width (unlike the main list, which stacks the photo on top on
+   the narrowest phones). --- */
+.noticias-page .news-post--compact {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-0-75);
+}
+
+.noticias-page .news-post--compact .news-post__image {
+  width: 4.5rem;
+  aspect-ratio: 1 / 1;
+}
+
+.noticias-page .news-post--compact .news-post__title {
+  margin-bottom: var(--space-0-25);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.3;
+}
+
+/* --- Cierre de "Lo más visto": ya no depende de igualar la altura de
+   .news-main (ver align-items: start en el grid), así que esto es
+   contenido real, no relleno para tapar un hueco. --- */
+.news-aside__promo {
+  margin-top: var(--space-1-25);
+  padding-top: var(--space-1-25);
+  border-top: 1px solid var(--news-border);
+}
+
+.news-aside__promo-title {
+  margin: 0 0 var(--space-0-5);
+  font-family: var(--font-display);
+  font-size: var(--font-size-md);
+  color: var(--news-text);
+}
+
+.news-aside__promo-text {
+  margin: 0 0 var(--space-1);
+  color: var(--news-text-muted);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.5;
+}
+
+/* --- Primera noticia destacada: imagen grande a todo el ancho de la
+   tarjeta (no el thumbnail en fila del resto de la lista), para que se
+   aprecie la foto completa. El selector encadena las dos clases
+   (.news-post.news-post--featured) para tener más especificidad que la
+   regla de @media (min-width: 480px) de arriba y así ganarle sin
+   importar el orden en el archivo. */
+.noticias-page .news-post.news-post--featured {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.noticias-page .news-post.news-post--featured .news-post__image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.noticias-page .news-post--featured .news-post__title {
+  font-size: var(--font-size-heading);
+}
+
 .noticias-page .news-post__excerpt {
   margin: 0 0 var(--space-0-5);
   color: var(--news-text-muted);
@@ -175,9 +581,10 @@
   }
 }
 
-/* Stacked (photo on top) on phones and in the narrow 3-up columns of
-   tablets; side-by-side thumbnail + text where there's room: one wide
-   column at 480-767px and the roomier 3-up columns from 1024px. */
+/* Stacked (photo on top) on phones; side-by-side thumbnail + text from
+   480px up. .news-main is a single-column list now (not the old 3-up
+   shelf grid), so unlike that layout this never needs to flip back to a
+   stacked card at wider breakpoints. */
 @media (min-width: 480px) {
   .noticias-page .news-post {
     flex-direction: row;
@@ -190,39 +597,189 @@
   }
 }
 
-@media (min-width: 768px) {
-  .news-shelf {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .noticias-page .news-post {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .noticias-page .news-post__image {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-  }
-
-  .noticias-page .news-post {
-    border-bottom: none;
-    border-right: 1px solid var(--news-border);
-  }
-
-  .noticias-page .news-post:last-child {
-    border-right: none;
-  }
+/* --- "Diseña con nosotras": encuesta de diseño, dentro del aside ---
+   Vive dentro de .news-aside, después de .news-aside__promo, y comparte su
+   misma tarjeta (fondo/radio/sombra de .news-aside) en vez de tener una
+   propia — antes era una segunda tarjeta apilada debajo, lo que se leía
+   como "2 tarjetas" en vez de una. Se separa del promo de arriba con la
+   misma línea divisoria que .news-aside__promo ya usa contra "Lo más
+   visto" (margin-top + border-top), no con un fondo/sombra distintos.
+   El resto del lenguaje visual sigue reusando lo que esta página ya tiene:
+   --news-accent-text para el eyebrow/barra vertical (mismo patrón que
+   .news-signin__heading-row/.news-signin__bar), y el botón sólido copia el
+   tratamiento de .news-signin__cta (texto en mayúsculas sobre --news-text,
+   no un degradado). Todo con tokens --news-*, así que sigue
+   el tema claro/oscuro de la página como el resto de sus tarjetas.
+   El voto es simulado (sin backend): al enviar, ts/design-poll.ts solo
+   valida que haya una opción elegida y muestra un mensaje de agradecimiento
+   reusando .form-feedback (ver styles.css) — mismo patrón que
+   contact-form.ts/login-form.ts. Esa clase ya es theme-aware por su cuenta,
+   así que no hace falta recolorearla acá. */
+.design-poll {
+  margin-top: var(--space-1-25);
+  padding-top: var(--space-1-25);
+  border-top: 1px solid var(--news-border);
 }
 
-@media (min-width: 1024px) {
-  .noticias-page .news-post {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .noticias-page .news-post__image {
-    width: 6rem;
-    aspect-ratio: 1 / 1;
-  }
+.design-poll__heading-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1-25);
 }
+
+.design-poll__bar {
+  flex-shrink: 0;
+  width: 4px;
+  background: var(--news-accent-text);
+  border-radius: 2px;
+}
+
+.design-poll__eyebrow {
+  margin: 0 0 var(--space-0-25);
+  color: var(--news-accent-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.design-poll__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  line-height: 1.15;
+  color: var(--news-text);
+  text-wrap: balance;
+}
+
+.design-poll__lead {
+  margin: 0 0 var(--space-1-25);
+  color: var(--news-text-muted);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.5;
+}
+
+.design-poll__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-625);
+  margin: 0 0 var(--space-1-25);
+  padding: 0;
+  border: none;
+}
+
+.design-poll__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-75);
+  padding: var(--space-0-75) var(--space-0-875);
+  border: 1px solid var(--news-border);
+  border-radius: 8px;
+  background: var(--news-canvas);
+  color: var(--news-text);
+  cursor: pointer;
+  transition: border-color 160ms var(--ease-out), background 160ms var(--ease-out);
+}
+
+.design-poll__option:hover {
+  border-color: var(--news-accent-text);
+}
+
+.design-poll__option:has(input:checked) {
+  border-color: var(--news-accent-text);
+  background: var(--news-surface);
+}
+
+/* El radio real queda accesible por teclado/lector de pantalla (misma
+   técnica de recorte que .hero__radio, no opacity:0, para no perder el
+   anillo de foco) — el círculo visible es el span de al lado, pintado
+   por los estados del input via selectores de hermano. */
+.design-poll__option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.design-poll__option-dot {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1.5px solid var(--news-border);
+  border-radius: 50%;
+  transition: border-color 160ms var(--ease-out);
+}
+
+.design-poll__option-dot::after {
+  content: "";
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: 50%;
+  background: var(--news-accent-text);
+  transform: scale(0);
+  transition: transform 160ms var(--ease-out);
+}
+
+.design-poll__option input:checked ~ .design-poll__option-dot {
+  border-color: var(--news-accent-text);
+}
+
+.design-poll__option input:checked ~ .design-poll__option-dot::after {
+  transform: scale(1);
+}
+
+.design-poll__option input:focus-visible ~ .design-poll__option-dot {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.design-poll__option-text {
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.4;
+}
+
+/* Mismo tratamiento que .news-signin__cta: relleno sólido en --news-text
+   (no un degradado), texto en mayúsculas — la firma tipográfica que esta
+   página ya usa para su botón principal. */
+.design-poll__submit {
+  display: block;
+  width: 100%;
+  padding: var(--space-0-75) var(--space-1);
+  border: none;
+  border-radius: 8px;
+  background: var(--news-text);
+  color: var(--news-canvas);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.design-poll__submit:hover {
+  opacity: 0.85;
+}
+
+.design-poll__submit:active {
+  transform: scale(0.97);
+}
+
+.design-poll__submit:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* .news-studio ("Así diseñamos") se movió a styles.css: ahora también
+   aparece en index.html, que no carga esta hoja. */

@@ -117,10 +117,25 @@ a:hover {
 
 /* --- Header --- */
 .site-header {
+  /* Permanently dark aubergine header (same family as .intro): the generic
+     tokens are remapped here so every descendant rule — logo, nav links,
+     toggles, search, mobile drawer — picks up the dark palette unchanged. */
+  --color-surface: var(--header-surface);
+  --color-bg: var(--header-hover);
+  --color-border: var(--header-border);
+  --color-accent: var(--header-hover);
+  --color-text: var(--header-text);
+  --color-text-muted: var(--header-text-muted);
+  --color-heading: var(--color-on-primary);
+  --color-primary: var(--header-accent);
+  --color-primary-dark: var(--header-accent-hover);
+  --color-on-primary-brand: var(--header-bg);
+  --color-focus: var(--header-focus);
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--color-surface);
+  background: var(--header-bg);
+  color: var(--color-text);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow);
 }
@@ -182,6 +197,150 @@ a:hover {
     transform: translate(calc(-50% + var(--petal-x, 0px)), calc(-50% + var(--petal-y, 0px))) scale(1) rotate(var(--petal-rot, 0deg));
     opacity: 0;
   }
+}
+
+/* --- Aubergine surface ---
+   Opt-in permanently dark plum palette (homepage sections below .intro):
+   remaps the generic tokens so every rule inside — cards, buttons, form
+   fields, validation — follows along without per-component overrides. */
+.surface-aubergine {
+  --color-bg: var(--aubergine-bg);
+  --color-surface: var(--aubergine-surface);
+  --color-accent: var(--aubergine-accent);
+  --color-border: var(--aubergine-border);
+  --color-text: var(--aubergine-text);
+  --color-text-muted: var(--aubergine-text-muted);
+  --color-heading: var(--aubergine-heading);
+  --color-primary: var(--header-accent);
+  --color-on-primary-brand: var(--aubergine-bg);
+  --color-focus: var(--header-focus);
+  --color-danger: var(--aubergine-danger);
+  --color-success: var(--aubergine-success);
+  --color-secondary: var(--aubergine-secondary);
+  --color-secondary-dark: var(--aubergine-secondary-dark);
+  --shadow: var(--aubergine-shadow);
+  --shadow-lg: var(--aubergine-shadow-lg);
+  color-scheme: dark;
+  color: var(--color-text);
+}
+
+/* Studio variant: the "Así diseñamos" panel's gradient, for other sections
+   that should look like it (e.g. "Mis favoritos" in mi-cuenta.html). */
+.surface-aubergine--studio {
+  /* Form fields/chips use --color-surface; the base plum surface is the
+     same tone as the gradient's end, so fields would melt into it. */
+  --color-surface: var(--aubergine-bg);
+  background: var(--aubergine-studio-bg);
+}
+
+.surface-aubergine--studio > .container > h1,
+.surface-aubergine--studio > .container > h2 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  color: var(--color-on-primary);
+}
+
+.surface-aubergine--studio > .container > h1::after,
+.surface-aubergine--studio > .container > h2::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-top: var(--space-0-75);
+  background: var(--gold);
+}
+
+/* Gold rule under section titles on plum surfaces — a small second-color
+   detail so headings don't read as purple-on-purple. */
+.surface-aubergine .section-header h2::after,
+.surface-ivory .section-header h2::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-top: var(--space-0-75);
+  background: var(--gold);
+}
+
+.surface-aubergine .favorites__dot--active {
+  background: var(--gold);
+}
+
+/* --- Ivory surface ---
+   Opt-in warm light palette, same token-remap approach as
+   .surface-aubergine but fixed light in both themes. */
+.surface-ivory {
+  --color-bg: var(--ivory-bg);
+  --color-surface: var(--ivory-surface);
+  --color-accent: var(--ivory-accent);
+  --color-border: var(--ivory-border);
+  --color-text: var(--ivory-text);
+  --color-text-muted: var(--ivory-text-muted);
+  --color-heading: var(--ivory-heading);
+  --color-primary: var(--ivory-primary);
+  --color-on-primary-brand: var(--ivory-on-primary);
+  --color-focus: var(--ivory-focus);
+  --color-danger: var(--ivory-danger);
+  --color-success: var(--ivory-success);
+  --color-secondary: var(--ivory-secondary);
+  --color-secondary-dark: var(--ivory-secondary-dark);
+  --shadow: var(--ivory-shadow);
+  --shadow-lg: var(--ivory-shadow-lg);
+  color-scheme: var(--ivory-scheme);
+  color: var(--color-text);
+}
+
+/* --- Sky variant (with .surface-ivory) ---
+   Steel-blue band + dusty-blue cards, from the blue shirt/columns of the
+   "Novedades" photo, so the homepage isn't purple top to bottom. Used by
+   .favorites and .contact-section on index.html. Doubled class so it beats
+   section rules like .favorites/.contact-section declared later. */
+.surface-ivory.surface-sky {
+  --color-bg: var(--sky-surface);
+  /* Controls drawn on the cards (size chips, form fields) use
+     --color-surface, so it must follow the sky palette in both themes too. */
+  --color-surface: var(--sky-field);
+  --color-border: var(--sky-border);
+  --color-accent: var(--sky-accent);
+  background: var(--sky-band-bg);
+  border-block: 1px solid var(--sky-band-edge);
+}
+
+/* A section header sitting straight on the steel-blue band (not inside a
+   light card, like the contact form's) needs light text to stay readable. */
+.surface-sky > .container > .section-header h2,
+.surface-sky .catalog__header h1 {
+  color: var(--color-on-primary);
+}
+
+.surface-sky > .container > .section-header p,
+.surface-sky .catalog__header p,
+.surface-sky .catalog__empty {
+  color: var(--sky-band-text-muted);
+}
+
+/* Catalog filter panel matches the product cards' dusty blue. */
+.surface-sky .catalog__sidebar {
+  background: var(--sky-surface);
+}
+
+.surface-sky .favorites__dot--active {
+  background: var(--color-on-primary);
+}
+
+/* Solid purple buttons on the sky sections: dark purple hover in light
+   mode, light lilac in dark mode, so their label always stays readable. */
+.surface-ivory .btn--primary:hover,
+.surface-ivory .btn--small:hover {
+  background: var(--ivory-primary-hover);
+}
+
+/* --color-primary-dark stays the fixed brand purple (it backs white icons,
+   e.g. .favorites__arrow), so solid lilac buttons here hover to a lighter
+   lilac instead, keeping their dark label readable. */
+.surface-aubergine .btn--primary:hover,
+.surface-aubergine .btn--small:hover {
+  background: var(--header-accent-hover);
 }
 
 /* --- Page loader ---
@@ -487,6 +646,46 @@ body.nav-open {
   color: var(--color-heading);
 }
 
+/* Signed-in state (see ts/session.ts): the button becomes a round avatar.
+   !important on display/padding/border-radius for the same reason as
+   .site-nav__login above: on catalogo.html this class lands on a link
+   inside .site-nav__list, and ".site-nav__list a" (one class + one type
+   selector) is more specific than a single class selector like this one,
+   so without it those three properties would lose to that base rule and
+   the avatar would render as a padded rounded square instead of a circle. */
+.site-header__login--avatar {
+  display: inline-grid !important;
+  place-items: center;
+  padding: 0 !important;
+  border: none;
+  border-radius: 50% !important;
+  background: var(--color-primary);
+  color: var(--color-on-primary-brand) !important;
+}
+
+.site-header__login--avatar:hover,
+.site-header__login--avatar:focus-visible {
+  background: var(--color-primary-dark) !important;
+  color: var(--color-on-primary-brand) !important;
+}
+
+.site-header__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+/* Profile photo (set in Mi cuenta, see session.ts) in place of the initial. */
+.site-header__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .site-header__login[aria-current="page"] {
   color: var(--color-primary);
   font-weight: var(--font-weight-bold);
@@ -561,18 +760,23 @@ body.nav-open {
 
 .hero__slide {
   flex: 0 0 100%;
-  min-height: clamp(16rem, 40vw, 22rem);
+  min-height: clamp(20rem, 46vw, 30rem);
   display: grid;
   place-items: center;
   padding: var(--space-3) var(--space-1-5);
 }
 
 /* Phones get the -sm crops (subject-centered, full vertical resolution, about
-   half the bytes); tablets and up switch to the full panoramas. */
+   half the bytes); tablets and up switch to the full panoramas.
+   Slide 1 is a full-length group shot (portrait-ish relative to how wide
+   this banner is). contain kept the whole photo but left empty bars on the
+   sides; back to cover (full-bleed, no gaps) with position "top" instead of
+   "center" so the crop eats into the floor/shoes at the bottom — which
+   matters far less — instead of cutting off the models' faces. */
 .hero__carousel:has(#hero-slide-1:checked) {
   background:
     var(--hero-overlay),
-    url("../img/hero-novedades-sm.jpg") center / cover no-repeat;
+    url("../img/hero-coleccion-pasarela-sm.jpg") top / cover no-repeat;
 }
 
 .hero__carousel:has(#hero-slide-2:checked) {
@@ -584,14 +788,14 @@ body.nav-open {
 .hero__carousel:has(#hero-slide-3:checked) {
   background:
     var(--hero-overlay),
-    url("../img/ofertas-sm.jpg") center / cover no-repeat;
+    url("../img/hero-ofertas-especiales-sm.jpg") center / cover no-repeat;
 }
 
 @media (min-width: 768px) {
   .hero__carousel:has(#hero-slide-1:checked) {
     background:
       var(--hero-overlay),
-      url("../img/hero-novedades.jpg") center / cover no-repeat;
+      url("../img/hero-coleccion-pasarela.jpg") top / cover no-repeat;
   }
 
   .hero__carousel:has(#hero-slide-2:checked) {
@@ -603,7 +807,7 @@ body.nav-open {
   .hero__carousel:has(#hero-slide-3:checked) {
     background:
       var(--hero-overlay),
-      url("../img/ofertas.jpg") center / cover no-repeat;
+      url("../img/hero-ofertas-especiales.jpg") center / cover no-repeat;
   }
 }
 
@@ -616,29 +820,49 @@ body.nav-open {
   margin: 0 0 var(--space-1);
   font-family: var(--font-display);
   font-size: var(--font-size-hero-title);
-  animation: hero-title-in 1.5s ease-out forwards,
-             hero-text-glow 4s ease-in-out 1.5s infinite;
-}
-
-.hero__content h2 a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.hero__content h2 a:hover,
-.hero__content h2 a:focus-visible {
-  text-decoration: underline;
+  animation: hero-title-in 700ms ease-out forwards;
 }
 
 .hero__content p {
   margin: 0;
   font-size: var(--font-size-hero-body);
-  animation: hero-subtitle-in 800ms ease-out 700ms forwards,
-             hero-text-glow 4s ease-in-out 1.5s infinite;
+  animation: hero-subtitle-in 600ms ease-out 250ms both;
+}
+
+/* CTA del hero: variante de .btn--outline para verse bien sobre la foto en
+   vez del borde/texto --color-primary pensado para superficies claras —
+   currentColor/--color-on-primary siguen el mismo blanco fijo que ya usa
+   todo el texto del hero. Aparece después del título/bajada (mismo timing
+   escalonado que ya tienen esos dos). Lleva relleno translúcido ya en
+   reposo (no solo en :hover) para que un botón de borde blanco se note
+   como botón sobre una foto, en vez de perderse como solo texto hasta que
+   alguien lo toca — mismo recurso que .intro__cta-btn más abajo.
+   !important en las tres propiedades: .hero__cta y .btn--outline son dos
+   clases sueltas (misma especificidad), y .btn--outline se define más
+   abajo en este archivo — sin !important sus border-color/background/color
+   ganaban por orden de cascada y el botón quedaba igual a cualquier
+   .btn--outline normal (borde y texto --color-primary, fondo transparente),
+   invisible sobre la foto. */
+.hero__cta {
+  margin-top: var(--space-1-5);
+  border-color: var(--color-on-primary) !important;
+  background: var(--overlay-on-dark-20) !important;
+  color: var(--color-on-primary) !important;
+  animation: hero-subtitle-in 600ms ease-out 400ms both;
+}
+
+.hero__cta:hover,
+.hero__cta:focus-visible {
+  background: var(--overlay-on-dark-35) !important;
+  color: var(--color-on-primary) !important;
 }
 
 /* Title: soft blur-to-clear fade-in. Background/photo are untouched —
-   only the text animates. */
+   only the text animates. Kept short (title 700ms, subtitle and CTA
+   staggered after it): this is the page's main message, so it must be
+   readable within a second. There used to be an infinite text-shadow
+   "glow" loop after this; removed because it repainted the hero text on
+   every frame, on all three slides, without conveying anything. */
 @keyframes hero-title-in {
   from {
     opacity: 0;
@@ -663,25 +887,16 @@ body.nav-open {
   }
 }
 
-/* Once the entrance finishes, a barely-there ambient glow loops on the
-   text so it doesn't sit fully static without competing for attention. */
-@keyframes hero-text-glow {
-  0%, 100% {
-    text-shadow: 0 0 0 rgb(255 255 255 / 0);
-  }
-  50% {
-    text-shadow: 0 0 10px rgb(255 255 255 / 0.3);
-  }
-}
-
 #hero-slide-1:checked ~ .hero__slides { transform: translateX(0); }
 #hero-slide-2:checked ~ .hero__slides { transform: translateX(-100%); }
 #hero-slide-3:checked ~ .hero__slides { transform: translateX(-200%); }
 
+/* Dots are small visually but each gets a 28px hit area (see ::after);
+   the gap keeps neighbouring hit areas from overlapping (WCAG 2.2 target size). */
 .hero__controls {
   display: flex;
   justify-content: center;
-  gap: var(--space-0-5);
+  gap: var(--space-1);
   padding-bottom: var(--space-1-5);
 }
 
@@ -698,7 +913,7 @@ body.nav-open {
 .hero__dot::after {
   content: "";
   position: absolute;
-  inset: -0.625rem;
+  inset: calc(var(--space-0-5) * -1);
 }
 
 .hero__dot:hover,
@@ -725,121 +940,173 @@ body.nav-open {
   display: none;
 }
 
-/* --- Intro & Mission --- */
-.intro,
-.benefits {
+/* --- Intro: declaración de marca, no un "quiénes somos" clásico ---
+   Panel oscuro fijo (no sigue el tema claro/oscuro, igual que .news-ticker
+   y el hero — es un panel de marca, no una superficie de contenido) a dos
+   columnas: título grande + cita a la izquierda, párrafo + grilla de 4
+   funciones numeradas a la derecha. Reemplaza el video + trío de tarjetas
+   que tenía antes esta sección — inspirada en una referencia que compartió
+   el usuario (eyebrow con barra, titular grande, funciones numeradas). */
+.intro {
   padding: var(--space-4) 0;
+  background: var(--intro-bg);
+  color: var(--color-on-primary);
 }
 
 .intro__layout {
   display: grid;
-  gap: var(--space-2);
-  align-items: center;
+  gap: var(--space-3);
 }
 
 .intro__eyebrow {
-  margin: 0 0 var(--space-0-5);
-  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-75);
+  margin: 0 0 var(--space-1);
+  color: var(--gold);
   font-size: var(--font-size-sm-alt);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+}
+
+.intro__eyebrow-bar {
+  width: 1.5rem;
+  height: 2px;
+  background: var(--gold);
 }
 
 .intro h2 {
-  margin: 0 0 var(--space-1-5);
-  max-width: 26rem;
+  margin: 0 0 var(--space-1-25);
+  max-width: 22rem;
   font-family: var(--font-display);
   font-size: var(--font-size-heading-lg);
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.02em;
-  color: var(--color-heading);
+  color: var(--color-on-primary);
 }
 
 .intro__highlight {
-  text-decoration: underline;
-  text-decoration-color: var(--color-primary);
-  text-decoration-thickness: 3px;
-  text-underline-offset: 6px;
+  color: var(--color-primary-light);
 }
 
-.intro p {
-  margin: 0;
-  max-width: 48rem;
-  color: var(--color-text-muted);
+.intro__lead {
+  margin: 0 0 var(--space-1-5);
+  max-width: 26rem;
+  color: var(--overlay-on-dark-70);
   font-size: var(--font-size-base-loose);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
-.intro__media {
-  position: relative;
-  justify-self: center;
-  width: 100%;
-  max-width: min(20rem, 80%);
+.intro__tagline {
+  margin: 0 0 var(--space-1-5);
+  color: var(--overlay-on-dark-70);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
-.intro__video {
-  display: block;
-  width: 100%;
-  aspect-ratio: 9 / 16;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+.intro__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-0-75) var(--space-1-25);
 }
 
-.intro__video-toggle {
-  position: absolute;
-  right: var(--space-1);
-  bottom: var(--space-1);
+.btn--arrow {
+  gap: var(--space-0-5);
+  padding: var(--space-0-75) var(--space-1-5);
+  font-size: var(--font-size-base-loose);
+}
+
+.btn__arrow {
+  flex-shrink: 0;
+  transition: transform 200ms var(--ease-out);
+}
+
+.btn--arrow:hover .btn__arrow,
+.btn--arrow:focus-visible .btn__arrow {
+  transform: translateX(0.25rem);
+}
+
+/* Mismo problema/solución que .hero__cta: .btn--outline se define más
+   abajo en este archivo con el mismo peso de selector (una sola clase), así
+   que sin !important su border-color/background/color (pensados para
+   superficies claras) ganarían por orden de cascada sobre el blanco que
+   necesita este botón para leerse en el panel oscuro. */
+.intro__cta-btn {
+  border-color: var(--color-on-primary) !important;
+  background: var(--overlay-on-dark-20) !important;
+  color: var(--color-on-primary) !important;
+}
+
+.intro__cta-btn:hover,
+.intro__cta-btn:focus-visible {
+  background: var(--overlay-on-dark-35) !important;
+  color: var(--color-on-primary) !important;
+}
+
+.intro__features-lead {
+  margin: 0 0 var(--space-1-5);
+  max-width: 30rem;
+  color: var(--overlay-on-dark-70);
+  font-size: var(--font-size-base-tight);
+  line-height: 1.6;
+}
+
+.intro__feature-grid {
   display: grid;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  gap: var(--space-1-25);
+  margin: 0;
   padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: var(--overlay-on-dark-20);
+  list-style: none;
+}
+
+.intro__feature {
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--gold-faint);
+}
+
+.intro__feature-number {
+  margin: 0 0 var(--space-0-25);
+  color: var(--gold);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+}
+
+.intro__feature-title {
+  margin: 0 0 var(--space-0-25);
+  font-family: var(--font-display);
+  font-size: var(--font-size-md);
   color: var(--color-on-primary);
-  cursor: pointer;
-  transition: background var(--transition);
 }
 
-.intro__video-toggle:hover,
-.intro__video-toggle:focus-visible {
-  background: var(--overlay-on-dark-35);
+.intro__feature-desc {
+  margin: 0;
+  color: var(--overlay-on-dark-70);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.5;
 }
 
-.intro__video-icon {
-  grid-area: 1 / 1;
-  transition: opacity 200ms var(--ease-out);
-}
-
-.intro__video-toggle[aria-pressed="false"] .intro__video-icon--pause {
-  opacity: 0;
-}
-
-.intro__video-toggle[aria-pressed="true"] .intro__video-icon--play {
-  opacity: 0;
+@media (min-width: 640px) {
+  .intro__feature-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-1-25) var(--space-2);
+  }
 }
 
 @media (min-width: 1024px) {
   .intro__layout {
-    grid-template-columns: minmax(0, 1fr) 20rem;
-  }
-
-  .intro__media {
-    justify-self: end;
-    max-width: none;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
-/* Misión/Visión/Objetivo now lives inside "Quiénes somos" as a compact
-   trio of cards, so .mission__* is sized for that from the start — the
-   same classes are reused by .benefits below for its own three cards. */
-.intro__essence {
-  margin-top: var(--space-3);
-}
-
+/* .mission__* no longer lives in index.html's intro (now the two-column
+   brand statement above) — it's only .benefits' trio of account-perks
+   cards on iniciar-sesion.html now, sized for that from the start. */
 .benefits {
   padding: var(--space-3) 0;
   background: var(--color-surface);
@@ -953,6 +1220,136 @@ body.nav-open {
   }
 }
 
+/* --- "Así diseñamos": quiénes diseñan y cómo ---
+   Panel oscuro fijo (no sigue el tema claro/oscuro de la página, igual
+   criterio que .news-ticker y el intro de index.html) a tres columnas en
+   desktop: marca + foto, texto del proceso, equipo con iniciales/rol/
+   descripción — inspirada en una referencia que compartió el usuario.
+   Mismo degradado que .intro en styles.css, para que las dos páginas
+   compartan una misma identidad de "panel editorial oscuro". */
+.news-studio {
+  padding: var(--space-4) 0;
+  background: var(--aubergine-studio-bg);
+  color: var(--color-on-primary);
+}
+
+.news-studio__layout {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.news-studio__title {
+  margin: 0 0 var(--space-1-25);
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  line-height: 1.1;
+  color: var(--color-on-primary);
+}
+
+.news-studio__title-accent {
+  color: var(--color-primary-light);
+}
+
+/* height: auto es necesario acá: el <img> trae width/height="900"/"1200"
+   como atributos HTML (para reservar espacio antes de cargar), y sin un
+   height explícito en CSS el navegador usa ese "1200" como alto fijo en
+   vez de calcularlo con aspect-ratio — la foto quedaba gigante, muy por
+   encima del resto de la columna, sin importar cuánto midiera en ancho. */
+.news-studio__photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.news-studio__subhead {
+  margin: 0 0 var(--space-1-25);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: var(--gold-soft);
+}
+
+.news-studio__process p {
+  margin: 0 0 var(--space-1);
+  color: var(--overlay-on-dark-70);
+  font-size: var(--font-size-base-tight);
+  line-height: 1.7;
+}
+
+.news-studio__process p:last-child {
+  margin-bottom: 0;
+}
+
+.news-studio__team {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.news-studio__member {
+  display: flex;
+  gap: var(--space-0-875);
+}
+
+/* Iniciales en vez de foto: no hay fotos reales del equipo todavía, y unas
+   "fotos de equipo diverso" genéricas de stock serían peor que ser
+   honestas — mismo criterio que el avatar circular del header
+   (.site-header__avatar) ya usa en todo el sitio. */
+.news-studio__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--overlay-on-dark-20);
+  border: 1px solid var(--gold-faint);
+  color: var(--color-on-primary);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm-alt);
+}
+
+.news-studio__member-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-base-loose);
+  color: var(--color-on-primary);
+}
+
+.news-studio__member-role {
+  margin: var(--space-0-25) 0 var(--space-0-375);
+  color: var(--gold-soft);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.news-studio__member-role::before {
+  content: "— ";
+}
+
+.news-studio__member-desc {
+  margin: 0;
+  color: var(--overlay-on-dark-70);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.5;
+}
+
+@media (min-width: 1024px) {
+  .news-studio__layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
 /* --- Product cards --- */
 .favorites,
 .catalog {
@@ -967,6 +1364,18 @@ body.nav-open {
 .catalog__grid {
   display: grid;
   gap: var(--space-1-5);
+}
+
+/* While GSAP Flip animates a filter change (search.ts), the cards' own
+   transform transition would smooth every frame Flip writes and lag behind.
+   position: relative makes the grid the cards' offsetParent, so Flip's
+   absolute positioning is measured from the grid (otherwise cards jump). */
+.catalog__grid--flipping {
+  position: relative;
+}
+
+.catalog__grid--flipping .product-card {
+  transition: none;
 }
 
 /* --- Favorites carousel ---
@@ -1026,14 +1435,62 @@ body.nav-open {
   right: var(--space-0-5);
 }
 
-.favorites__dots {
+.favorites__controls {
   display: flex;
   justify-content: center;
-  gap: var(--space-0-5);
+  align-items: center;
+  gap: var(--space-1-5);
   margin-top: var(--space-1-5);
 }
 
+.favorites__pause {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background: var(--color-primary-dark);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: background var(--transition), transform 160ms var(--ease-out);
+}
+
+.favorites__pause:hover {
+  background: var(--color-primary);
+}
+
+.favorites__pause:active {
+  transform: scale(0.92);
+}
+
+.favorites__pause[hidden] {
+  display: none;
+}
+
+.favorites__pause-icon--play,
+.favorites__pause[data-paused="true"] .favorites__pause-icon--pause {
+  display: none;
+}
+
+.favorites__pause[data-paused="true"] .favorites__pause-icon--play {
+  display: block;
+}
+
+/* Same hit-area approach as .hero__dot: 10px dot, 26px target, gap sized
+   so neighbouring targets don't overlap. */
+.favorites__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
 .favorites__dot {
+  position: relative;
   width: 0.625rem;
   height: 0.625rem;
   padding: 0;
@@ -1042,6 +1499,12 @@ body.nav-open {
   background: var(--color-border);
   cursor: pointer;
   transition: background var(--transition), transform var(--transition);
+}
+
+.favorites__dot::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-0-5) * -1);
 }
 
 .favorites__dot:hover {
@@ -1073,14 +1536,20 @@ body.nav-open {
   transition: box-shadow var(--transition), transform var(--transition);
 }
 
+/* Dorado (--color-secondary-fill), no morado: el badge "Oferta" es una
+   señal de promoción, no de marca — se lee mejor distinto del resto de
+   los acentos morados de la tarjeta (precio, rating, botón), en vez de
+   sumar un morado más encima de otro. Usa el "fill" fijo y brillante, no
+   --color-secondary (el oscuro, pensado para texto): con texto encima ese
+   tono se ve marrón apagado en vez de dorado. */
 .product-card__badge {
   position: absolute;
   top: var(--space-0-75);
   left: var(--space-0-75);
   z-index: 1;
   padding: var(--space-0-375) var(--space-0-875);
-  background: var(--color-primary);
-  color: var(--color-on-primary-brand);
+  background: var(--color-secondary-fill);
+  color: var(--color-on-secondary);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
@@ -1110,6 +1579,17 @@ body.nav-open {
 
 .product-card__favorite:active {
   transform: scale(0.9);
+}
+
+/* Estado real de favorito (favorites.ts), no solo :hover: el corazón queda
+   relleno y en --color-danger de forma permanente mientras el producto siga
+   guardado, en vez de perder el color apenas se aleja el mouse. */
+.product-card__favorite--active {
+  color: var(--color-danger);
+}
+
+.product-card__favorite--active svg {
+  fill: currentColor;
 }
 
 .product-card:hover {
@@ -1248,7 +1728,7 @@ body.nav-open {
 }
 
 .product-card__discount {
-  color: var(--color-primary);
+  color: var(--color-secondary);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm-alt);
 }
@@ -1285,6 +1765,25 @@ body.nav-open {
   background: var(--color-primary-dark);
 }
 
+.btn--outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn--outline:hover {
+  background: var(--color-accent);
+  color: var(--color-heading);
+}
+
+.btn[hidden] {
+  display: none;
+}
+
+.btn[disabled] {
+  cursor: progress;
+}
+
 .btn--small {
   padding: var(--space-0-625) var(--space-0-875);
   font-size: var(--font-size-sm-alt);
@@ -1301,6 +1800,11 @@ body.nav-open {
 .catalog__layout {
   display: grid;
   gap: var(--space-2);
+}
+
+/* The layout's grid gap already spaces it from the categories and products. */
+.catalog__header {
+  margin-bottom: 0;
 }
 
 .catalog__sidebar {
@@ -1492,9 +1996,24 @@ body.nav-open {
 .register-form,
 .recover-form,
 .checkout-form,
-.form-contacto {
+.form-contacto,
+.account-data-form {
   display: flex;
   flex-direction: column;
+}
+
+.account-data-form {
+  max-width: 28rem;
+}
+
+.account-data-form .btn {
+  align-self: flex-start;
+}
+
+.account-data-form__hint {
+  margin: var(--space-0-375) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
 }
 
 /* --- Contact section --- */
@@ -1514,6 +2033,12 @@ body.nav-open {
 .contact-section__card {
   padding: var(--space-2);
   background: var(--color-surface);
+}
+
+/* Homepage (sky band): the form card switches to the photo's dusty blue;
+   fields use --sky-field (set on .surface-sky) so they read as inputs. */
+.surface-sky .contact-section__card {
+  background: var(--sky-surface);
 }
 
 .contact-section__card .section-header p {
@@ -1586,8 +2111,9 @@ body.nav-open {
 /* --- Footer --- */
 .site-footer {
   padding: var(--space-3) 0;
-  background: var(--color-primary-dark);
+  background: var(--aubergine-surface);
   color: var(--color-on-primary);
+  border-top: 1px solid var(--header-border);
 }
 
 .site-footer a {
@@ -1996,6 +2522,50 @@ body.nav-open {
   height: fit-content;
 }
 
+.cart-summary__discount {
+  margin: 0 0 var(--space-0-5);
+  color: var(--color-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Dorado en el borde (no morado): es la misma señal de "ahorro/beneficio"
+   que .product-card__badge y .cart-summary__discount, para que las tres
+   se lean como una misma categoría en vez de una más de acento morado. */
+.points-redeem {
+  margin-bottom: var(--space-1);
+  padding: var(--space-0-875) var(--space-1);
+  background: var(--color-accent);
+  border: 1px dashed var(--color-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.points-redeem__info {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm-alt);
+  line-height: 1.5;
+}
+
+.points-redeem__option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-625);
+  margin-top: var(--space-0-75);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.points-redeem__option[hidden] {
+  display: none;
+}
+
+.points-redeem__option input {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--color-primary);
+}
+
 .cart-summary__total {
   margin: 0 0 var(--space-1-5);
   font-size: var(--font-size-lg);
@@ -2201,6 +2771,16 @@ body.nav-open {
   transform: scale(0.98);
 }
 
+/* Mismo criterio que .product-card__favorite--active: relleno permanente
+   mientras el producto siga en favoritos, no solo en :hover. */
+.product-detail__wishlist--active {
+  color: var(--color-danger);
+}
+
+.product-detail__wishlist--active svg {
+  fill: currentColor;
+}
+
 .product-detail__price-row {
   display: flex;
   align-items: baseline;
@@ -2219,8 +2799,8 @@ body.nav-open {
 
 .product-detail__discount {
   padding: var(--space-0-25) var(--space-0-625);
-  background: var(--color-primary);
-  color: var(--color-on-primary-brand);
+  background: var(--color-secondary-fill);
+  color: var(--color-on-secondary);
   border-radius: 9999px;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -2762,6 +3342,327 @@ body:has(.product-detail__actions) .site-footer {
   color: var(--color-text-muted);
 }
 
+.account-intro__logout {
+  margin-top: var(--space-1);
+}
+
+/* --- Profile photo ("Editar perfil" style) ---
+   Big circle with the photo (or the initial) and a small gold pencil badge
+   on its bottom-right edge. The badge is a button that opens the file
+   picker (no photo yet) or the crop editor below (photo set); the file
+   input itself stays clipped and out of the tab order. Driven by
+   account-avatar.ts. */
+/* TikTok-style profile header: photo on the left, name/@handle/stats on
+   its right. Wraps under the photo only on very narrow screens. */
+.account-profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-1-25);
+  margin-bottom: var(--space-1);
+}
+
+.account-profile[hidden] {
+  display: none;
+}
+
+.account-profile__info {
+  min-width: 0;
+}
+
+.account-profile__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: var(--color-on-primary);
+  overflow-wrap: anywhere;
+}
+
+.account-profile__handle {
+  margin: var(--space-0-25) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm-alt);
+  overflow-wrap: anywhere;
+}
+
+.account-profile__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0-5) var(--space-1-25);
+  margin: var(--space-0-75) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-profile__stats li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-0-375);
+}
+
+.account-profile__stats strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-primary);
+}
+
+.account-profile__stats span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.account-avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 6rem;
+  height: 6rem;
+}
+
+.account-avatar__circle {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary-brand);
+  box-shadow: var(--shadow-lg);
+}
+
+.account-avatar__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The global img { display: block } would otherwise beat [hidden]. */
+.account-avatar__photo[hidden] {
+  display: none;
+}
+
+.account-avatar__initial {
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.account-avatar__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.account-avatar__edit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 2px solid var(--color-bg);
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--color-on-secondary);
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background var(--transition);
+}
+
+.account-avatar__edit:hover {
+  background: var(--gold-soft);
+  transform: scale(1.08);
+}
+
+.account-avatar__edit:active {
+  transform: scale(0.95);
+}
+
+.account-avatar__edit:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* --- Profile photo editor ---
+   Native <dialog>: a square canvas preview (account-avatar.ts draws the
+   photo with the current pan/zoom/rotation/filters into it) under a mask
+   that dims everything outside the circle, so what's inside the circle is
+   exactly what gets saved. Lives inside the plum band, so it inherits that
+   palette. */
+.avatar-editor {
+  width: min(100% - 2rem, 26rem);
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-lg);
+}
+
+.avatar-editor::backdrop {
+  background: var(--overlay-scrim);
+  backdrop-filter: blur(4px);
+}
+
+.avatar-editor__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-1-5);
+}
+
+.avatar-editor__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-lg);
+  color: var(--color-heading);
+}
+
+.avatar-editor__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--color-bg);
+}
+
+.avatar-editor__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.avatar-editor__canvas:active {
+  cursor: grabbing;
+}
+
+.avatar-editor__canvas:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: -3px;
+}
+
+/* Huge spread shadow = dim everything outside the circle; the stage's
+   overflow: hidden trims it to the square. */
+.avatar-editor__mask {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 100vmax var(--overlay-scrim);
+  pointer-events: none;
+}
+
+.avatar-editor__hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.avatar-editor__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.avatar-editor__filters[hidden] {
+  display: none;
+}
+
+.avatar-editor__control {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  align-items: center;
+  gap: var(--space-0-75);
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+}
+
+.avatar-editor__control input[type="range"] {
+  width: 100%;
+  accent-color: var(--gold);
+}
+
+.avatar-editor__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0-5);
+}
+
+.avatar-editor__tool {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-375);
+  padding: var(--space-0-375) var(--space-0-875);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-sm-alt);
+  cursor: pointer;
+  transition: border-color var(--transition), transform 160ms var(--ease-out);
+}
+
+.avatar-editor__tool:hover {
+  border-color: var(--gold);
+}
+
+.avatar-editor__tool:active {
+  transform: scale(0.96);
+}
+
+.avatar-editor__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-0-75);
+  padding-top: var(--space-0-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.account-avatar__remove {
+  display: block;
+  margin: 0 0 var(--space-1);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--font-size-sm-alt);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.account-avatar__remove[hidden] {
+  display: none;
+}
+
+.account-avatar__feedback {
+  margin: 0 0 var(--space-1);
+}
+
+/* Full-width plum band around the "Mi cuenta" intro (the intro itself is a
+   .container, so it can't paint edge to edge). */
+.account-intro-band {
+  padding-bottom: var(--space-3);
+}
+
 .account-section {
   padding: var(--space-4) 0;
   border-bottom: 1px solid var(--color-border);
@@ -2773,6 +3674,12 @@ body:has(.product-detail__actions) .site-footer {
 
 .account-section:last-of-type {
   border-bottom: none;
+}
+
+/* "Mis pedidos" is the first section but no longer sits right under the
+   plain intro text: it follows the plum band, so it needs full padding. */
+.account-intro-band + .account-section {
+  padding-top: var(--space-4);
 }
 
 .account-section h2 {
@@ -2815,6 +3722,12 @@ body:has(.product-detail__actions) .site-footer {
   font-size: var(--font-size-sm-alt);
 }
 
+.account-order__items {
+  margin: var(--space-0-25) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
 .account-order__status {
   margin: 0;
   font-weight: var(--font-weight-semibold);
@@ -2833,31 +3746,6 @@ body:has(.product-detail__actions) .site-footer {
   margin: 0;
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
-}
-
-.account-data {
-  margin: 0;
-}
-
-.account-data__row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-1);
-  padding: var(--space-0-75) 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.account-data__row:last-child {
-  border-bottom: none;
-}
-
-.account-data__row dt {
-  color: var(--color-text-muted);
-}
-
-.account-data__row dd {
-  margin: 0;
-  font-weight: var(--font-weight-semibold);
 }
 
 @media (min-width: 640px) {
@@ -3067,6 +3955,396 @@ body:has(.product-detail__actions) .site-footer {
   40%,
   80% {
     transform: translateX(4px);
+  }
+}
+
+/* --- Product reviews (producto.html, product-reviews.ts) ---
+   Plum band like Mi cuenta (same profile photos show up here). Summary +
+   form on one side, the list of reviews on the other from 1024px. Stars
+   use the gold accent with the same background-clip fill trick as
+   .product-card__rating-stars, so 4,5 shows four and a half stars. */
+.product-reviews {
+  margin-top: var(--space-2);
+  padding: var(--space-4) 0;
+}
+
+.product-reviews[hidden] {
+  display: none;
+}
+
+.product-reviews__layout {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.product-reviews__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  min-width: 0;
+}
+
+.product-reviews__empty,
+.product-reviews__guest {
+  margin: 0;
+  padding: var(--space-1-25);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-muted);
+}
+
+.product-reviews__summary {
+  display: grid;
+  gap: var(--space-1-25);
+  padding: var(--space-1-25);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.product-reviews__score {
+  text-align: center;
+}
+
+.product-reviews__average {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: var(--color-heading);
+}
+
+.product-reviews__stars,
+.review__stars {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--gold) var(--rating-fill, 100%),
+    var(--gold-faint) var(--rating-fill, 100%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.08em;
+}
+
+.product-reviews__stars {
+  margin-top: var(--space-0-375);
+  font-size: var(--font-size-lg);
+}
+
+.product-reviews__count {
+  margin: var(--space-0-25) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm-alt);
+}
+
+.product-reviews__fit-title {
+  margin: 0 0 var(--space-0-5);
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+}
+
+.product-reviews__fit-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-375);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-reviews__fit-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr 2.5rem;
+  align-items: center;
+  gap: var(--space-0-5);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.product-reviews__fit-bar {
+  height: 0.375rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+
+.product-reviews__fit-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gold);
+}
+
+.product-reviews__fit-value {
+  text-align: right;
+}
+
+.product-reviews__guest a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Review form */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-25);
+  padding: var(--space-1-25);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.review-form__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-75);
+}
+
+.review-form__group {
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0;
+}
+
+.review-form__legend {
+  margin-bottom: var(--space-0-5);
+  padding: 0;
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+}
+
+.review-form__stars {
+  display: inline-flex;
+  gap: var(--space-0-25);
+  vertical-align: middle;
+}
+
+.review-form__star {
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--gold-faint);
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), color 120ms var(--ease-out);
+}
+
+.review-form__star svg {
+  fill: currentColor;
+}
+
+.review-form__star--filled {
+  color: var(--gold);
+}
+
+.review-form__star:hover {
+  transform: scale(1.12);
+}
+
+.review-form__star:active {
+  transform: scale(0.92);
+}
+
+.review-form__star-input,
+.review-form__fit-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.review-form__star-input:focus-visible + svg {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+.review-form__star-label {
+  margin-left: var(--space-0-5);
+  color: var(--gold-soft);
+  font-size: var(--font-size-sm-alt);
+  font-weight: var(--font-weight-semibold);
+  vertical-align: middle;
+}
+
+.review-form__fits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0-5);
+}
+
+.review-form__fit {
+  position: relative;
+  cursor: pointer;
+}
+
+.review-form__fit-chip {
+  display: inline-block;
+  padding: var(--space-0-375) var(--space-0-875);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  font-size: var(--font-size-sm-alt);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+}
+
+.review-form__fit:hover .review-form__fit-chip {
+  border-color: var(--color-primary);
+}
+
+.review-form__fit-input:checked + .review-form__fit-chip {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary-brand);
+}
+
+.review-form__fit-input:focus-visible + .review-form__fit-chip {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.review-form .form-group {
+  position: relative;
+}
+
+.review-form__count {
+  display: block;
+  margin-top: var(--space-0-25);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: right;
+}
+
+.review-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0-75);
+}
+
+.review-form .form-feedback {
+  margin-top: 0;
+}
+
+/* Review list */
+.product-reviews__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.review {
+  display: flex;
+  gap: var(--space-0-875);
+  padding: var(--space-1-25);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.review--mine {
+  border-color: var(--gold-faint);
+}
+
+.review__avatar {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--gold-faint);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review__avatar--initial {
+  display: grid;
+  place-items: center;
+  background: var(--color-primary);
+  color: var(--color-on-primary-brand);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+}
+
+.review__body {
+  min-width: 0;
+}
+
+.review__name {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-heading);
+  overflow-wrap: anywhere;
+}
+
+.review__badge {
+  display: inline-block;
+  margin-left: var(--space-0-375);
+  padding: 0 var(--space-0-5);
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--color-on-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.review__handle {
+  margin: var(--space-0-25) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.review__rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-0-5);
+  margin: var(--space-0-5) 0 0;
+}
+
+.review__fit {
+  padding: 0 var(--space-0-5);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.review__text {
+  margin: var(--space-0-5) 0 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+@media (min-width: 640px) {
+  .product-reviews__summary {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+
+  .product-reviews__score {
+    padding-right: var(--space-1-25);
+    border-right: 1px solid var(--color-border);
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-reviews__layout {
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+    align-items: start;
   }
 }
 
@@ -3338,6 +4616,7 @@ body:has(.product-detail__actions) .rating-prompt {
   .site-nav__list {
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-0-25) var(--space-1);
   }
 
@@ -3398,14 +4677,22 @@ body:has(.product-detail__actions) .rating-prompt {
     display: grid;
   }
 
-  /* Categories sit on the right; the sidebar is last in the markup so it
-     stays below the products on phones. */
+  /* Markup order is heading → categories → products, so on phones the
+     filters sit above the grid instead of after every product. From here
+     the categories move to a right-hand column spanning both rows. */
   .catalog__layout {
     grid-template-columns: minmax(0, 1fr) 12rem;
     gap: var(--space-1-5);
   }
 
+  .catalog__header,
+  .catalog__main {
+    grid-column: 1;
+  }
+
   .catalog__sidebar {
+    grid-column: 2;
+    grid-row: 1 / span 2;
     position: sticky;
     top: calc(var(--header-h) + var(--space-1));
   }
@@ -3433,5 +4720,198 @@ body:has(.product-detail__actions) .rating-prompt {
   .catalog__grid {
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-1-25);
+  }
+}
+
+/* ==========================================================================
+   Asistente de combinación de colores (asistente-colores.html)
+   ========================================================================== */
+/* A diferencia del resto de las secciones de página completa del sitio
+   (.catalog, .cart-page, .login-section, etc.), a esta le faltaba el
+   padding-block propio — el footer quedaba pegado justo debajo del
+   dropzone, sin aire, y se veía como una franja cortada de golpe. */
+.color-assistant-page {
+  padding: var(--space-4) 0;
+}
+
+.color-assistant {
+  display: grid;
+  gap: var(--space-1-5);
+}
+
+.color-assistant__uploader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0-75);
+  margin-bottom: var(--space-1);
+}
+
+.prenda-dropzone {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 20rem;
+  padding: var(--space-1);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  text-align: center;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.prenda-dropzone--activa {
+  border-color: var(--color-primary);
+  background: var(--color-accent);
+}
+
+.prenda-dropzone__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-0-75);
+  color: var(--color-text-muted);
+  max-width: 22rem;
+}
+
+.prenda-dropzone__placeholder svg {
+  color: var(--color-primary);
+}
+
+#prenda-canvas,
+#prenda-video {
+  display: block;
+  width: 100%;
+  max-height: 32rem;
+  height: auto;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  object-fit: contain;
+  cursor: crosshair;
+}
+
+.prenda-instrucciones {
+  margin: var(--space-0-75) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm-alt);
+  text-align: center;
+}
+
+.color-resultado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1-25);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.color-resultado__swatch {
+  flex-shrink: 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+}
+
+.color-resultado__texto h3 {
+  margin: 0 0 var(--space-0-25);
+  font-family: var(--font-display);
+  color: var(--color-heading);
+}
+
+.color-resultado__texto p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm-alt);
+}
+
+.guia-combinaciones-wrap {
+  overflow-x: auto;
+}
+
+.guia-combinaciones {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-1);
+  font-size: var(--font-size-sm-alt);
+}
+
+.guia-combinaciones caption {
+  text-align: left;
+  margin-bottom: var(--space-0-5);
+  color: var(--color-text-muted);
+}
+
+.guia-combinaciones th,
+.guia-combinaciones td {
+  padding: var(--space-0-625) var(--space-0-75);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.guia-combinaciones__muestra {
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  white-space: nowrap;
+}
+
+.guia-combinaciones__chip {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+}
+
+.guia-combinaciones__veredicto {
+  white-space: nowrap;
+  font-weight: var(--font-weight-semibold);
+}
+
+.guia-combinaciones__icono {
+  display: inline-block;
+  margin-right: var(--space-0-25);
+}
+
+.guia-combinaciones__fila--bien .guia-combinaciones__veredicto {
+  color: var(--color-success);
+}
+
+.guia-combinaciones__fila--precaucion .guia-combinaciones__veredicto {
+  color: var(--semantic-warning);
+}
+
+.guia-combinaciones__fila--evitar .guia-combinaciones__veredicto {
+  color: var(--color-danger);
+}
+
+.color-safe-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0-75);
+  list-style: none;
+  margin: var(--space-1) 0 0;
+  padding: 0;
+}
+
+.color-safe-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  padding: var(--space-0-375) var(--space-0-75);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  font-size: var(--font-size-sm-alt);
+}
+
+@media (min-width: 1024px) {
+  .color-assistant {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
   }
 }

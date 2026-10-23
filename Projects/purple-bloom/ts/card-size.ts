@@ -1,6 +1,9 @@
 (function (): void {
   const SIZES = ["S", "M", "L", "XL"];
   const ERROR_MESSAGE = "Elige una talla para añadir al carrito.";
+  // Also matches the favorites carousel's inert loop clones (created by
+  // favorites-carousel.ts before DOMContentLoaded, buttons included), so they
+  // get a picker too and keep the same height/look as the real cards.
   const CARD_BUTTONS = '.product-card [data-action="add-to-cart"], .product-card [data-related-add]';
 
   let counter = 0;

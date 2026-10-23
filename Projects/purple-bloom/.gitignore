@@ -1,2 +1,6 @@
 node_modules/
 dist/
+# agent-harness-kit
+.harness/harness.db
+.harness/harness.db-shm
+.harness/harness.db-wal

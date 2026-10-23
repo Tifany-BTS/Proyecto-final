@@ -6,6 +6,15 @@
         return;
     const formEl = form;
     const feedbackEl = feedback;
+    // Si se llegó desde una tarjeta de "inicia sesión" externa (ej. la de
+    // noticias.html) que ya pidió el correo, se precarga aquí en vez de
+    // hacer que la persona lo vuelva a escribir.
+    const emailFromQuery = new URLSearchParams(window.location.search).get("email");
+    if (emailFromQuery) {
+        const emailField = formEl.querySelector("#email-login");
+        if (emailField)
+            emailField.value = emailFromQuery;
+    }
     const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const PASSWORD_MIN_LENGTH = 6;
     const rules = [
@@ -78,6 +87,15 @@
                 validateField(rule);
         });
     });
+    // Back/forward cache can restore the page mid-"login": undo the busy state.
+    window.addEventListener("pageshow", (event) => {
+        if (!event.persisted)
+            return;
+        formEl.removeAttribute("aria-busy");
+        const btn = formEl.querySelector("button[type='submit']");
+        if (btn)
+            btn.disabled = false;
+    });
     formEl.addEventListener("submit", (event) => {
         event.preventDefault();
         let isValid = true;
@@ -95,14 +113,29 @@
             firstInvalidField?.focus();
             return;
         }
-        showFeedback("Credenciales válidas. Te llevamos a tu cuenta. (Simulación: no hay autenticación real.)", false);
-        formEl.reset();
+        const email = getField("email-login")?.value ?? "";
         const submitBtn = formEl.querySelector("button[type='submit']");
-        if (submitBtn)
-            pbPetalBurst(submitBtn);
-        pbTrackBeforeNavigate("Inicio de sesión completado");
+        const idleLabel = submitBtn?.textContent ?? "Entrar";
+        // Simulated network round-trip so the button gives feedback while "signing in".
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Entrando…";
+        }
+        formEl.setAttribute("aria-busy", "true");
+        showFeedback("Verificando tus datos…", false);
         window.setTimeout(() => {
-            window.location.href = "mi-cuenta.html";
-        }, 1200);
+            const user = pbSessionLogin(email);
+            formEl.removeAttribute("aria-busy");
+            showFeedback(`¡Hola, ${user.name}! Sesión iniciada. Te llevamos a tu cuenta. (Simulación: no hay autenticación real.)`, false);
+            formEl.reset();
+            if (submitBtn) {
+                submitBtn.textContent = idleLabel;
+                pbPetalBurst(submitBtn);
+            }
+            pbTrackBeforeNavigate("Inicio de sesión completado");
+            window.setTimeout(() => {
+                window.location.href = "mi-cuenta.html";
+            }, 1200);
+        }, 700);
     });
 })();

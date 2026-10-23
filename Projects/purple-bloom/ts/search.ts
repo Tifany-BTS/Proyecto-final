@@ -1,3 +1,24 @@
+// GSAP + Flip llegan por <script> desde el CDN (solo en catalogo.html), así
+// que viven en window. Opcionales: si el CDN falla, el filtro sigue
+// funcionando, solo que sin animación.
+interface FlipTimeline {
+  isActive: () => boolean;
+  progress: (value: number) => unknown;
+  to: (target: Element, vars: object, position: number) => unknown;
+}
+
+interface Window {
+  gsap?: {
+    registerPlugin: (...plugins: unknown[]) => void;
+    fromTo: (targets: Element[], fromVars: object, toVars: object) => unknown;
+    to: (targets: Element[], vars: object) => unknown;
+  };
+  Flip?: {
+    getState: (targets: Element[]) => unknown;
+    from: (state: unknown, vars: object) => FlipTimeline;
+  };
+}
+
 (function (): void {
   const form = document.querySelector<HTMLFormElement>(".site-search");
   const input = document.querySelector<HTMLInputElement>("#buscar");
@@ -35,7 +56,23 @@
     });
   }
 
-  function runFilter(): void {
+  const { gsap, Flip } = window;
+  if (gsap && Flip) gsap.registerPlugin(Flip);
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let currentFlip: FlipTimeline | undefined;
+
+  // Flip: foto de dónde está cada tarjeta, se aplica el filtro, y Flip anima
+  // desde la posición vieja a la nueva. Las que quedan se deslizan a su
+  // lugar; las que salen se desvanecen (más rápido que las que entran, para
+  // que la grilla se sienta ágil).
+  function runFilter(animate = false): void {
+    const canFlip = animate && gsap && Flip && !reduceMotion.matches;
+    // Si todavía se está animando el filtro anterior (p. ej. al escribir
+    // rápido), se termina de golpe para medir desde un estado limpio.
+    if (currentFlip?.isActive()) currentFlip.progress(1);
+    const state = canFlip ? Flip.getState(cards) : null;
+    const startHeight = gridEl.offsetHeight;
+
     const query = inputEl.value.trim().toLowerCase();
     let visibleCount = 0;
 
@@ -48,6 +85,43 @@
       card.hidden = !matches;
       if (matches) visibleCount += 1;
     });
+
+    if (state && gsap && Flip) {
+      // Con absolute: true las tarjetas salen del flujo y la grilla quedaría
+      // con altura 0: el footer subiría por detrás de ellas. Se fija la
+      // altura vieja y se anima hacia la nueva, a la par de las tarjetas.
+      const endHeight = gridEl.offsetHeight;
+      gridEl.style.height = `${startHeight}px`;
+      // La transición CSS de transform de .product-card (hover) pelearía con
+      // los transforms que Flip escribe en cada frame.
+      gridEl.classList.add("catalog__grid--flipping");
+      const flip = Flip.from(state, {
+        duration: 0.45,
+        ease: "power2.inOut",
+        absolute: true,
+        // delay: las que entran esperan a que las que salen casi no se vean;
+        // si no, los textos de ambas se enciman en el mismo lugar.
+        onEnter: (els: Element[]) =>
+          gsap.fromTo(els, { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.35, delay: 0.1, ease: "power2.out" }),
+        onLeave: (els: Element[]) =>
+          gsap.to(els, { opacity: 0, scale: 0.92, duration: 0.25, ease: "power2.in" }),
+        // Al terminar, Flip borra sus estilos inline. Si la clase se quitara
+        // en ese mismo cuadro, la transición CSS animaría ese cambio y la
+        // tarjeta saltaría: se espera a que el navegador pinte primero. Si en
+        // ese lapso arrancó otro filtro, la clase es suya y no se toca.
+        onComplete: () => {
+          gridEl.style.height = "";
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+              if (currentFlip !== flip) return;
+              gridEl.classList.remove("catalog__grid--flipping");
+            })
+          );
+        },
+      });
+      flip.to(gridEl, { height: endHeight, duration: 0.45, ease: "power2.inOut" }, 0);
+      currentFlip = flip;
+    }
 
     if (empty) {
       const trimmed = inputEl.value.trim();
@@ -76,7 +150,7 @@
     runFilter();
   });
 
-  inputEl.addEventListener("input", runFilter);
+  inputEl.addEventListener("input", () => runFilter(true));
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -85,7 +159,7 @@
       activeCategory = category;
       setActiveButton(activeCategory);
       updateUrl(activeCategory);
-      runFilter();
+      runFilter(true);
     });
   });
 
@@ -93,7 +167,7 @@
   window.addEventListener("popstate", () => {
     activeCategory = getCategoryFromUrl();
     setActiveButton(activeCategory);
-    runFilter();
+    runFilter(true);
   });
 
   // Deep-link support: catalogo.html?categoria=Blusas loads pre-filtered.

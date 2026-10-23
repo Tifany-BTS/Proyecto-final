@@ -29,6 +29,29 @@
   --color-focus: #0066cc;
   --color-danger: #c62828;
   --color-success: #2e7d32;
+  /* Acento complementario (dorado/mostaza) — el morado sigue siendo el
+     color principal de marca (nav, botones, headings); este es el único
+     otro color con peso propio, reservado a promociones/ahorro (badge
+     "Oferta", descuentos, puntos canjeados) para que esas señales se lean
+     distinto del resto de la UI en vez de competir con el morado en todas
+     partes.
+     Dos tonos, no uno, porque el mismo dorado no sirve para los dos usos:
+     --color-secondary es para TEXTO sobre superficies claras (el -20%, el
+     ahorro del carrito) y necesita ser oscuro para tener contraste contra
+     blanco — por eso en modo claro es un dorado profundo, no uno brillante
+     (en modo oscuro se aclara, mismo criterio que --color-primary). Para
+     RELLENOS sólidos (el badge "Oferta") eso se ve apagado/marrón en vez
+     de dorado, así que esos usan --color-secondary-fill en su lugar: un
+     dorado brillante fijo, igual de fijo que --color-primary-dark de abajo,
+     porque siempre va con texto oscuro encima (--color-on-secondary) sin
+     importar el tema. */
+  --color-secondary: #8a6218;
+  --color-secondary-dark: #6e4d13;
+  --color-secondary-fill: #c9962f;
+  /* Fixed: un fondo dorado siempre necesita texto oscuro encima para
+     contraste, sin importar el tema del sitio — igual motivo que
+     --color-on-primary de abajo. */
+  --color-on-secondary: #2d1b3d;
   /* Fixed: white text/icons on top of brand-colored surfaces (buttons, hero,
      footer, cart FAB) read the same regardless of the site theme. */
   --color-on-primary: #fff;
@@ -103,6 +126,83 @@
      form's fabric photo so the white text at its bottom stays readable,
      regardless of the site theme. */
   --contact-decor-scrim: linear-gradient(to top, rgb(20 16 26 / 0.7), rgb(20 16 26 / 0) 65%);
+  /* Fixed: deep aubergine panel under the hero (.intro), sampled from the
+     plum/violet tones of the "Novedades" runway photo so both read as one
+     block. Text on it is always white, so it never inverts with the theme. */
+  --intro-bg: linear-gradient(160deg, #45195e 0%, #2e0f42 55%, #1c0829 100%);
+  /* Fixed: plum-tinted scrim over the noticias.html hero video, so it
+     blends with the plum panels around it while white text stays readable. */
+  --news-hero-overlay: linear-gradient(160deg, rgb(69 25 94 / 0.55), rgb(28 8 41 / 0.35));
+  /* Fixed: header palette, same aubergine family as --intro-bg. Remapped
+     onto the generic color tokens inside .site-header (styles.css), so the
+     logo, nav, toggles, search and mobile drawer all follow along. */
+  --header-bg: #170622;
+  --header-surface: #26092f;
+  --header-border: rgb(255 255 255 / 0.16);
+  --header-hover: rgb(255 255 255 / 0.1);
+  --header-text: rgb(255 255 255 / 0.88);
+  --header-text-muted: rgb(255 255 255 / 0.65);
+  --header-accent: #c9a6f2;
+  --header-accent-hover: #e0cbf8;
+  --header-focus: #7ab8ff;
+  /* Fixed: dark aubergine palette for the homepage sections below .intro
+     (opt-in via .surface-aubergine in styles.css), same family as
+     --intro-bg/--header-bg so the whole page reads as one continuous
+     plum surface, in both themes. */
+  --aubergine-bg: #1c0829;
+  --aubergine-surface: #2e0f42;
+  --aubergine-accent: #45195e;
+  --aubergine-border: #522a6b;
+  --aubergine-text: #f3eaf8;
+  --aubergine-text-muted: #c4b0d4;
+  --aubergine-heading: #f0e2fb;
+  --aubergine-danger: #ff8a80;
+  --aubergine-success: #81c995;
+  --aubergine-secondary: #d9a840;
+  --aubergine-secondary-dark: #b8862e;
+  --aubergine-shadow: 0 2px 12px rgb(0 0 0 / 0.3);
+  --aubergine-shadow-lg: 0 8px 32px rgb(0 0 0 / 0.4);
+  /* Studio panel gradient (.news-studio, "Mis favoritos"). Built from the
+     tokens above on :root, so it follows their dark-mode values too. */
+  --aubergine-studio-bg: linear-gradient(160deg, var(--aubergine-accent) 0%, var(--aubergine-surface) 100%);
+  /* Fixed: warm gold accent for the dark plum panels, taken from the
+     mustard jacket in the "Novedades" photo. Breaks up the all-purple look
+     on small details (eyebrows, numbers, roles, rules) without competing
+     with purple as the main brand color. */
+  --gold: #d9a840;
+  --gold-soft: #ecd08f;
+  --gold-faint: rgb(217 168 64 / 0.35);
+  /* Fixed: warm ivory light palette (opt-in via .surface-ivory) — one light
+     band on the homepage so the dark plum sections get a pause, staying
+     light in both themes. */
+  --ivory-bg: #f6efe5;
+  --ivory-surface: #fffaf3;
+  --ivory-accent: #f1e4d2;
+  --ivory-border: #e4d5c1;
+  --ivory-text: #2d1b3d;
+  --ivory-text-muted: #5c4a6a;
+  --ivory-heading: #4a2d73;
+  --ivory-primary: #6b3fa0;
+  --ivory-focus: #0066cc;
+  --ivory-danger: #c62828;
+  --ivory-success: #2e7d32;
+  --ivory-secondary: #8a6218;
+  --ivory-secondary-dark: #6e4d13;
+  --ivory-on-primary: #fff;
+  --ivory-primary-hover: #4a2d73;
+  --ivory-scheme: light;
+  --ivory-shadow: 0 2px 12px rgb(74 45 115 / 0.1);
+  --ivory-shadow-lg: 0 8px 32px rgb(74 45 115 / 0.16);
+  /* Fixed: dusty blue from the shirt/columns in the "Novedades" photo,
+     used for the contact form card so it isn't one more purple/cream panel. */
+  --sky-surface: #dce7f2;
+  --sky-border: #b5c9de;
+  --sky-field: #ffffff;
+  --sky-accent: #c9daea;
+  /* Deeper steel blue from the same photo's columns, behind the card. */
+  --sky-band-bg: linear-gradient(160deg, #7193b8 0%, #4e6e95 100%);
+  --sky-band-edge: #42607f;
+  --sky-band-text-muted: rgb(255 255 255 / 0.85);
   --transition: 200ms ease;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -171,7 +271,44 @@
     --color-focus: #7ab8ff;
     --color-danger: #ff8a80;
     --color-success: #81c995;
+    /* Más claro/saturado que en modo claro — mismo motivo que --color-primary
+       arriba: un dorado oscuro se perdería contra fondos casi negros. */
+    --color-secondary: #d9a840;
+    --color-secondary-dark: #b8862e;
     --color-on-primary-brand: var(--color-bg);
+    /* Night versions of the homepage palettes (light values in :root). */
+    --ivory-primary-hover: #e0cbf8;
+    --header-bg: #0e0315;
+    --header-surface: #1a0726;
+    --intro-bg: linear-gradient(160deg, #2a0d3b 0%, #1a0726 55%, #0e0315 100%);
+    --aubergine-bg: #110418;
+    --aubergine-surface: #1d0929;
+    --aubergine-accent: #2e1040;
+    --aubergine-border: #3d1d52;
+    --ivory-bg: #0f1c2e;
+    --ivory-surface: #16263b;
+    --ivory-border: #2a405c;
+    --ivory-text: #eaf1f9;
+    --ivory-text-muted: #b3c4d8;
+    --ivory-heading: #e6d6fa;
+    --ivory-primary: #c9a6f2;
+    --ivory-on-primary: #0f1c2e;
+    --ivory-accent: #243a55;
+    --ivory-focus: #7ab8ff;
+    --ivory-danger: #ff8a80;
+    --ivory-success: #81c995;
+    --ivory-secondary: #d9a840;
+    --ivory-secondary-dark: #b8862e;
+    --ivory-shadow: 0 2px 12px rgb(0 0 0 / 0.35);
+    --ivory-shadow-lg: 0 8px 32px rgb(0 0 0 / 0.45);
+    --ivory-scheme: dark;
+    --sky-surface: #1a2c43;
+    --sky-border: #2f4865;
+    --sky-field: #10203a;
+    --sky-accent: #243a55;
+    --sky-band-bg: linear-gradient(160deg, #16283f 0%, #0c1626 100%);
+    --sky-band-edge: #233a57;
+    --sky-band-text-muted: rgb(255 255 255 / 0.75);
     color-scheme: dark;
   }
 }
@@ -189,6 +326,42 @@
   --color-danger: #ff8a80;
   --color-success: #81c995;
   --color-focus: #7ab8ff;
+  --color-secondary: #d9a840;
+  --color-secondary-dark: #b8862e;
   --color-on-primary-brand: var(--color-bg);
+  /* Night versions of the homepage palettes (light values in :root). */
+  --ivory-primary-hover: #e0cbf8;
+  --header-bg: #0e0315;
+  --header-surface: #1a0726;
+  --intro-bg: linear-gradient(160deg, #2a0d3b 0%, #1a0726 55%, #0e0315 100%);
+  --aubergine-bg: #110418;
+  --aubergine-surface: #1d0929;
+  --aubergine-accent: #2e1040;
+  --aubergine-border: #3d1d52;
+  --ivory-bg: #0f1c2e;
+  --ivory-surface: #16263b;
+  --ivory-border: #2a405c;
+  --ivory-text: #eaf1f9;
+  --ivory-text-muted: #b3c4d8;
+  --ivory-heading: #e6d6fa;
+  --ivory-primary: #c9a6f2;
+  --ivory-on-primary: #0f1c2e;
+  --ivory-accent: #243a55;
+  --ivory-focus: #7ab8ff;
+  --ivory-danger: #ff8a80;
+  --ivory-success: #81c995;
+  --ivory-secondary: #d9a840;
+  --ivory-secondary-dark: #b8862e;
+  --ivory-shadow: 0 2px 12px rgb(0 0 0 / 0.35);
+  --ivory-shadow-lg: 0 8px 32px rgb(0 0 0 / 0.45);
+  --ivory-scheme: dark;
+  --sky-surface: #1a2c43;
+  --sky-border: #2f4865;
+  --sky-field: #10203a;
+  --sky-accent: #243a55;
+  --sky-band-bg: linear-gradient(160deg, #16283f 0%, #0c1626 100%);
+  --sky-band-edge: #233a57;
+  --sky-band-text-muted: rgb(255 255 255 / 0.75);
   color-scheme: dark;
 }
+

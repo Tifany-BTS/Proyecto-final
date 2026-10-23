@@ -90,6 +90,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
         </ul>
       </nav>
 
@@ -115,7 +116,7 @@
       <div class="container">
         <header class="section-header">
           <h1 id="cart-heading">Tu carrito</h1>
-          <p>Revisá tus productos antes de confirmar la compra.</p>
+          <p>Revisa tus productos antes de confirmar la compra.</p>
         </header>
 
         <div class="cart-page__layout">
@@ -123,6 +124,7 @@
 
           <aside class="cart-summary" aria-labelledby="cart-summary-heading">
             <h2 id="cart-summary-heading" class="visually-hidden">Resumen del pedido</h2>
+            <p class="cart-summary__discount" id="cart-points-discount" hidden></p>
             <p class="cart-summary__total">Total: <span id="cart-total">$0.00</span></p>
 
             <form class="checkout-form" id="checkout-form" novalidate>
@@ -180,6 +182,13 @@
                 </div>
                 <span class="field-error" id="checkout-email-error"></span>
               </div>
+              <div class="points-redeem" id="points-redeem">
+                <p class="points-redeem__info" id="points-redeem-info"></p>
+                <label class="points-redeem__option" id="points-redeem-option" hidden>
+                  <input type="checkbox" id="points-redeem-check" name="canjear-puntos">
+                  <span id="points-redeem-label"></span>
+                </label>
+              </div>
               <button type="submit" class="btn btn--primary" id="checkout-submit" disabled>Confirmar compra</button>
             </form>
             <div class="form-feedback" role="status" aria-live="polite" id="checkout-feedback"></div>
@@ -198,6 +207,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="privacidad.html">Política de privacidad</a></li>
           <li><a href="terminos.html">Términos y condiciones</a></li>
         </ul>
@@ -227,6 +237,7 @@
 
   <script src="js/analytics.js" defer></script>
   <script src="js/theme.js" defer></script>
+  <script src="js/session.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/header-scroll.js" defer></script>
   <script src="js/page-loader.js" defer></script>

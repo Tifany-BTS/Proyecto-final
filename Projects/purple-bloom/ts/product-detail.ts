@@ -88,7 +88,7 @@
                       ${ratingHtml(item)}
                       ${relatedPriceHtml(item)}
                       <button type="button" class="btn btn--small" data-related-add="${item.id}" aria-label="Añadir ${item.name} al carrito">Añadir al carrito</button>
-                      <button type="button" class="product-card__favorite" data-related-favorite="${item.id}" aria-label="Añadir ${item.name} a favoritos">
+                      <button type="button" class="product-card__favorite" data-action="add-to-favorite" data-product-id="${item.id}" aria-label="Añadir ${item.name} a favoritos">
                         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                           <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                         </svg>
@@ -187,7 +187,7 @@
     root.innerHTML = `
       <div class="container product-detail__not-found">
         <h1>Producto no encontrado</h1>
-        <p>El producto que buscás ya no está disponible o el enlace es incorrecto.</p>
+        <p>El producto que buscas ya no está disponible o el enlace es incorrecto.</p>
         <a href="catalogo.html" class="btn btn--primary">Ver catálogo</a>
       </div>
     `;
@@ -232,11 +232,11 @@
         <a href="catalogo.html" class="product-detail__back">&larr; Regresar</a>
         <h1 id="product-detail-heading">${product.name}</h1>
         <p class="product-detail__code">Código: ${productCode}</p>
-        <button type="button" class="product-detail__wishlist" data-action="add-to-favorite" aria-label="Añadir ${product.name} a favoritos">
+        <button type="button" class="product-detail__wishlist" data-action="add-to-favorite" data-product-id="${product.id}" aria-label="Añadir ${product.name} a favoritos">
           <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
-          Agregar a favoritos
+          <span data-favorite-label>Agregar a favoritos</span>
         </button>
         <div class="product-detail__price-row">${priceRowHtml(product)}</div>
         <hr class="product-detail__divider">
@@ -275,7 +275,7 @@
         <div class="product-detail__actions">
           <div class="product-detail__qty" role="group" aria-label="Cantidad">
             <button type="button" class="product-detail__qty-btn" data-action="decrease" aria-label="Restar unidad">&minus;</button>
-            <span class="product-detail__qty-value" data-qty-value>1</span>
+            <span class="product-detail__qty-value" data-qty-value aria-live="polite">1</span>
             <button type="button" class="product-detail__qty-btn" data-action="increase" aria-label="Sumar unidad">+</button>
           </div>
           <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="${product.id}" aria-label="Añadir ${product.name} al carrito">
@@ -362,27 +362,31 @@
       sizeSelect.focus();
       return;
     }
-    for (let i = 0; i < quantity; i++) {
-      document.dispatchEvent(new CustomEvent("purplebloom:add-to-cart", { detail: { id: productId, color: selectedColor } }));
-    }
+    // Un solo evento con la cantidad: uno por unidad abría el aviso de
+    // calificación y registraba la analítica una vez por cada unidad.
+    document.dispatchEvent(
+      new CustomEvent("purplebloom:add-to-cart", {
+        detail: { id: productId, color: selectedColor, size: sizeSelect?.value || undefined, qty: quantity },
+      })
+    );
   });
 
-  const favoriteButton = root.querySelector<HTMLElement>('[data-action="add-to-favorite"]');
-  favoriteButton?.addEventListener("click", () => {
-    document.dispatchEvent(new CustomEvent("purplebloom:add-to-favorite", { detail: { id: product.id } }));
-  });
+  // El botón de favoritos (el propio y los de "Te recomendamos") no necesita
+  // un listener acá: lleva data-action="add-to-favorite" + data-product-id,
+  // así que favorites.ts lo maneja por delegación de eventos en document,
+  // sin importar que este bloque se haya renderizado después de que
+  // favorites.ts corrió su propio escaneo inicial.
 
   root.querySelectorAll<HTMLElement>("[data-related-add]").forEach((button) => {
     button.addEventListener("click", () => {
       const relatedId = button.getAttribute("data-related-add");
-      if (relatedId) document.dispatchEvent(new CustomEvent("purplebloom:add-to-cart", { detail: { id: relatedId } }));
-    });
-  });
-
-  root.querySelectorAll<HTMLElement>("[data-related-favorite]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const relatedId = button.getAttribute("data-related-favorite");
-      if (relatedId) document.dispatchEvent(new CustomEvent("purplebloom:add-to-favorite", { detail: { id: relatedId } }));
+      // Talla del selector que card-size.ts pone antes del botón.
+      const group = button.previousElementSibling;
+      const size =
+        group instanceof HTMLElement && group.classList.contains("card-size")
+          ? group.querySelector<HTMLInputElement>("input:checked")?.value
+          : undefined;
+      if (relatedId) document.dispatchEvent(new CustomEvent("purplebloom:add-to-cart", { detail: { id: relatedId, size } }));
     });
   });
 

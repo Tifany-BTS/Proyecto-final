@@ -90,6 +90,7 @@
           <li><a href="catalogo.html" aria-current="page">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="iniciar-sesion.html" class="site-nav__login">Iniciar sesión</a></li>
         </ul>
       </nav>
@@ -128,14 +129,26 @@
   </header>
 
   <main id="contenido-principal">
-    <section id="catalogo" class="catalog" aria-labelledby="catalog-heading">
+    <section id="catalogo" class="catalog surface-ivory surface-sky" aria-labelledby="catalog-heading">
       <div class="container catalog__layout">
-        <div class="catalog__main">
-          <header class="section-header">
-            <h1 id="catalog-heading">Catálogo</h1>
-            <p>Explora nuestra selección de ropa de mujer.</p>
-          </header>
+        <header class="section-header catalog__header">
+          <h1 id="catalog-heading">Catálogo</h1>
+          <p>Explora nuestra selección de ropa de mujer.</p>
+        </header>
 
+        <aside class="catalog__sidebar" aria-labelledby="filters-heading">
+          <h2 id="filters-heading" class="catalog__sidebar-title">Categorías</h2>
+          <nav aria-label="Filtrar por categoría">
+            <ul class="filter-list">
+              <li><button type="button" class="filter-list__link filter-list__link--active" data-category="" aria-current="true">Todas</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Blusas">Blusas</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Vestidos">Vestidos</button></li>
+              <li><button type="button" class="filter-list__link" data-category="Pantalones">Pantalones</button></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <div class="catalog__main">
           <div class="catalog__grid" role="list" aria-label="Listado de productos">
             <article class="product-card product-card--compact" role="listitem" aria-labelledby="prod-1-name" data-category="Blusas">
               <span class="product-card__badge">Oferta</span>
@@ -399,18 +412,6 @@
 
           <p class="catalog__empty" role="status" aria-live="polite" hidden></p>
         </div>
-
-        <aside class="catalog__sidebar" aria-labelledby="filters-heading">
-          <h2 id="filters-heading" class="catalog__sidebar-title">Categorías</h2>
-          <nav aria-label="Filtrar por categoría">
-            <ul class="filter-list">
-              <li><button type="button" class="filter-list__link filter-list__link--active" data-category="" aria-current="true">Todas</button></li>
-              <li><button type="button" class="filter-list__link" data-category="Blusas">Blusas</button></li>
-              <li><button type="button" class="filter-list__link" data-category="Vestidos">Vestidos</button></li>
-              <li><button type="button" class="filter-list__link" data-category="Pantalones">Pantalones</button></li>
-            </ul>
-          </nav>
-        </aside>
       </div>
 
       <a href="carrito.html" class="cart-fab" aria-label="Ver carrito de compras">
@@ -434,6 +435,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="iniciar-sesion.html">Iniciar sesión</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="privacidad.html">Política de privacidad</a></li>
           <li><a href="terminos.html">Términos y condiciones</a></li>
         </ul>
@@ -464,6 +466,7 @@
 
   <script src="js/analytics.js" defer></script>
   <script src="js/theme.js" defer></script>
+  <script src="js/session.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/header-scroll.js" defer></script>
   <script src="js/page-loader.js" defer></script>
@@ -473,6 +476,8 @@
   <script src="js/card-size.js" defer></script>
   <script src="js/rating-prompt.js" defer></script>
   <script src="js/rating-display.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js" defer></script>
   <script src="js/search.js" defer></script>
   <script src="js/favorites.js" defer></script>
 </body>

@@ -89,6 +89,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
         </ul>
       </nav>
 
@@ -112,6 +113,10 @@
   <main id="contenido-principal">
     <section class="product-detail" id="product-detail" aria-label="Detalle del producto"></section>
 
+    <!-- Reseñas del producto (product-reviews.ts): se completa y se mueve
+         antes de "Te recomendamos" cuando el producto existe. -->
+    <section class="product-reviews surface-aubergine surface-aubergine--studio" id="product-reviews" aria-labelledby="reviews-heading" hidden></section>
+
     <a href="carrito.html" class="cart-fab" aria-label="Ver carrito de compras">
       <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M6 6h15l-1.5 9h-12L6 6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -132,6 +137,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="privacidad.html">Política de privacidad</a></li>
           <li><a href="terminos.html">Términos y condiciones</a></li>
         </ul>
@@ -162,6 +168,7 @@
 
   <script src="js/analytics.js" defer></script>
   <script src="js/theme.js" defer></script>
+  <script src="js/session.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/header-scroll.js" defer></script>
   <script src="js/page-loader.js" defer></script>
@@ -172,6 +179,7 @@
   <script src="js/rating-prompt.js" defer></script>
   <script src="js/rating-display.js" defer></script>
   <script src="js/product-detail.js" defer></script>
+  <script src="js/product-reviews.js" defer></script>
   <script src="js/favorites.js" defer></script>
 </body>
 </html>

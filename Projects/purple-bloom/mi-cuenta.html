@@ -90,6 +90,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados" aria-current="page">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
         </ul>
       </nav>
 
@@ -111,79 +112,136 @@
   </header>
 
   <main id="contenido-principal">
-    <div class="container account-intro">
-      <h1 id="account-heading">Mi cuenta</h1>
-      <p>Este destino todavía es un mockup estático: no hay backend ni autenticación real.</p>
+    <div class="account-intro-band surface-aubergine surface-aubergine--studio">
+      <div class="container account-intro">
+        <!-- Cabecera de perfil al estilo TikTok: foto (círculo + lápiz) y a
+             su lado nombre, @usuario y números. El lápiz abre el selector
+             de archivos (sin foto) o el editor de recorte (con foto); el
+             input de archivo queda oculto y fuera del orden de tabulación.
+             Lo maneja account-avatar.ts. -->
+        <div class="account-profile" data-account-profile hidden>
+          <div class="account-avatar" id="account-avatar">
+            <div class="account-avatar__circle">
+              <img class="account-avatar__photo" alt="" width="256" height="256" hidden>
+              <span class="account-avatar__initial" aria-hidden="true"></span>
+            </div>
+            <input type="file" id="account-avatar-input" class="account-avatar__input" accept="image/*" tabindex="-1" aria-hidden="true">
+            <button type="button" class="account-avatar__edit" data-avatar-edit aria-label="Agregar foto de perfil" title="Agregar foto de perfil">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M4 20h4L19 9a2.83 2.83 0 0 0-4-4L4 16v4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M13.5 6.5l4 4" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Nombre al lado de la foto, como en un perfil de TikTok:
+               nombre, @usuario y un resumen en números. -->
+          <div class="account-profile__info">
+            <p class="account-profile__name" data-profile-name></p>
+            <p class="account-profile__handle" data-profile-handle></p>
+            <ul class="account-profile__stats" aria-label="Resumen de tu cuenta">
+              <li><strong data-profile-stat="orders">0</strong> <span>Pedidos</span></li>
+              <li><strong data-profile-stat="favorites">0</strong> <span>Favoritos</span></li>
+              <li><strong data-profile-stat="points">0</strong> <span>Puntos</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Editor de la foto: encuadre arrastrando, zoom, giro y ajustes.
+             Vive dentro de la franja berenjena para heredar su paleta. -->
+        <dialog class="avatar-editor" id="avatar-editor" aria-labelledby="avatar-editor-title">
+          <div class="avatar-editor__inner">
+            <h2 id="avatar-editor-title" class="avatar-editor__title">Editar foto de perfil</h2>
+
+            <div class="avatar-editor__stage">
+              <canvas class="avatar-editor__canvas" id="avatar-editor-canvas" tabindex="0" aria-label="Vista previa del recorte. Arrastrá la foto para encuadrarla, o usá las flechas para moverla y + o − para acercarla."></canvas>
+              <div class="avatar-editor__mask" aria-hidden="true"></div>
+            </div>
+            <p class="avatar-editor__hint">Arrastrá para encuadrar · pellizcá o usá la rueda para acercar</p>
+
+            <label class="avatar-editor__control">
+              <span>Zoom</span>
+              <input type="range" min="1" max="4" step="0.01" value="1" data-edit="zoom">
+            </label>
+
+            <div class="avatar-editor__filters" data-filters>
+              <label class="avatar-editor__control">
+                <span>Brillo</span>
+                <input type="range" min="50" max="150" step="1" value="100" data-filter="brightness">
+              </label>
+              <label class="avatar-editor__control">
+                <span>Contraste</span>
+                <input type="range" min="50" max="150" step="1" value="100" data-filter="contrast">
+              </label>
+              <label class="avatar-editor__control">
+                <span>Saturación</span>
+                <input type="range" min="0" max="200" step="1" value="100" data-filter="saturation">
+              </label>
+            </div>
+
+            <div class="avatar-editor__tools">
+              <button type="button" class="avatar-editor__tool" data-edit-rotate>
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Girar
+              </button>
+              <button type="button" class="avatar-editor__tool" data-edit-reset>Restablecer</button>
+              <button type="button" class="avatar-editor__tool" data-edit-change>Cambiar foto</button>
+            </div>
+
+            <div class="avatar-editor__actions">
+              <button type="button" class="btn btn--outline" data-edit-cancel>Cancelar</button>
+              <button type="button" class="btn btn--primary" data-edit-save>Guardar</button>
+            </div>
+          </div>
+        </dialog>
+        <button type="button" class="account-avatar__remove" data-avatar-remove hidden>Quitar foto</button>
+        <p class="form-feedback account-avatar__feedback" data-avatar-feedback aria-live="polite"></p>
+        <h1 id="account-heading">Mi cuenta</h1>
+        <p data-session-greeting>Este destino todavía es un mockup estático: no hay backend ni autenticación real.</p>
+        <button type="button" class="btn btn--outline account-intro__logout" data-session-logout hidden>Cerrar sesión</button>
+      </div>
     </div>
 
-    <section class="account-section" aria-labelledby="account-orders-heading">
+    <section class="account-section surface-aubergine surface-aubergine--studio" aria-labelledby="account-orders-heading">
       <div class="container">
         <h2 id="account-orders-heading">Mis pedidos</h2>
-        <div class="account-orders">
-          <article class="account-order">
-            <div class="account-order__info">
-              <p class="account-order__number">Pedido #PB-1042</p>
-              <p class="account-order__date">15 de julio de 2026</p>
-            </div>
-            <p class="account-order__status account-order__status--delivered">Entregado</p>
-            <p class="account-order__total">$129.98</p>
-          </article>
-          <article class="account-order">
-            <div class="account-order__info">
-              <p class="account-order__number">Pedido #PB-1035</p>
-              <p class="account-order__date">2 de junio de 2026</p>
-            </div>
-            <p class="account-order__status account-order__status--transit">En camino</p>
-            <p class="account-order__total">$54.99</p>
-          </article>
-        </div>
-        <p class="content-note">Pedidos de ejemplo: este prototipo no procesa compras reales.</p>
+        <div class="account-orders" id="account-orders-list" hidden></div>
+        <p class="catalog__empty" id="account-orders-empty" hidden>Todavía no hiciste ningún pedido. Mirá el <a href="catalogo.html">catálogo</a> para encontrar algo que te guste.</p>
+        <p class="catalog__empty" id="account-orders-guest" hidden>Iniciá sesión para ver tu historial de pedidos. <a href="iniciar-sesion.html">Iniciar sesión</a>.</p>
+        <p class="content-note">Los pedidos quedan guardados en este navegador al confirmar la compra en el carrito — no hay pago, envío ni seguimiento de entrega reales.</p>
       </div>
     </section>
 
-    <section class="account-section" aria-labelledby="account-data-heading">
+    <section class="account-section surface-aubergine surface-aubergine--studio" aria-labelledby="account-data-heading">
       <div class="container">
         <h2 id="account-data-heading">Mis datos</h2>
-        <dl class="account-data">
-          <div class="account-data__row">
-            <dt>Nombre</dt>
-            <dd>—</dd>
+        <form class="account-data-form" id="account-data-form" hidden>
+          <div class="form-group">
+            <label for="account-nombre">Nombre</label>
+            <input type="text" id="account-nombre" name="nombre" placeholder=" " required minlength="2" autocomplete="name">
           </div>
-          <div class="account-data__row">
-            <dt>Correo electrónico</dt>
-            <dd>—</dd>
+          <div class="form-group">
+            <label for="account-email">Correo electrónico</label>
+            <input type="email" id="account-email" name="email" placeholder=" " disabled>
+            <p class="account-data-form__hint">Es tu usuario: no se puede cambiar desde acá.</p>
           </div>
-          <div class="account-data__row">
-            <dt>Teléfono</dt>
-            <dd>—</dd>
+          <div class="form-group">
+            <label for="account-telefono">Teléfono</label>
+            <input type="tel" id="account-telefono" name="telefono" placeholder=" " autocomplete="tel">
           </div>
-        </dl>
-        <p class="content-note">Todavía no hay backend para guardar o mostrar tus datos reales.</p>
+          <button type="submit" class="btn btn--primary">Guardar cambios</button>
+          <p class="form-feedback" aria-live="polite"></p>
+        </form>
+        <p class="catalog__empty" id="account-data-guest" hidden>Iniciá sesión para ver y editar tus datos. <a href="iniciar-sesion.html">Iniciar sesión</a>.</p>
+        <p class="content-note">Estos datos se guardan en este navegador, no en un servidor.</p>
       </div>
     </section>
 
-    <section id="favoritos-guardados" class="account-section" aria-labelledby="account-favorites-heading">
+    <section id="favoritos-guardados" class="account-section surface-aubergine surface-aubergine--studio" aria-labelledby="account-favorites-heading">
       <div class="container">
         <h2 id="account-favorites-heading">Mis favoritos</h2>
-        <div class="favorites__grid" role="list">
-          <article class="product-card" role="listitem" aria-labelledby="account-fav-1-name">
-            <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
-            <h3 id="account-fav-1-name"><a href="producto.html?id=blusa-lavanda">Blusa Lavanda</a></h3>
-            <div class="product-card__price-row">
-              <p class="product-card__price">$49.99</p>
-              <span class="product-card__original-price">$62.49</span>
-              <span class="product-card__discount">-20%</span>
-            </div>
-            <a href="producto.html?id=blusa-lavanda" class="btn btn--primary">Ver producto</a>
-          </article>
-          <article class="product-card" role="listitem" aria-labelledby="account-fav-2-name">
-            <img class="product-card__image" src="img/vestido-violeta.jpg" alt="Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura" width="800" height="533" loading="lazy">
-            <h3 id="account-fav-2-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h3>
-            <p class="product-card__price">$79.99</p>
-            <a href="producto.html?id=vestido-violeta" class="btn btn--primary">Ver producto</a>
-          </article>
-        </div>
-        <p class="content-note">Favoritos de ejemplo: todavía no se pueden guardar productos desde el catálogo.</p>
+        <div class="favorites__grid" id="account-favorites-grid" role="list" hidden></div>
+        <p class="catalog__empty" id="account-favorites-empty" hidden>Todavía no agregaste ninguna prenda a favoritos. Volvé al <a href="catalogo.html">catálogo</a> y tocá el corazón en las que te gusten.</p>
+        <p class="catalog__empty" id="account-favorites-guest" hidden>Iniciá sesión para ver y guardar tus favoritos. <a href="iniciar-sesion.html">Iniciar sesión</a>.</p>
       </div>
     </section>
   </main>
@@ -197,6 +255,7 @@
           <li><a href="catalogo.html">Catálogo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados" aria-current="page">Favoritos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="asistente-colores.html">Asistente de color</a></li>
           <li><a href="privacidad.html">Política de privacidad</a></li>
           <li><a href="terminos.html">Términos y condiciones</a></li>
         </ul>
@@ -222,10 +281,18 @@
     </div>
   </footer>
 
+  <script src="js/analytics.js" defer></script>
   <script src="js/theme.js" defer></script>
+  <script src="js/session.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/header-scroll.js" defer></script>
   <script src="js/page-loader.js" defer></script>
   <script src="js/petal-burst.js" defer></script>
+  <script src="js/products-data.js" defer></script>
+  <script src="js/favorites.js" defer></script>
+  <script src="js/account-favorites.js" defer></script>
+  <script src="js/account-orders.js" defer></script>
+  <script src="js/account-data.js" defer></script>
+  <script src="js/account-avatar.js" defer></script>
 </body>
 </html>
