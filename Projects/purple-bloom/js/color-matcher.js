@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 (function () {
     // Asistente de combinación de colores de ropa (asistente-colores.html):
     // sube/captura una foto de una prenda, la pinta en un <canvas>, y al
@@ -339,13 +339,64 @@
                 .join("");
             resultPanelEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
+        // Aviso de fondo y botón Limpiar selección (respeta tu tabla y lógica HSL)
+        const noticeEl = document.createElement("p");
+        noticeEl.id = "prenda-aviso-fondo";
+        noticeEl.setAttribute("role", "status");
+        noticeEl.hidden = true;
+        noticeEl.style.cssText = "margin-top:0.75rem;padding:0.6rem 0.9rem;border-radius:8px;background:#fef3c7;color:#92400e;font-weight:600;";
+        noticeEl.textContent = "Toca una zona de la prenda para detectar su color.";
+        dropZone.insertAdjacentElement("afterend", noticeEl);
+
+        const clearBtn = document.createElement("button");
+        clearBtn.type = "button";
+        clearBtn.className = "btn btn--small btn--outline";
+        clearBtn.style.marginTop = "0.75rem";
+        clearBtn.textContent = "Limpiar selección";
+        clearBtn.addEventListener("click", () => {
+            resultPanelEl.hidden = true;
+            noticeEl.hidden = true;
+            guideBodyEl.innerHTML = '<tr><td colspan="3">Detecta un color en la prenda para ver sugerencias de combinación.</td></tr>';
+        });
+        resultPanelEl.insertAdjacentElement("afterend", clearBtn);
+
+        function isBackgroundPixel(px) {
+            // 1. Fondo transparente (PNG recortado)
+            if (px[3] < 50) return true;
+            // 2. Muestrea 8 puntos del borde exterior de la imagen (esquinas y centros de cada lado)
+            const w = canvasEl.width - 1;
+            const h = canvasEl.height - 1;
+            const borderPoints = [
+                [0, 0], [w, 0], [0, h], [w, h],
+                [Math.floor(w / 2), 0], [Math.floor(w / 2), h],
+                [0, Math.floor(h / 2)], [w, Math.floor(h / 2)]
+            ];
+            return borderPoints.some(([bx, by]) => {
+                const c = ctx.getImageData(bx, by, 1, 1).data;
+                return c[3] > 200 && colorDistance([px[0], px[1], px[2]], [c[0], c[1], c[2]]) < 42;
+            });
+        }
+
+        // Si hace clic en el contenedor dropZone fuera del canvas (el área vacía alrededor de la foto)
+        dropZone.addEventListener("click", (event) => {
+            if (event.target !== canvasEl && event.target !== video) {
+                noticeEl.hidden = false;
+            }
+        });
+
         canvasEl.addEventListener("click", (event) => {
             const rect = canvasEl.getBoundingClientRect();
             const scaleX = canvasEl.width / rect.width;
             const scaleY = canvasEl.height / rect.height;
-            const x = Math.round((event.clientX - rect.left) * scaleX);
-            const y = Math.round((event.clientY - rect.top) * scaleY);
-            const pixel = ctx.getImageData(Math.min(Math.max(x, 0), canvasEl.width - 1), Math.min(Math.max(y, 0), canvasEl.height - 1), 1, 1).data;
+            const x = Math.min(Math.max(Math.round((event.clientX - rect.left) * scaleX), 0), canvasEl.width - 1);
+            const y = Math.min(Math.max(Math.round((event.clientY - rect.top) * scaleY), 0), canvasEl.height - 1);
+            const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+            if (isBackgroundPixel(pixel)) {
+                noticeEl.hidden = false;
+                return;
+            }
+            noticeEl.hidden = true;
             renderResult([pixel[0], pixel[1], pixel[2]]);
         });
     }
@@ -356,3 +407,5 @@
         init();
     }
 })();
+
+
