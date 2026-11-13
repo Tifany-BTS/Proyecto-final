@@ -1,129 +1,210 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { useProducts } from "../hooks/useProducts";
 import { useCartStore } from "../stores/use-cart-store";
-import { VariantSelector } from "../components/detail/VariantSelector";
-import { ProductAccordion } from "../components/detail/ProductAccordion";
+
+const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL"];
 
 export function ViewProductDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: products, isLoading } = useProducts();
+  const product = products?.find((p) => p.id === id);
   const addItem = useCartStore((state) => state.addItem);
 
-  const product = products?.find((p) => p.id === id);
-
+  const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("Selecciona");
-  const [sizeError, setSizeError] = useState<string | null>(null);
-  const [addedFeedback, setAddedFeedback] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (product) {
-      setSelectedColor(product.colors?.[0]?.name ?? "Único");
-      setSelectedSize("Selecciona");
-      setSizeError(null);
-      setAddedFeedback(null);
-    }
-  }, [product]);
+  const [quantity, setQuantity] = useState(1);
+  const [sizeError, setSizeError] = useState("");
+  const [addedFeedback, setAddedFeedback] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
 
   if (isLoading) {
-    return <p role="status">Cargando detalle de prenda...</p>;
+    return (
+      <div className="container" style={{ padding: "3rem 1rem" }}>
+        <p role="status">Cargando detalles de la prenda...</p>
+      </div>
+    );
   }
 
   if (!product) {
     return (
-      <section>
-        <h1>Prenda no encontrada</h1>
-        <Link to="/">Volver al catálogo</Link>
+      <section className="container product-detail__not-found" style={{ padding: "3rem 1rem" }}>
+        <h2>Prenda no encontrada</h2>
+        <p>La referencia solicitada no está disponible en el catálogo actual.</p>
+        <Link to="/" className="btn btn--primary">
+          Volver al catálogo
+        </Link>
       </section>
     );
   }
 
-  const activeColorVariant = product.colors?.find((c) => c.name === selectedColor);
-  const displayImage = activeColorVariant?.imageSrc ?? product.imageSrc;
+  const colorOptions = product.colors ?? [];
+  const activeColorObj = colorOptions.find((c) => c.name === selectedColor) ?? colorOptions[0];
+  const activeColorName = activeColorObj?.name || "Único";
+  const currentImageSrc = activeColorObj?.imageSrc || product.imageSrc;
+  const isOutOfStock = product.stock === 0;
+  const showFallback = !currentImageSrc || imgFailed;
 
   const handleAddToCart = () => {
-    if (product.stock <= 0) return;
+    if (isOutOfStock) return;
 
-    if (selectedSize === "Selecciona") {
+    if (!selectedSize) {
       setSizeError("Elige una talla para añadir al carrito");
-      setAddedFeedback(null);
+      setAddedFeedback(false);
       return;
     }
 
-    setSizeError(null);
+    setSizeError("");
     addItem({
       productId: product.id,
       size: selectedSize,
-      color: selectedColor || "Único",
-      quantity: 1,
+      color: activeColorName,
+      quantity,
     });
-    setAddedFeedback(`Se añadió ${product.name} (Talla ${selectedSize}) al carrito.`);
+    setAddedFeedback(true);
   };
 
   return (
-    <section>
-      <p style={{ marginBottom: "1.25rem" }}>
-        <Link to="/" style={{ color: "#6b21a8", textDecoration: "none", fontWeight: 600 }}>
+    <section className="product-detail" style={{ padding: "2.5rem 0 4rem" }}>
+      <div className="container">
+        <Link to="/" className="product-detail__back" style={{ display: "inline-block", marginBottom: "1.25rem" }}>
           ← Volver al catálogo
         </Link>
-      </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
-        <div>
-          {displayImage ? (
-            <img
-              src={`/${displayImage}`}
-              alt={activeColorVariant?.imageAlt ?? product.name}
-              style={{ width: "100%", maxHeight: 440, objectFit: "cover", borderRadius: 12 }}
-            />
-          ) : (
-            <div
-              style={{
-                height: 360,
-                borderRadius: 12,
-                background: "linear-gradient(135deg, #f5d0fe 0%, #c084fc 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 700,
-                color: "#3b0764",
-              }}
-            >
-              {product.name}
+        <div className="product-detail__layout">
+          <div className="product-detail__media">
+            {showFallback ? (
+              <div
+                className="product-detail__image"
+                data-testid={`detail-fallback-${product.id}`}
+                style={{
+                  minHeight: 380,
+                  background: "linear-gradient(135deg, #f3e8ff 0%, #c084fc 100%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#3b0764",
+                  padding: "1.5rem",
+                  textAlign: "center",
+                }}
+              >
+                <span style={{ fontSize: "2.2rem" }}>✿</span>
+                <strong style={{ fontSize: "1.2rem" }}>{product.name}</strong>
+                <span>{product.category}</span>
+              </div>
+            ) : (
+              <img
+                src={currentImageSrc}
+                alt={product.name}
+                className="product-detail__image"
+                onError={() => setImgFailed(true)}
+              />
+            )}
+          </div>
+
+          <div className="product-detail__info">
+            <span className="product-detail__code">{product.category}</span>
+            <h1 style={{ margin: "0.3rem 0 0.6rem" }}>{product.name}</h1>
+
+            <div className="product-detail__price-row">
+              <span className="product-detail__price">${product.price.toFixed(2)}</span>
+              <span style={{ fontSize: "0.9rem", opacity: 0.75 }}>
+                {isOutOfStock ? "Sin existencias" : `Stock disponible: ${product.stock}`}
+              </span>
             </div>
-          )}
-        </div>
 
-        <div>
-          <span style={{ color: "#7e22ce", fontWeight: 600 }}>{product.category}</span>
-          <h1 style={{ margin: "0.3rem 0", color: "#2d1b3d" }}>{product.name}</h1>
-          <p style={{ fontSize: "1.5rem", fontWeight: 700, color: "#5b2a86", margin: "0.5rem 0 1rem" }}>
-            ${product.price.toFixed(2)}
-          </p>
-          <p style={{ color: "#4b3b5c", lineHeight: 1.6 }}>{product.description}</p>
+            <hr className="product-detail__divider" />
+            <p style={{ lineHeight: 1.6 }}>{product.description}</p>
 
-          <VariantSelector
-            colors={product.colors ?? []}
-            selectedColor={selectedColor}
-            onColorChange={setSelectedColor}
-            selectedSize={selectedSize}
-            onSizeChange={(s) => {
-              setSelectedSize(s);
-              if (s !== "Selecciona") setSizeError(null);
-            }}
-            stock={product.stock}
-            sizeError={sizeError}
-            onAddToCart={handleAddToCart}
-          />
+            {colorOptions.length > 0 && (
+              <div className="product-detail__field">
+                <label htmlFor="detail-color" className="product-detail__field-label">
+                  Color
+                </label>
+                <select
+                  id="detail-color"
+                  className="product-detail__select"
+                  value={activeColorName}
+                  onChange={(e) => {
+                    setSelectedColor(e.target.value);
+                    setImgFailed(false);
+                  }}
+                  disabled={isOutOfStock}
+                >
+                  {colorOptions.map((color) => (
+                    <option key={color.name} value={color.name}>
+                      {color.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
-          {addedFeedback && (
-            <p role="status" style={{ marginTop: "1rem", color: "#15803d", fontWeight: 600 }}>
-              {addedFeedback}
-            </p>
-          )}
+            <div className="product-detail__field">
+              <label htmlFor="detail-size" className="product-detail__field-label">
+                Talla
+              </label>
+              <select
+                id="detail-size"
+                className="product-detail__select"
+                value={selectedSize}
+                onChange={(e) => {
+                  setSelectedSize(e.target.value);
+                  if (e.target.value) setSizeError("");
+                }}
+                disabled={isOutOfStock}
+              >
+                <option value="">Selecciona una talla</option>
+                {AVAILABLE_SIZES.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
 
-          <ProductAccordion material={product.material} care={product.care} />
+              {sizeError && (
+                <p role="alert" className="product-detail__field-error">
+                  {sizeError}
+                </p>
+              )}
+            </div>
+
+            <div className="product-detail__field">
+              <label htmlFor="detail-qty" className="product-detail__field-label">
+                Cantidad
+              </label>
+              <input
+                id="detail-qty"
+                type="number"
+                className="product-detail__select"
+                min={1}
+                max={Math.max(1, product.stock)}
+                value={quantity}
+                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
+                disabled={isOutOfStock}
+                style={{ width: 96 }}
+              />
+            </div>
+
+            <div className="product-detail__actions">
+              <button
+                type="button"
+                className="btn btn--primary"
+                disabled={isOutOfStock}
+                onClick={handleAddToCart}
+                style={{ width: "100%", padding: "0.95rem 1.25rem" }}
+              >
+                {isOutOfStock ? "Agotado" : "AGREGAR A MI CARRITO"}
+              </button>
+            </div>
+
+            {addedFeedback && (
+              <p role="status" className="form-feedback form-feedback--success" style={{ marginTop: "0.9rem" }}>
+                Prenda añadida al carrito ({activeColorName}, talla {selectedSize}).
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </section>

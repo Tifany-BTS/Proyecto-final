@@ -1,5 +1,6 @@
 ﻿import { Route, Routes } from "react-router";
 import { MainLayout } from "../components/layout/MainLayout";
+import { ViewHome } from "../views/ViewHome";
 import { ViewCatalog } from "../views/ViewCatalog";
 import { ViewProductDetail } from "../views/ViewProductDetail";
 import { ViewColorAdvisor } from "../views/ViewColorAdvisor";
@@ -11,6 +12,7 @@ export function AppRoutes() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<ViewCatalog />} />
+        <Route path="/inicio" element={<ViewHome />} />
         <Route path="/catalogo" element={<ViewCatalog />} />
         <Route path="/producto/:id" element={<ViewProductDetail />} />
         <Route path="/asistente-colores" element={<ViewColorAdvisor />} />
