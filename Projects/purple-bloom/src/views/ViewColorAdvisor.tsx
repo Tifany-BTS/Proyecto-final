@@ -1,4 +1,4 @@
-﻿import { useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 
 interface ColorGuideItem {
   name: string;
@@ -50,11 +50,7 @@ export function ViewColorAdvisor() {
     }
 
     setOutsideError("");
-    const index = Math.min(
-      PALETTE.length - 1,
-      Math.floor(((relY - 0.16) / 0.7) * PALETTE.length)
-    );
-    setSelectedPalette(PALETTE[Math.max(0, index)]);
+    const distFromCenter = Math.hypot(relX - 0.5, relY - 0.5); const index = distFromCenter < 0.12 ? 0 : relY < 0.5 ? 1 : 2; setSelectedPalette(PALETTE[index]);
   };
 
   return (
