@@ -1,9 +1,6 @@
-(function (): void {
+﻿(function (): void {
   const SIZES = ["S", "M", "L", "XL"];
   const ERROR_MESSAGE = "Elige una talla para añadir al carrito.";
-  // Also matches the favorites carousel's inert loop clones (created by
-  // favorites-carousel.ts before DOMContentLoaded, buttons included), so they
-  // get a picker too and keep the same height/look as the real cards.
   const CARD_BUTTONS = '.product-card [data-action="add-to-cart"], .product-card [data-related-add]';
 
   let counter = 0;
@@ -13,17 +10,18 @@
     return previous instanceof HTMLElement && previous.classList.contains("card-size") ? previous : null;
   }
 
-  function buildGroup(): HTMLElement {
+  function buildGroup(isOutOfStock: boolean): HTMLElement {
     const name = `card-size-${++counter}`;
     const group = document.createElement("fieldset");
     group.className = "card-size";
+    if (isOutOfStock) group.disabled = true;
     group.innerHTML = `
       <legend class="card-size__legend">Talla</legend>
       <div class="card-size__options">
         ${SIZES.map(
           (size) => `
           <label class="card-size__option">
-            <input type="radio" name="${name}" value="${size}" class="card-size__input">
+            <input type="radio" name="${name}" value="${size}" class="card-size__input" ${isOutOfStock ? "disabled" : ""}>
             <span class="card-size__chip">${size}</span>
           </label>`
         ).join("")}
@@ -39,19 +37,37 @@
   }
 
   function enhance(): void {
-    document.querySelectorAll<HTMLElement>(CARD_BUTTONS).forEach((button) => {
+    document.querySelectorAll<HTMLButtonElement>(CARD_BUTTONS).forEach((button) => {
+      const productId = button.getAttribute("data-product-id") || button.getAttribute("data-related-add");
+      const product = productId ? findPurpleBloomProduct(productId) : undefined;
+      const isOutOfStock = product?.stock === 0;
+
+      if (isOutOfStock) {
+        button.disabled = true;
+        button.textContent = "Agotado";
+        button.setAttribute("aria-label", `${product?.name ?? "Producto"} agotado`);
+      }
+
       if (sizeGroupFor(button)) return;
-      button.before(buildGroup());
+      button.before(buildGroup(isOutOfStock));
     });
   }
 
-  // Runs before the buttons' own listeners (capture phase on document) so a
-  // click without a size never reaches the add-to-cart handlers.
+  // Intercepta el clic antes de los manejadores del carrito para validar stock y talla obligatoria.
   document.addEventListener(
     "click",
     (event) => {
-      const button = (event.target as HTMLElement).closest<HTMLElement>(CARD_BUTTONS);
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>(CARD_BUTTONS);
       if (!button) return;
+
+      const productId = button.getAttribute("data-product-id") || button.getAttribute("data-related-add");
+      const product = productId ? findPurpleBloomProduct(productId) : undefined;
+      if (button.disabled || product?.stock === 0) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return;
+      }
+
       const group = sizeGroupFor(button);
       if (!group || group.querySelector("input:checked")) return;
 
@@ -60,7 +76,6 @@
 
       const error = group.querySelector<HTMLElement>(".card-size__error");
       if (error) error.hidden = false;
-      // Restart the shake if the shopper keeps pressing the button.
       group.classList.remove("card-size--invalid");
       void group.offsetWidth;
       group.classList.add("card-size--invalid");
@@ -69,9 +84,6 @@
     true
   );
 
-  // Deferred scripts have all run by DOMContentLoaded (readyState is still
-  // "interactive" while they run), so cards rendered by offers.js /
-  // product-detail.js exist by then whatever the script order.
   if (document.readyState !== "complete") {
     document.addEventListener("DOMContentLoaded", enhance);
   } else {

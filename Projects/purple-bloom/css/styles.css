@@ -4915,3 +4915,5 @@ body:has(.product-detail__actions) .rating-prompt {
     align-items: start;
   }
 }
+
+button:disabled, .btn:disabled, fieldset:disabled .card-size__option { cursor: not-allowed !important; }
