@@ -1,15 +1,14 @@
-{
+﻿{
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": ["ES2022", "DOM"],
-    "rootDir": "./ts",
-    "outDir": "./js",
+    "jsx": "react-jsx",
     "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": ["ts/**/*"]
+  "include": ["src"]
 }
