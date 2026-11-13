@@ -1,4 +1,4 @@
-# Entregable de la Fase 3: Diseño Técnico y Plan de Construcción (Proyecto Purple Bloom)
+﻿# Entregable de la Fase 3: Diseño Técnico y Plan de Construcción (Proyecto Purple Bloom)
 
 ## 1. Identificación del Proyecto
 * **Nombre del Producto:** Purple Bloom (Plataforma E-commerce de Moda Femenina)

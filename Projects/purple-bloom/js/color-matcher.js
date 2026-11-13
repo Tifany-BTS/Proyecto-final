@@ -430,7 +430,7 @@
             const y = Math.min(Math.max(Math.round((event.clientY - rect.top) * scaleY), 0), canvasEl.height - 1);
             const pixel = ctx.getImageData(x, y, 1, 1).data;
             if (isOutsideGarment(x, y, pixel)) {
-                errorBannerEl.textContent = "No se encuentra la blusa o prenda. Toca una de las zonas marcadas";
+                errorBannerEl.textContent = "No se encuentra la blusa o prenda";
                 errorBannerEl.hidden = false;
                 return;
             }
