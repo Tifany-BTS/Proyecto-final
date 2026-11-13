@@ -1,7 +1,7 @@
 "use strict";
 (function () {
     const CART_KEY = "cart";
-    // Misma prenda en otro color u otra talla es otra línea del carrito.
+    // Misma prenda en otro color u otra talla es otra lÃ­nea del carrito.
     function isSameLine(line, id, color, size) {
         return line.id === id && line.color === color && line.size === size;
     }
@@ -55,12 +55,14 @@
             return undefined;
         return product.colors.some((option) => option.name === color) ? color : product.colors[0].name;
     }
-    // qty: la página de producto agrega varias unidades de una vez; se suman en
-    // una sola llamada para que el aviso de calificación y la analítica salgan
+    // qty: la pÃ¡gina de producto agrega varias unidades de una vez; se suman en
+    // una sola llamada para que el aviso de calificaciÃ³n y la analÃ­tica salgan
     // una vez, no una por unidad.
     function addToCart(id, color, size, qty = 1) {
         const lines = getCart();
         const product = findPurpleBloomProduct(id);
+        if (!product || product.stock === 0)
+            return;
         const chosenColor = resolveColor(product, color);
         const existing = lines.find((line) => isSameLine(line, id, chosenColor, size));
         if (existing) {
@@ -156,7 +158,7 @@
         const liveRegion = document.getElementById("carrito");
         if (liveRegion) {
             liveRegion.textContent =
-                count === 0 ? "Carrito de compras: vacío." : `Carrito de compras: ${count} producto${count === 1 ? "" : "s"}.`;
+                count === 0 ? "Carrito de compras: vacÃ­o." : `Carrito de compras: ${count} producto${count === 1 ? "" : "s"}.`;
         }
     }
     function productMediaHtml(product, color) {
@@ -175,7 +177,7 @@
         const lines = getCart();
         if (lines.length === 0) {
             itemsEl.innerHTML =
-                '<p class="cart-page__empty">Tu carrito está vacío. <a href="catalogo.html">Explora el catálogo</a>.</p>' +
+                '<p class="cart-page__empty">Tu carrito estÃ¡ vacÃ­o. <a href="catalogo.html">Explora el catÃ¡logo</a>.</p>' +
                     '<img class="cart-page__empty-image" src="img/carrito-vacio.png" alt="" width="480" height="274">';
         }
         else {
@@ -188,8 +190,8 @@
                     return "";
                 const linePrice = product.price * line.qty;
                 const isLast = index === lines.length - 1;
-                // Nombre accesible con talla y color: si hay dos líneas de la misma
-                // prenda, "Quitar Blusa Lavanda" no diría cuál de las dos.
+                // Nombre accesible con talla y color: si hay dos lÃ­neas de la misma
+                // prenda, "Quitar Blusa Lavanda" no dirÃ­a cuÃ¡l de las dos.
                 const variant = [line.color, line.size ? `talla ${line.size}` : ""].filter(Boolean).join(", ");
                 const label = variant ? `${product.name} (${variant})` : product.name;
                 const lineData = `data-id="${product.id}" data-color="${line.color ?? ""}" data-size="${line.size ?? ""}"`;
@@ -259,12 +261,12 @@
         totalEl.textContent = formatPrice(finalTotal);
         if (discountEl) {
             discountEl.hidden = redeemed === 0;
-            discountEl.textContent = redeemed > 0 ? `Puntos canjeados (${redeemed} pts): −${formatPrice(discount)}` : "";
+            discountEl.textContent = redeemed > 0 ? `Puntos canjeados (${redeemed} pts): âˆ’${formatPrice(discount)}` : "";
         }
         if (infoEl) {
             if (!user) {
                 infoEl.innerHTML =
-                    'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="iniciar-sesion.html">Inicia sesión</a> para usarlos.';
+                    'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="iniciar-sesion.html">Inicia sesiÃ³n</a> para usarlos.';
             }
             else {
                 const earned = Math.floor(finalTotal * PB_POINTS_EARNED_PER_DOLLAR);
@@ -276,7 +278,7 @@
         if (labelEl)
             labelEl.textContent = `Canjear ${usable} puntos y ahorrar ${formatPrice(pointsToDollars(usable))}`;
     }
-    // Talla marcada en el selector que card-size.ts pone justo antes del botón
+    // Talla marcada en el selector que card-size.ts pone justo antes del botÃ³n
     // de la tarjeta (card-size.ts ya frena el clic si no hay ninguna).
     function cardSize(button) {
         const group = button.previousElementSibling;
@@ -292,7 +294,7 @@
                     addToCart(id, undefined, cardSize(button));
             });
         });
-        // The product-detail page builds its "Añadir al carrito" button after
+        // The product-detail page builds its "AÃ±adir al carrito" button after
         // this script has already run its initial querySelectorAll above, so it
         // dispatches this event instead of relying on a listener attached here.
         document.addEventListener("purplebloom:add-to-cart", (event) => {
@@ -326,10 +328,10 @@
             restoreFocus(button, action);
         });
     }
-    // Cada cambio vuelve a dibujar la lista, así que el botón que tenía el foco
-    // desaparece y el foco de teclado se iría al inicio de la página. Se devuelve
-    // al mismo botón de la línea nueva; si la línea ya no existe (se quitó), al
-    // título del carrito.
+    // Cada cambio vuelve a dibujar la lista, asÃ­ que el botÃ³n que tenÃ­a el foco
+    // desaparece y el foco de teclado se irÃ­a al inicio de la pÃ¡gina. Se devuelve
+    // al mismo botÃ³n de la lÃ­nea nueva; si la lÃ­nea ya no existe (se quitÃ³), al
+    // tÃ­tulo del carrito.
     function restoreFocus(oldButton, action) {
         const itemsEl = document.getElementById("cart-items");
         if (!itemsEl)
@@ -400,30 +402,39 @@
                 return;
             if (message) {
                 field.setAttribute("aria-invalid", "true");
+                field.style.borderColor = "#dc2626";
+                errorEl.style.color = "#dc2626";
                 errorEl.textContent = message;
             }
             else {
                 field.removeAttribute("aria-invalid");
+                field.style.borderColor = "";
                 errorEl.textContent = "";
             }
         }
-        const addressGroup = document.getElementById("checkout-direccion-group");
         const pickupNote = document.getElementById("checkout-retiro-note");
         function deliveryMethod() {
             const chosen = formEl.querySelector('input[name="entrega"]:checked');
             return chosen?.value === "tienda" ? "tienda" : "domicilio";
         }
-        // Store pickup needs no shipping address, so that field (and its
-        // validation) only applies to home delivery.
         function syncDelivery() {
             const isPickup = deliveryMethod() === "tienda";
             const address = getField("checkout-direccion");
-            if (addressGroup)
-                addressGroup.hidden = isPickup;
             if (pickupNote)
                 pickupNote.hidden = !isPickup;
-            if (address)
+            if (address) {
+                address.disabled = isPickup;
                 address.required = !isPickup;
+                if (isPickup) {
+                    address.value = "No aplica para retiro";
+                    address.placeholder = "No aplica para retiro";
+                }
+                else {
+                    if (address.value === "No aplica para retiro")
+                        address.value = "";
+                    address.placeholder = " ";
+                }
+            }
             if (isPickup)
                 setFieldError("checkout-direccion", null);
         }
@@ -432,8 +443,6 @@
         });
         syncDelivery();
         redeemCheckbox()?.addEventListener("change", () => renderTotals(cartTotal(getCart())));
-        // Mismo patrón que contact-form.ts / login-form.ts: valida al salir del
-        // campo y, una vez tocado, se revalida mientras se escribe.
         const touched = new Set();
         for (const rule of rules) {
             const field = getField(rule.id);
@@ -452,6 +461,46 @@
                 if (touched.has(rule.id))
                     validate();
             });
+        }
+        function openOrderConfirmationModal(summaryHtml, onFinalize) {
+            document.getElementById("order-confirmation-modal")?.remove();
+            const backdrop = document.createElement("div");
+            backdrop.id = "order-confirmation-modal";
+            backdrop.setAttribute("role", "dialog");
+            backdrop.setAttribute("aria-modal", "true");
+            backdrop.setAttribute("aria-labelledby", "order-modal-title");
+            backdrop.style.cssText =
+                "position:fixed;inset:0;z-index:9999;background:rgba(15,10,25,0.65);display:flex;align-items:center;justify-content:center;padding:1rem;";
+            backdrop.innerHTML = `
+        <div style="background:var(--color-surface, #fff);color:var(--color-text, #1f1630);max-width:480px;width:100%;border-radius:16px;padding:1.5rem;box-shadow:0 20px 45px rgba(0,0,0,0.3);position:relative;">
+          <button type="button" data-modal-close aria-label="Cerrar ventana" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:inherit;">&times;</button>
+          <h2 id="order-modal-title" style="margin:0 0 0.5rem;font-size:1.35rem;color:var(--color-primary, #6d28d9);">¡Orden Confirmada!</h2>
+          <p style="margin:0 0 1rem;font-size:0.95rem;opacity:0.85;">Revisa el resumen de tu pedido simbólico antes de finalizar:</p>
+          <div style="background:rgba(109,40,217,0.06);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.92rem;line-height:1.5;">
+            ${summaryHtml}
+          </div>
+          <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+            <button type="button" class="btn" data-modal-close>Cancelar</button>
+            <button type="button" class="btn btn--primary" data-modal-finalize>Finalizar y Cerrar</button>
+          </div>
+        </div>
+      `;
+            const closeModalWithoutClearing = () => {
+                backdrop.remove();
+            };
+            backdrop.addEventListener("click", (e) => {
+                if (e.target === backdrop)
+                    closeModalWithoutClearing();
+            });
+            backdrop.querySelectorAll("[data-modal-close]").forEach((btn) => {
+                btn.addEventListener("click", closeModalWithoutClearing);
+            });
+            backdrop.querySelector("[data-modal-finalize]")?.addEventListener("click", () => {
+                backdrop.remove();
+                onFinalize();
+            });
+            document.body.appendChild(backdrop);
+            backdrop.querySelector("[data-modal-finalize]")?.focus();
         }
         formEl.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -475,59 +524,71 @@
                 }
             }
             if (!isValid) {
-                feedbackEl.textContent = "Revisa los campos marcados antes de continuar.";
+                feedbackEl.textContent = "Revisa los campos marcados en rojo antes de continuar.";
                 feedbackEl.classList.add("form-feedback--error");
                 feedbackEl.classList.remove("form-feedback--success");
                 firstInvalid?.focus();
                 return;
             }
+            feedbackEl.textContent = "";
             const purchasedLines = getCart();
             const subtotal = cartTotal(purchasedLines);
             const redeemed = currentRedeemedPoints(subtotal);
             const paidTotal = roundCents(Math.max(0, subtotal - pointsToDollars(redeemed)));
-            pbTrack("Checkout completado", {
-                items: cartCount(purchasedLines),
-                total: paidTotal,
-                deliveryMethod: deliveryMethod(),
-                pointsRedeemed: redeemed,
-            });
-            // Simulated loyalty: spend the redeemed points, then earn new ones on what was paid.
-            let pointsMessage = "";
-            if (pbSessionGet()) {
-                const earned = Math.floor(paidTotal * PB_POINTS_EARNED_PER_DOLLAR);
-                const newBalance = pbPointsGet() - redeemed + earned;
-                pbPointsSet(newBalance);
-                pointsMessage = ` ${redeemed > 0 ? `Canjeaste ${redeemed} puntos. ` : ""}Ganaste ${earned} puntos: ahora tienes ${newBalance}.`;
-                // Pedido real (no un ejemplo fijo): queda guardado para esta cuenta y
-                // "Mis pedidos" en mi-cuenta.html lo lee de ahí.
-                pbOrdersAdd({
-                    items: purchasedLines.map((line) => {
-                        const product = findPurpleBloomProduct(line.id);
-                        return { id: line.id, name: product?.name ?? line.id, qty: line.qty, color: line.color, size: line.size, price: product?.price ?? 0 };
-                    }),
+            const customerName = getField("checkout-nombre")?.value.trim() ?? "";
+            const customerEmail = getField("checkout-email")?.value.trim() ?? "";
+            const customerAddress = isPickup ? "Retiro en tienda (No aplica envío)" : (getField("checkout-direccion")?.value.trim() ?? "");
+            const itemsListHtml = purchasedLines
+                .map((line) => {
+                const p = findPurpleBloomProduct(line.id);
+                const meta = [line.color, line.size ? `Talla ${line.size}` : ""].filter(Boolean).join(" · ");
+                return `<li><strong>${line.qty}x ${p?.name ?? line.id}</strong> ${meta ? `(${meta})` : ""} — ${formatPrice((p?.price ?? 0) * line.qty)}</li>`;
+            })
+                .join("");
+            const summaryHtml = `
+        <p style="margin:0 0 0.4rem;"><strong>Cliente:</strong> ${customerName} (${customerEmail})</p>
+        <p style="margin:0 0 0.6rem;"><strong>Entrega:</strong> ${customerAddress}</p>
+        <ul style="margin:0 0 0.75rem;padding-left:1.2rem;">${itemsListHtml}</ul>
+        <p style="margin:0;font-size:1.05rem;font-weight:700;border-top:1px solid rgba(0,0,0,0.1);padding-top:0.5rem;">
+          Total pagado: ${formatPrice(paidTotal)}
+        </p>
+      `;
+            openOrderConfirmationModal(summaryHtml, () => {
+                pbTrack("Checkout completado", {
+                    items: cartCount(purchasedLines),
                     total: paidTotal,
                     deliveryMethod: deliveryMethod(),
+                    pointsRedeemed: redeemed,
                 });
-            }
-            saveCart([]);
-            updateBadges();
-            renderCartPage();
-            const wasPickup = isPickup;
-            formEl.reset();
-            touched.clear();
-            syncDelivery();
-            renderCartPage();
-            feedbackEl.textContent =
-                (wasPickup
-                    ? "¡Gracias por tu compra! Te avisaremos por correo cuando esté listo para retirar en tienda."
-                    : "¡Gracias por tu compra! Te enviamos la confirmación por correo.") +
-                    pointsMessage +
-                    " (Simulación: no se procesó ningún pago real.)";
-            feedbackEl.classList.add("form-feedback--success");
-            feedbackEl.classList.remove("form-feedback--error");
-            const submitBtn = document.getElementById("checkout-submit");
-            if (submitBtn)
-                pbPetalBurst(submitBtn);
+                let pointsMessage = "";
+                if (pbSessionGet()) {
+                    const earned = Math.floor(paidTotal * PB_POINTS_EARNED_PER_DOLLAR);
+                    const newBalance = pbPointsGet() - redeemed + earned;
+                    pbPointsSet(newBalance);
+                    pointsMessage = ` ${redeemed > 0 ? `Canjeaste ${redeemed} puntos. ` : ""}Ganaste ${earned} puntos: ahora tienes ${newBalance}.`;
+                    pbOrdersAdd({
+                        items: purchasedLines.map((line) => {
+                            const product = findPurpleBloomProduct(line.id);
+                            return { id: line.id, name: product?.name ?? line.id, qty: line.qty, color: line.color, size: line.size, price: product?.price ?? 0 };
+                        }),
+                        total: paidTotal,
+                        deliveryMethod: deliveryMethod(),
+                    });
+                }
+                saveCart([]);
+                updateBadges();
+                renderCartPage();
+                formEl.reset();
+                touched.clear();
+                syncDelivery();
+                renderCartPage();
+                feedbackEl.textContent = (isPickup ? "¡Gracias por tu compra! Te avisaremos por correo cuando esté listo para retirar en tienda." : "¡Gracias por tu compra! Te enviamos la confirmación por correo.") + pointsMessage + " (Simulación: no se procesó ningún pago real.)";
+                feedbackEl.classList.add("form-feedback--success");
+                feedbackEl.classList.remove("form-feedback--error");
+                const submitBtn = document.getElementById("checkout-submit");
+                if (submitBtn)
+                    pbPetalBurst(submitBtn);
+            });
         });
     }
     updateBadges();

@@ -79,7 +79,9 @@
                       <h3 id="related-${item.id}-name"><a href="producto.html?id=${item.id}">${item.name}</a></h3>
                       ${ratingHtml(item)}
                       ${relatedPriceHtml(item)}
-                      <button type="button" class="btn btn--small" data-related-add="${item.id}" aria-label="Añadir ${item.name} al carrito">Añadir al carrito</button>
+                      <button type="button" class="btn btn--small" data-related-add="${item.id}" ${item.stock === 0 ? "disabled" : ""} aria-label="Añadir ${item.name} al carrito">
+                        ${item.stock === 0 ? "Agotado" : "Añadir al carrito"}
+                      </button>
                       <button type="button" class="product-card__favorite" data-action="add-to-favorite" data-product-id="${item.id}" aria-label="Añadir ${item.name} a favoritos">
                         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                           <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -182,6 +184,7 @@
     document.title = `${product.name} | Purple Bloom`;
     const productIndex = PURPLE_BLOOM_PRODUCTS.findIndex((candidate) => candidate.id === product.id);
     const productCode = `PB-${String(productIndex + 1).padStart(4, "0")}`;
+    const isOutOfStock = product.stock === 0;
     function swatchHtml(p) {
         if (p.imageSrc) {
             return `<img class="product-detail__swatch-fill" src="${p.imageSrc}" alt="" width="48" height="48">`;
@@ -210,6 +213,9 @@
         <a href="catalogo.html" class="product-detail__back">&larr; Regresar</a>
         <h1 id="product-detail-heading">${product.name}</h1>
         <p class="product-detail__code">Código: ${productCode}</p>
+        <p class="product-detail__stock" style="font-size: 0.9rem; font-weight: 600; color: ${isOutOfStock ? '#b91c1c' : '#15803d'}; margin: 0.25rem 0 0.75rem;">
+          ${isOutOfStock ? "Sin stock (Agotado)" : `Disponibilidad: ${product.stock} unidades en inventario`}
+        </p>
         <button type="button" class="product-detail__wishlist" data-action="add-to-favorite" data-product-id="${product.id}" aria-label="Añadir ${product.name} a favoritos">
           <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -226,12 +232,12 @@
         </div>
         <div class="product-detail__field">
           <label class="product-detail__field-label" for="product-size">Talla:</label>
-          <select id="product-size" class="product-detail__select" aria-describedby="product-size-error">
+          <select id="product-size" class="product-detail__select" aria-describedby="product-size-error" ${isOutOfStock ? "disabled" : ""}>
             <option value="">Selecciona</option>
             ${SIZES.map((size) => `<option value="${size}">${size}</option>`).join("")}
           </select>
         </div>
-        <p class="product-detail__field-error" id="product-size-error" role="alert" hidden>Elige una talla antes de agregar al carrito.</p>
+        <p class="product-detail__field-error" id="product-size-error" role="alert" hidden>Elige una talla para añadir al carrito.</p>
 
         <ul class="product-detail__delivery" role="list">
           <li class="product-detail__delivery-item">
@@ -252,12 +258,12 @@
 
         <div class="product-detail__actions">
           <div class="product-detail__qty" role="group" aria-label="Cantidad">
-            <button type="button" class="product-detail__qty-btn" data-action="decrease" aria-label="Restar unidad">&minus;</button>
+            <button type="button" class="product-detail__qty-btn" data-action="decrease" aria-label="Restar unidad" ${isOutOfStock ? "disabled" : ""}>&minus;</button>
             <span class="product-detail__qty-value" data-qty-value aria-live="polite">1</span>
-            <button type="button" class="product-detail__qty-btn" data-action="increase" aria-label="Sumar unidad">+</button>
+            <button type="button" class="product-detail__qty-btn" data-action="increase" aria-label="Sumar unidad" ${isOutOfStock ? "disabled" : ""}>+</button>
           </div>
-          <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="${product.id}" aria-label="Añadir ${product.name} al carrito">
-            Agregar a mi carrito
+          <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="${product.id}" ${isOutOfStock ? "disabled" : ""} aria-label="${isOutOfStock ? `${product.name} agotado` : `Añadir ${product.name} al carrito`}">
+            ${isOutOfStock ? "Agotado" : "Agregar a mi carrito"}
           </button>
         </div>
 
@@ -288,8 +294,7 @@
             sizeError.hidden = true;
         sizeSelect.removeAttribute("aria-invalid");
     });
-    // Colour swatches: picking one swaps the main photo and remembers the
-    // choice for the cart.
+    // Selector de color: al elegir uno cambia la foto principal y guarda la selección para el carrito.
     let selectedColor = colorOptions[0]?.name;
     const mainImage = root.querySelector(".product-detail__image");
     const colorName = root.querySelector("[data-color-name]");
@@ -308,7 +313,7 @@
                 mainImage.src = option.imageSrc;
                 mainImage.alt = option.imageAlt;
                 mainImage.classList.remove("product-detail__image--swap");
-                void mainImage.offsetWidth; // restart the fade if colours are switched quickly
+                void mainImage.offsetWidth; // Reinicia la transición si se cambia rápido de color
                 mainImage.classList.add("product-detail__image--swap");
             }
             pbTrack("Color de producto elegido", { productId: product.id, color: option.name });
@@ -317,19 +322,21 @@
     let quantity = 1;
     const qtyValue = root.querySelector("[data-qty-value]");
     root.querySelector('[data-action="decrease"]')?.addEventListener("click", () => {
-        if (quantity <= 1 || !qtyValue)
+        if (isOutOfStock || quantity <= 1 || !qtyValue)
             return;
         quantity -= 1;
         qtyValue.textContent = String(quantity);
     });
     root.querySelector('[data-action="increase"]')?.addEventListener("click", () => {
-        if (!qtyValue)
+        if (isOutOfStock || quantity >= product.stock || !qtyValue)
             return;
         quantity += 1;
         qtyValue.textContent = String(quantity);
     });
     const addButton = root.querySelector('[data-action="add-to-cart"]');
     addButton?.addEventListener("click", () => {
+        if (isOutOfStock)
+            return;
         const productId = addButton.getAttribute("data-product-id");
         if (!productId)
             return;
@@ -340,21 +347,14 @@
             sizeSelect.focus();
             return;
         }
-        // Un solo evento con la cantidad: uno por unidad abría el aviso de
-        // calificación y registraba la analítica una vez por cada unidad.
+        // Se emite un solo evento con la cantidad seleccionada hacia el carrito.
         document.dispatchEvent(new CustomEvent("purplebloom:add-to-cart", {
             detail: { id: productId, color: selectedColor, size: sizeSelect?.value || undefined, qty: quantity },
         }));
     });
-    // El botón de favoritos (el propio y los de "Te recomendamos") no necesita
-    // un listener acá: lleva data-action="add-to-favorite" + data-product-id,
-    // así que favorites.ts lo maneja por delegación de eventos en document,
-    // sin importar que este bloque se haya renderizado después de que
-    // favorites.ts corrió su propio escaneo inicial.
     root.querySelectorAll("[data-related-add]").forEach((button) => {
         button.addEventListener("click", () => {
             const relatedId = button.getAttribute("data-related-add");
-            // Talla del selector que card-size.ts pone antes del botón.
             const group = button.previousElementSibling;
             const size = group instanceof HTMLElement && group.classList.contains("card-size")
                 ? group.querySelector("input:checked")?.value

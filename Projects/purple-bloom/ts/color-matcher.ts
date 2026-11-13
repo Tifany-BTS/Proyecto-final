@@ -1,11 +1,4 @@
-(function (): void {
-  // Asistente de combinación de colores de ropa (asistente-colores.html):
-  // sube/captura una foto de una prenda, la pinta en un <canvas>, y al
-  // tocar/clicar sobre ella extrae el color del píxel, lo nombra contra un
-  // listado amplio de colores base en español y genera una guía de
-  // combinaciones (✓ / ⚠ / ✕) basada en relación de matiz (HSL), no solo en
-  // una tabla fija de parejas.
-
+﻿(function (): void {
   interface ColorRef {
     name: string;
     hex: string;
@@ -18,9 +11,6 @@
     l: number;
   }
 
-  // Listado amplio de colores base de ropa en español. "neutral: true" marca
-  // los tonos que la mayoría de guías de estilo tratan como comodín (incluye
-  // metálicos y azul marino, que en moda se usan como neutro clásico).
   const COLOR_LIST: ColorRef[] = [
     { name: "Negro", hex: "#1a1a1a", neutral: true },
     { name: "Blanco", hex: "#f5f5f3", neutral: true },
@@ -97,8 +87,6 @@
     return { h, s: s * 100, l: l * 100 };
   }
 
-  // "redmean": aproximación perceptual de distancia de color, más fiel que
-  // una distancia euclidiana simple en RGB sin necesitar convertir a Lab.
   function colorDistance(a: [number, number, number], b: [number, number, number]): number {
     const rMean = (a[0] + b[0]) / 2;
     const dr = a[0] - b[0];
@@ -187,7 +175,7 @@
           color: candidate,
           verdict: "evitar",
           icon: VERDICT_ICON.evitar,
-          description: "Dos tonos muy saturados y en tensión: compiten entre sí, evita usarlos en partes iguales.",
+          description: "Dos tonos muy saturados y en tensión: evita usarlos en partes iguales.",
         };
       }
       return {
@@ -222,7 +210,6 @@
     const precaucion = evaluated.filter((e) => e.verdict === "precaucion");
     const evitar = evaluated.filter((e) => e.verdict === "evitar");
 
-    // Guía compacta: prioriza variedad de veredictos sobre exhaustividad.
     return [...bien.slice(0, 6), ...precaucion.slice(0, 3), ...evitar.slice(0, 3)];
   }
 
@@ -257,9 +244,6 @@
     const rawCtx = canvas.getContext("2d", { willReadFrequently: true });
     if (!rawCtx) return;
 
-    // Alias con tipo no-nulo explícito: los closures de abajo (drawImageToCanvas,
-    // renderResult, listeners) no heredan el estrechamiento de tipo de los
-    // guardas de arriba, así que se declaran de nuevo con un tipo concreto.
     const canvasEl: HTMLCanvasElement = canvas;
     const ctx: CanvasRenderingContext2D = rawCtx;
     const resultPanelEl: HTMLElement = resultPanel;
@@ -268,7 +252,85 @@
     const valuesElEl: HTMLElement = valuesEl;
     const guideBodyEl: HTMLElement = guideBody;
 
+    // Eliminar botón superior antiguo si existía
+    const oldTopBtn = document.getElementById("limpiar-seleccion-btn");
+    if (oldTopBtn && oldTopBtn.parentElement !== resultPanelEl) {
+      oldTopBtn.remove();
+    }
+
+    // Colocar el botón "Limpiar selección" dentro de la tarjeta de resultado, a la derecha
+    resultPanelEl.style.display = resultPanelEl.hidden ? "none" : "flex";
+    resultPanelEl.style.alignItems = "center";
+    resultPanelEl.style.justifyContent = "space-between";
+    resultPanelEl.style.gap = "1rem";
+
+    let clearBtn = document.getElementById("limpiar-seleccion-btn") as HTMLButtonElement | null;
+    if (!clearBtn) {
+      clearBtn = document.createElement("button");
+      clearBtn.type = "button";
+      clearBtn.id = "limpiar-seleccion-btn";
+      clearBtn.className = "btn btn--small btn--outline";
+      clearBtn.textContent = "Limpiar selección";
+      clearBtn.style.marginLeft = "auto";
+      clearBtn.style.flexShrink = "0";
+      resultPanelEl.appendChild(clearBtn);
+    }
+
+    // Aviso de error cuando se toca fuera de la prenda
+    let errorBanner = document.getElementById("prenda-error-aviso");
+    if (!errorBanner) {
+      errorBanner = document.createElement("p");
+      errorBanner.id = "prenda-error-aviso";
+      errorBanner.setAttribute("role", "alert");
+      errorBanner.hidden = true;
+      errorBanner.style.cssText =
+        "margin-top: 1rem; padding: 0.75rem 1rem; border-radius: 8px; background: #fee2e2; color: #991b1b; font-weight: 600; text-align: center;";
+      dropZone.after(errorBanner);
+    }
+    const errorBannerEl: HTMLElement = errorBanner;
+
     let stream: MediaStream | null = null;
+    let backgroundSamples: [number, number, number][] = [];
+
+    function sampleImageBackground(): void {
+      const w = canvasEl.width;
+      const h = canvasEl.height;
+      if (w < 10 || h < 10) return;
+
+      const points: [number, number][] = [
+        [3, 3],
+        [w - 4, 3],
+        [3, h - 4],
+        [w - 4, h - 4],
+        [Math.floor(w / 2), 3],
+        [3, Math.floor(h / 2)],
+        [w - 4, Math.floor(h / 2)],
+      ];
+
+      backgroundSamples = points.map(([px, py]) => {
+        const d = ctx.getImageData(px, py, 1, 1).data;
+        return [d[0], d[1], d[2]];
+      });
+    }
+
+    function setResultVisible(visible: boolean): void {
+      resultPanelEl.hidden = !visible;
+      resultPanelEl.style.display = visible ? "flex" : "none";
+    }
+
+    function clearSelectionKeepPhoto(): void {
+      errorBannerEl.hidden = true;
+      setResultVisible(false);
+      swatchElEl.style.backgroundColor = "transparent";
+      nameElEl.textContent = "—";
+      valuesElEl.textContent = "—";
+      guideBodyEl.innerHTML =
+        '<tr><td colspan="3">Detecta un color en la prenda para ver sugerencias de combinación.</td></tr>';
+    }
+
+    clearBtn.addEventListener("click", () => {
+      clearSelectionKeepPhoto();
+    });
 
     function stopStream(): void {
       if (stream) {
@@ -281,19 +343,20 @@
 
     function showCanvas(): void {
       canvasEl.hidden = false;
+      errorBannerEl.hidden = true;
       if (placeholder instanceof HTMLElement) placeholder.hidden = true;
       if (instructions instanceof HTMLElement) instructions.hidden = false;
     }
 
     function drawImageToCanvas(source: CanvasImageSource, width: number, height: number): void {
-      // Limita el lado mayor para mantener el trabajo de pintado/lectura de
-      // píxeles ligero en móviles, conservando la proporción original.
       const maxSide = 900;
       const scale = Math.min(1, maxSide / Math.max(width, height));
       canvasEl.width = Math.round(width * scale);
       canvasEl.height = Math.round(height * scale);
       ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
       ctx.drawImage(source, 0, 0, canvasEl.width, canvasEl.height);
+      sampleImageBackground();
+      clearSelectionKeepPhoto();
       showCanvas();
     }
 
@@ -340,11 +403,12 @@
           });
           video.srcObject = stream;
           video.hidden = false;
+          errorBannerEl.hidden = true;
           if (placeholder instanceof HTMLElement) placeholder.hidden = true;
           canvasEl.hidden = true;
           await video.play();
           if (captureBtn instanceof HTMLElement) captureBtn.hidden = false;
-        } catch (error) {
+        } catch {
           window.alert(
             "No se pudo acceder a la cámara. Puedes subir una foto de la prenda en su lugar."
           );
@@ -359,11 +423,42 @@
       });
     }
 
+    function isOutsideGarment(x: number, y: number, pixel: Uint8ClampedArray): boolean {
+      const [r, g, b, alpha] = pixel;
+      if (alpha < 50) return true;
+
+      // Comprobar textura local (los fondos de foto son lisos, la tela tiene trama o variaciones)
+      const sampleX = Math.min(Math.max(x - 2, 0), canvasEl.width - 5);
+      const sampleY = Math.min(Math.max(y - 2, 0), canvasEl.height - 5);
+      const block = ctx.getImageData(sampleX, sampleY, 5, 5).data;
+      let maxDiff = 0;
+      for (let i = 0; i < block.length; i += 4) {
+        const diff = Math.abs(block[i] - r) + Math.abs(block[i + 1] - g) + Math.abs(block[i + 2] - b);
+        if (diff > maxDiff) maxDiff = diff;
+      }
+
+      // 1) Fondo blanco/gris claro muy liso
+      if (r >= 225 && g >= 225 && b >= 225 && maxDiff < 14) {
+        return true;
+      }
+
+      // 2) Coincide con el color del borde/fondo de la foto y es una superficie lisa
+      if (maxDiff < 14 && backgroundSamples.length > 0) {
+        const matchesBg = backgroundSamples.some(
+          (bg) => colorDistance([r, g, b], bg) < 28
+        );
+        if (matchesBg) return true;
+      }
+
+      return false;
+    }
+
     function renderResult(rgb: [number, number, number]): void {
+      errorBannerEl.hidden = true;
       const hex = rgbToHex(...rgb);
       const closest = findClosestColor(rgb);
 
-      resultPanelEl.hidden = false;
+      setResultVisible(true);
       swatchElEl.style.backgroundColor = hex;
       nameElEl.textContent = closest.name;
       valuesElEl.textContent = `RGB(${rgb[0]}, ${rgb[1]}, ${rgb[2]}) · ${hex}`;
@@ -395,14 +490,16 @@
       const rect = canvasEl.getBoundingClientRect();
       const scaleX = canvasEl.width / rect.width;
       const scaleY = canvasEl.height / rect.height;
-      const x = Math.round((event.clientX - rect.left) * scaleX);
-      const y = Math.round((event.clientY - rect.top) * scaleY);
-      const pixel = ctx.getImageData(
-        Math.min(Math.max(x, 0), canvasEl.width - 1),
-        Math.min(Math.max(y, 0), canvasEl.height - 1),
-        1,
-        1
-      ).data;
+      const x = Math.min(Math.max(Math.round((event.clientX - rect.left) * scaleX), 0), canvasEl.width - 1);
+      const y = Math.min(Math.max(Math.round((event.clientY - rect.top) * scaleY), 0), canvasEl.height - 1);
+      const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+      if (isOutsideGarment(x, y, pixel)) {
+        errorBannerEl.textContent = "No se encuentra la blusa o prenda. Toca una de las zonas marcadas";
+        errorBannerEl.hidden = false;
+        return;
+      }
+
       renderResult([pixel[0], pixel[1], pixel[2]]);
     });
   }

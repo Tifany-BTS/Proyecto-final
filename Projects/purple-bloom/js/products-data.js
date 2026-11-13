@@ -9,8 +9,15 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "100% seda",
         care: "mano",
+        stock: 10,
         imageSrc: "img/blusa-lavanda.jpg",
         imageAlt: "Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura",
+        colors: [
+            { name: "Lavanda", imageSrc: "img/blusa-lavanda.jpg", imageAlt: "Blusa en tono lavanda" },
+            { name: "Rosa Palo", imageSrc: "img/blusa-rosa-palo.jpg", imageAlt: "Blusa en tono rosa palo" },
+            { name: "Menta", imageSrc: "img/blusa-menta.jpg", imageAlt: "Blusa en tono menta" },
+            { name: "Celeste", imageSrc: "img/blusa-celeste.jpg", imageAlt: "Blusa en tono celeste" },
+        ],
     },
     {
         id: "vestido-violeta",
@@ -21,8 +28,14 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "Poliéster y tul con bordado floral",
         care: "mano",
+        stock: 6,
         imageSrc: "img/vestido-violeta.jpg",
         imageAlt: "Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura",
+        colors: [
+            { name: "Violeta", imageSrc: "img/vestido-violeta.jpg", imageAlt: "Vestido midi violeta" },
+            { name: "Orquídea", imageSrc: "img/vestido-orquidea.jpg", imageAlt: "Vestido midi orquídea" },
+            { name: "Esmeralda", imageSrc: "img/vestido-esmeralda.jpg", imageAlt: "Vestido midi esmeralda" },
+        ],
     },
     {
         id: "pantalon-berenjena",
@@ -33,8 +46,15 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "65% poliéster, 35% viscosa",
         care: "ambos",
+        stock: 12,
         imageSrc: "img/pantalon-berenjena.jpg",
         imageAlt: "Pantalón Berenjena: pantalón de corte recto en tono berenjena con pinzas",
+        colors: [
+            { name: "Berenjena", imageSrc: "img/pantalon-berenjena.jpg", imageAlt: "Pantalón tono berenjena" },
+            { name: "Borgoña", imageSrc: "img/pantalon-borgona.jpg", imageAlt: "Pantalón tono borgoña" },
+            { name: "Azul Noche", imageSrc: "img/pantalon-azul-noche.jpg", imageAlt: "Pantalón tono azul noche" },
+            { name: "Verde Bosque", imageSrc: "img/pantalon-verde-bosque.jpg", imageAlt: "Pantalón tono verde bosque" },
+        ],
     },
     {
         id: "blusa-clasica",
@@ -45,8 +65,12 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "100% algodón",
         care: "ambos",
+        stock: 15,
         imageSrc: "img/blusa-clasica.jpg",
         imageAlt: "Blusa Clásica: camisa blanca de manga larga con botones y cuello camisero",
+        colors: [
+            { name: "Blanco Clásico", imageSrc: "img/blusa-clasica.jpg", imageAlt: "Camisa blanca clásica" },
+        ],
     },
     {
         id: "vestido-elegante",
@@ -57,8 +81,12 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "95% poliéster, 5% elastano",
         care: "maquina",
+        stock: 0, // Sin inventario: activa el botón "Agotado" (Regla RN-02)
         imageSrc: "img/vestido-elegante.jpg",
         imageAlt: "Vestido Elegante: vestido largo color crudo de manga larga con bordado y borde festoneado",
+        colors: [
+            { name: "Crudo Marfil", imageSrc: "img/vestido-elegante.jpg", imageAlt: "Vestido color crudo" },
+        ],
     },
     {
         id: "pantalon-slim",
@@ -69,8 +97,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "70% algodón, 28% poliéster, 2% elastano",
         care: "maquina",
+        stock: 7,
         imageSrc: "img/pantalon-slim.jpg",
         imageAlt: "Pantalón Slim: pantalón negro de tiro alto con pinzas y corte ajustado",
+        colors: [
+            { name: "Negro", imageSrc: "img/pantalon-slim.jpg", imageAlt: "Pantalón negro slim" },
+            { name: "Azul Noche", imageSrc: "img/pantalon-azul-noche.jpg", imageAlt: "Pantalón azul noche" },
+        ],
     },
     {
         id: "blusa-estampada",
@@ -81,6 +114,7 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "100% viscosa",
         care: "mano",
+        stock: 0, // Sin inventario: activa el botón "Agotado" (Regla RN-02)
         swatch: "",
     },
     {
@@ -92,8 +126,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "100% poliéster",
         care: "ambos",
+        stock: 9,
         imageSrc: "img/vestido-casual.jpg",
         imageAlt: "Vestido Casual: vestido lila de tiras con estampado floral y lazo en la cintura",
+        colors: [
+            { name: "Lila Floral", imageSrc: "img/vestido-casual.jpg", imageAlt: "Vestido casual lila floral" },
+            { name: "Turquesa Floral", imageSrc: "img/vestido-turquesa.jpg", imageAlt: "Vestido casual turquesa floral" },
+        ],
     },
     {
         id: "pantalon-wide-leg",
@@ -104,6 +143,7 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "100% lino",
         care: "maquina",
+        stock: 5,
         swatch: "alt2",
     },
     {
@@ -115,8 +155,14 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "100% viscosa",
         care: "mano",
+        stock: 8,
         imageSrc: "img/blusa-menta.jpg",
         imageAlt: "Blusa Menta: blusa cruzada verde menta con manga corta y lazo en la cintura",
+        colors: [
+            { name: "Menta", imageSrc: "img/blusa-menta.jpg", imageAlt: "Blusa verde menta" },
+            { name: "Rosa Palo", imageSrc: "img/blusa-rosa-palo.jpg", imageAlt: "Blusa rosa palo" },
+            { name: "Celeste", imageSrc: "img/blusa-celeste.jpg", imageAlt: "Blusa celeste" },
+        ],
     },
     {
         id: "blusa-rosa-palo",
@@ -127,8 +173,15 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "100% seda",
         care: "mano",
+        stock: 8,
         imageSrc: "img/blusa-rosa-palo.jpg",
         imageAlt: "Blusa Rosa Palo: blusa cruzada rosa palo con manga corta y lazo en la cintura",
+        colors: [
+            { name: "Rosa Palo", imageSrc: "img/blusa-rosa-palo.jpg", imageAlt: "Blusa cruzada rosa palo" },
+            { name: "Lavanda", imageSrc: "img/blusa-lavanda.jpg", imageAlt: "Blusa cruzada lavanda" },
+            { name: "Menta", imageSrc: "img/blusa-menta.jpg", imageAlt: "Blusa cruzada menta" },
+            { name: "Celeste", imageSrc: "img/blusa-celeste.jpg", imageAlt: "Blusa cruzada celeste" },
+        ],
     },
     {
         id: "blusa-celeste",
@@ -139,8 +192,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "65% algodón, 35% poliéster",
         care: "ambos",
+        stock: 4,
         imageSrc: "img/blusa-celeste.jpg",
         imageAlt: "Blusa Celeste: blusa cruzada azul celeste con manga corta y lazo en la cintura",
+        colors: [
+            { name: "Celeste", imageSrc: "img/blusa-celeste.jpg", imageAlt: "Blusa azul celeste" },
+            { name: "Lavanda", imageSrc: "img/blusa-lavanda.jpg", imageAlt: "Blusa lavanda" },
+        ],
     },
     {
         id: "vestido-esmeralda",
@@ -151,8 +209,14 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "Poliéster y tul con bordado floral",
         care: "mano",
+        stock: 3,
         imageSrc: "img/vestido-esmeralda.jpg",
         imageAlt: "Vestido Esmeralda: vestido midi verde esmeralda con bordado floral y lazo en la cintura",
+        colors: [
+            { name: "Esmeralda", imageSrc: "img/vestido-esmeralda.jpg", imageAlt: "Vestido esmeralda" },
+            { name: "Violeta", imageSrc: "img/vestido-violeta.jpg", imageAlt: "Vestido violeta" },
+            { name: "Orquídea", imageSrc: "img/vestido-orquidea.jpg", imageAlt: "Vestido orquídea" },
+        ],
     },
     {
         id: "vestido-orquidea",
@@ -163,8 +227,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "Poliéster y tul con bordado floral",
         care: "mano",
+        stock: 6,
         imageSrc: "img/vestido-orquidea.jpg",
         imageAlt: "Vestido Orquídea: vestido midi color orquídea con bordado floral y lazo en la cintura",
+        colors: [
+            { name: "Orquídea", imageSrc: "img/vestido-orquidea.jpg", imageAlt: "Vestido orquídea" },
+            { name: "Violeta", imageSrc: "img/vestido-violeta.jpg", imageAlt: "Vestido violeta" },
+        ],
     },
     {
         id: "vestido-turquesa",
@@ -175,8 +244,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "100% poliéster",
         care: "ambos",
+        stock: 5,
         imageSrc: "img/vestido-turquesa.jpg",
         imageAlt: "Vestido Turquesa: vestido turquesa de tiras con estampado floral y lazo en la cintura",
+        colors: [
+            { name: "Turquesa Floral", imageSrc: "img/vestido-turquesa.jpg", imageAlt: "Vestido turquesa" },
+            { name: "Lila Floral", imageSrc: "img/vestido-casual.jpg", imageAlt: "Vestido lila" },
+        ],
     },
     {
         id: "pantalon-azul-noche",
@@ -187,8 +261,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "70% poliéster, 28% viscosa, 2% elastano",
         care: "maquina",
+        stock: 11,
         imageSrc: "img/pantalon-azul-noche.jpg",
         imageAlt: "Pantalón Azul Noche: pantalón azul marino de corte recto con pinzas",
+        colors: [
+            { name: "Azul Noche", imageSrc: "img/pantalon-azul-noche.jpg", imageAlt: "Pantalón azul noche" },
+            { name: "Berenjena", imageSrc: "img/pantalon-berenjena.jpg", imageAlt: "Pantalón berenjena" },
+        ],
     },
     {
         id: "pantalon-verde-bosque",
@@ -199,8 +278,13 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 4,
         material: "65% poliéster, 35% viscosa",
         care: "ambos",
+        stock: 4,
         imageSrc: "img/pantalon-verde-bosque.jpg",
         imageAlt: "Pantalón Verde Bosque: pantalón verde oscuro de corte recto con pinzas",
+        colors: [
+            { name: "Verde Bosque", imageSrc: "img/pantalon-verde-bosque.jpg", imageAlt: "Pantalón verde bosque" },
+            { name: "Borgoña", imageSrc: "img/pantalon-borgona.jpg", imageAlt: "Pantalón borgoña" },
+        ],
     },
     {
         id: "pantalon-borgona",
@@ -211,24 +295,23 @@ const PURPLE_BLOOM_PRODUCTS = [
         rating: 5,
         material: "70% poliéster, 28% viscosa, 2% elastano",
         care: "maquina",
+        stock: 9,
         imageSrc: "img/pantalon-borgona.jpg",
         imageAlt: "Pantalón Borgoña: pantalón color vino de corte recto con pinzas",
+        colors: [
+            { name: "Borgoña", imageSrc: "img/pantalon-borgona.jpg", imageAlt: "Pantalón borgoña" },
+            { name: "Berenjena", imageSrc: "img/pantalon-berenjena.jpg", imageAlt: "Pantalón berenjena" },
+        ],
     },
 ];
 function findPurpleBloomProduct(id) {
     return PURPLE_BLOOM_PRODUCTS.find((product) => product.id === id);
 }
-// A product counts as "on offer" purely by its current price — there is no
-// separate discount/original-price field, so this stays correct on its own
-// if a price in the list above ever changes.
 const OFFER_PRICE_THRESHOLD = 50;
 const OFFER_DISCOUNT_PERCENT = 20;
 function isOnOffer(product) {
     return product.price <= OFFER_PRICE_THRESHOLD;
 }
-// Reverse-computed from the flat OFFER_DISCOUNT_PERCENT rather than a stored
-// field, for the same reason isOnOffer avoids one: nothing to keep in sync
-// if a price above changes.
 function originalPriceIfOnOffer(product) {
     if (!isOnOffer(product))
         return undefined;
