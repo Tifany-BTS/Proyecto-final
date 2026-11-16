@@ -1,6 +1,6 @@
 ﻿import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { useProducts } from "../hooks/useProducts";
+import { useCommitOrderStock, useProducts } from "../hooks/useProducts";
 import { useCartStore } from "../stores/use-cart-store";
 import { CartTable, type EnrichedCartLine } from "../components/checkout/CartTable";
 import { CheckoutForm } from "../components/checkout/CheckoutForm";
@@ -12,6 +12,7 @@ import {
 export function ViewCartCheckout() {
   const navigate = useNavigate();
   const { data: products } = useProducts();
+  const commitOrderStock = useCommitOrderStock();
   const items = useCartStore((state) => state.items);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
@@ -63,7 +64,22 @@ export function ViewCartCheckout() {
           <CartTable
             lines={enrichedLines}
             total={total}
-            onUpdateQuantity={updateQuantity}
+            onUpdateQuantity={(productId, size, color, nextQty) => {
+              const product = products?.find((p) => p.id === productId);
+              if (!product) {
+                updateQuantity(productId, size, color, nextQty);
+                return;
+              }
+              const otherVariantsQty = items
+                .filter(
+                  (i) =>
+                    i.productId === productId &&
+                    !(i.size === size && i.color === color)
+                )
+                .reduce((sum, i) => sum + i.quantity, 0);
+              const maxAllowed = Math.max(0, product.stock - otherVariantsQty);
+              updateQuantity(productId, size, color, Math.min(nextQty, maxAllowed));
+            }}
             onRemoveItem={removeItem}
           />
         )}
@@ -73,12 +89,23 @@ export function ViewCartCheckout() {
           <CheckoutForm
             disabled={isEmpty}
             onValidSubmit={(customer) => {
+              const snapshotLines = [...enrichedLines];
+              const snapshotTotal = total;
+
+              commitOrderStock(
+                snapshotLines.map((line) => ({
+                  productId: line.productId,
+                  quantity: line.quantity,
+                }))
+              );
+
+              clearCart();
+
               setConfirmedOrder({
                 customer,
-                lines: enrichedLines,
-                total,
+                lines: snapshotLines,
+                total: snapshotTotal,
               });
-              clearCart();
             }}
           />
         </div>

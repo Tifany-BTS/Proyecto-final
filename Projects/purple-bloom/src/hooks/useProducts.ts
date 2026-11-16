@@ -1,5 +1,9 @@
-﻿import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../services/product-service";
+﻿import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  commitOrderStock,
+  fetchProducts,
+  type PurpleBloomProduct,
+} from "../services/product-service";
 
 export function useProducts() {
   return useQuery({
@@ -7,4 +11,13 @@ export function useProducts() {
     queryFn: fetchProducts,
     staleTime: 1000 * 60 * 5,
   });
+}
+
+export function useCommitOrderStock() {
+  const queryClient = useQueryClient();
+
+  return (purchasedLines: { productId: string; quantity: number }[]) => {
+    const updatedProducts = commitOrderStock(purchasedLines);
+    queryClient.setQueryData<PurpleBloomProduct[]>(["products"], updatedProducts);
+  };
 }

@@ -9,6 +9,7 @@ export function ViewProductDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: products, isLoading } = useProducts();
   const product = products?.find((p) => p.id === id);
+  const items = useCartStore((state) => state.items);
   const addItem = useCartStore((state) => state.addItem);
 
   const [selectedSize, setSelectedSize] = useState("");
@@ -42,7 +43,13 @@ export function ViewProductDetail() {
   const activeColorObj = colorOptions.find((c) => c.name === selectedColor) ?? colorOptions[0];
   const activeColorName = activeColorObj?.name || "Único";
   const currentImageSrc = activeColorObj?.imageSrc || product.imageSrc;
-  const isOutOfStock = product.stock === 0;
+
+  const inCartQty = items
+    .filter((item) => item.productId === product.id)
+    .reduce((sum, item) => sum + item.quantity, 0);
+  const availableStock = Math.max(0, product.stock - inCartQty);
+  const isOutOfStock = availableStock === 0;
+  const effectiveQty = isOutOfStock ? 1 : Math.min(quantity, availableStock);
   const showFallback = !currentImageSrc || imgFailed;
 
   const handleAddToCart = () => {
@@ -54,13 +61,19 @@ export function ViewProductDetail() {
       return;
     }
 
+    const qtyToAdd = Math.min(effectiveQty, availableStock);
+    if (qtyToAdd <= 0) return;
+
     setSizeError("");
     addItem({
       productId: product.id,
       size: selectedSize,
       color: activeColorName,
-      quantity,
+      quantity: qtyToAdd,
     });
+
+    const nextAvailable = availableStock - qtyToAdd;
+    setQuantity(nextAvailable > 0 ? Math.min(effectiveQty, nextAvailable) : 1);
     setAddedFeedback(true);
   };
 
@@ -109,8 +122,14 @@ export function ViewProductDetail() {
 
             <div className="product-detail__price-row">
               <span className="product-detail__price">${product.price.toFixed(2)}</span>
-              <span style={{ fontSize: "0.9rem", opacity: 0.75 }}>
-                {isOutOfStock ? "Sin existencias" : `Stock disponible: ${product.stock}`}
+              <span
+                style={{
+                  fontSize: "0.9rem",
+                  fontWeight: 600,
+                  color: isOutOfStock ? "#b91c1c" : "#15803d",
+                }}
+              >
+                {isOutOfStock ? "Sin existencias (Agotado)" : `Stock disponible: ${availableStock}`}
               </span>
             </div>
 
@@ -179,9 +198,12 @@ export function ViewProductDetail() {
                 type="number"
                 className="product-detail__select"
                 min={1}
-                max={Math.max(1, product.stock)}
-                value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
+                max={Math.max(1, availableStock)}
+                value={effectiveQty}
+                onChange={(e) => {
+                  const val = Math.max(1, Number(e.target.value) || 1);
+                  setQuantity(Math.min(val, Math.max(1, availableStock)));
+                }}
                 disabled={isOutOfStock}
                 style={{ width: 96 }}
               />
@@ -193,7 +215,12 @@ export function ViewProductDetail() {
                 className="btn btn--primary"
                 disabled={isOutOfStock}
                 onClick={handleAddToCart}
-                style={{ width: "100%", padding: "0.95rem 1.25rem" }}
+                style={{
+                  width: "100%",
+                  padding: "0.95rem 1.25rem",
+                  opacity: isOutOfStock ? 0.55 : 1,
+                  cursor: isOutOfStock ? "not-allowed" : "pointer",
+                }}
               >
                 {isOutOfStock ? "Agotado" : "AGREGAR A MI CARRITO"}
               </button>

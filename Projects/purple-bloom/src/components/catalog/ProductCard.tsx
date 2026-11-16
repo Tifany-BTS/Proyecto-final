@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router";
+import { useCartStore } from "../../stores/use-cart-store";
 import type { PurpleBloomProduct } from "../../services/product-service";
 
 interface ProductCardProps {
@@ -8,11 +9,17 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [imgFailed, setImgFailed] = useState(false);
+  const cartItems = useCartStore((state) => state.items);
+  const inCartQty = cartItems
+    .filter((item) => item.productId === product.id)
+    .reduce((sum, item) => sum + item.quantity, 0);
+  const remainingStock = Math.max(0, product.stock - inCartQty);
+  const isOutOfStock = remainingStock === 0;
   const showFallback = !product.imageSrc || imgFailed;
 
   return (
     <article className="product-card" data-testid={`product-card-${product.id}`}>
-      {product.stock === 0 && (
+      {isOutOfStock && (
         <span className="product-card__badge">Agotado</span>
       )}
 
@@ -57,6 +64,16 @@ export function ProductCard({ product }: ProductCardProps) {
           </Link>
         </h3>
         <p className="product-card__desc">{product.description}</p>
+        <p
+          style={{
+            margin: "0.35rem 0 0",
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            color: isOutOfStock ? "#b91c1c" : "#15803d",
+          }}
+        >
+          {isOutOfStock ? "Agotado" : `Disponibles: ${remainingStock}`}
+        </p>
 
         <div className="product-card__price-row" style={{ marginTop: "0.75rem" }}>
           <span className="product-card__price">${product.price.toFixed(2)}</span>

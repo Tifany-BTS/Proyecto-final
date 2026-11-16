@@ -1,7 +1,4 @@
-﻿// Archivo de datos compartidos del catálogo. Expone la lista de productos
-// de forma global para que cart.ts, product-detail.ts y catalog-filters.ts
-// puedan leer los mismos datos sin necesidad de un empaquetador de módulos.
-export interface PurpleBloomProduct {
+﻿export interface PurpleBloomProduct {
   id: string;
   name: string;
   price: number;
@@ -99,7 +96,7 @@ export const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = [
     rating: 5,
     material: "95% poliéster, 5% elastano",
     care: "maquina",
-    stock: 0, // Sin inventario: activa el botón "Agotado" (Regla RN-02)
+    stock: 0,
     imageSrc: "img/vestido-elegante.jpg",
     imageAlt: "Vestido Elegante: vestido largo color crudo de manga larga con bordado y borde festoneado",
     colors: [
@@ -132,7 +129,7 @@ export const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = [
     rating: 5,
     material: "100% viscosa",
     care: "mano",
-    stock: 0, // Sin inventario: activa el botón "Agotado" (Regla RN-02)
+    stock: 0,
     swatch: "",
   },
   {
@@ -323,8 +320,68 @@ export const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = [
   },
 ];
 
+const STOCK_STORAGE_KEY = "purple_bloom_stock_v1";
+
+function readStockOverrides(): Record<string, number> {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return {};
+    const raw = window.localStorage.getItem(STOCK_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeStockOverrides(overrides: Record<string, number>): void {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return;
+    window.localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(overrides));
+  } catch {
+    // Ignorar errores de almacenamiento privado
+  }
+}
+
+export function getProductsWithPersistedStock(): PurpleBloomProduct[] {
+  const overrides = readStockOverrides();
+  return PURPLE_BLOOM_PRODUCTS.map((product) => ({
+    ...product,
+    stock:
+      typeof overrides[product.id] === "number"
+        ? Math.max(0, overrides[product.id])
+        : product.stock,
+  }));
+}
+
+export function commitOrderStock(
+  purchasedLines: { productId: string; quantity: number }[]
+): PurpleBloomProduct[] {
+  const currentProducts = getProductsWithPersistedStock();
+  const overrides = readStockOverrides();
+
+  const totalsByProduct = new Map<string, number>();
+  for (const line of purchasedLines) {
+    totalsByProduct.set(
+      line.productId,
+      (totalsByProduct.get(line.productId) ?? 0) + line.quantity
+    );
+  }
+
+  const updated = currentProducts.map((product) => {
+    const purchasedQty = totalsByProduct.get(product.id) ?? 0;
+    if (purchasedQty <= 0) return product;
+    const nextStock = Math.max(0, product.stock - purchasedQty);
+    overrides[product.id] = nextStock;
+    return { ...product, stock: nextStock };
+  });
+
+  writeStockOverrides(overrides);
+  return updated;
+}
+
 export function findPurpleBloomProduct(id: string): PurpleBloomProduct | undefined {
-  return PURPLE_BLOOM_PRODUCTS.find((product) => product.id === id);
+  return getProductsWithPersistedStock().find((product) => product.id === id);
 }
 
 const OFFER_PRICE_THRESHOLD = 50;
@@ -341,7 +398,7 @@ export function originalPriceIfOnOffer(product: PurpleBloomProduct): number | un
 
 export async function fetchProducts(): Promise<PurpleBloomProduct[]> {
   await new Promise((resolve) => setTimeout(resolve, 60));
-  return PURPLE_BLOOM_PRODUCTS;
+  return getProductsWithPersistedStock();
 }
 
 export async function fetchProductById(id: string): Promise<PurpleBloomProduct | undefined> {
