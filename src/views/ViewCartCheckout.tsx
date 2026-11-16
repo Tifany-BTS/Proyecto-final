@@ -1,6 +1,7 @@
 ﻿import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useCommitOrderStock, useProducts } from "../hooks/useProducts";
+import { getStockForSize } from "../services/product-service";
 import { useCartStore } from "../stores/use-cart-store";
 import { CartTable, type EnrichedCartLine } from "../components/checkout/CartTable";
 import { CheckoutForm } from "../components/checkout/CheckoutForm";
@@ -70,14 +71,16 @@ export function ViewCartCheckout() {
                 updateQuantity(productId, size, color, nextQty);
                 return;
               }
-              const otherVariantsQty = items
+              const otherColorsSameSizeQty = items
                 .filter(
                   (i) =>
                     i.productId === productId &&
-                    !(i.size === size && i.color === color)
+                    i.size === size &&
+                    i.color !== color
                 )
                 .reduce((sum, i) => sum + i.quantity, 0);
-              const maxAllowed = Math.max(0, product.stock - otherVariantsQty);
+              const sizeStock = getStockForSize(product, size);
+              const maxAllowed = Math.max(0, sizeStock - otherColorsSameSizeQty);
               updateQuantity(productId, size, color, Math.min(nextQty, maxAllowed));
             }}
             onRemoveItem={removeItem}
@@ -95,6 +98,7 @@ export function ViewCartCheckout() {
               commitOrderStock(
                 snapshotLines.map((line) => ({
                   productId: line.productId,
+                  size: line.size,
                   quantity: line.quantity,
                 }))
               );

@@ -1,9 +1,8 @@
 ﻿import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { useProducts } from "../hooks/useProducts";
+import { getStockForSize, PRODUCT_SIZES } from "../services/product-service";
 import { useCartStore } from "../stores/use-cart-store";
-
-const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL"];
 
 export function ViewProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -44,12 +43,29 @@ export function ViewProductDetail() {
   const activeColorName = activeColorObj?.name || "Único";
   const currentImageSrc = activeColorObj?.imageSrc || product.imageSrc;
 
-  const inCartQty = items
-    .filter((item) => item.productId === product.id)
-    .reduce((sum, item) => sum + item.quantity, 0);
-  const availableStock = Math.max(0, product.stock - inCartQty);
-  const isOutOfStock = availableStock === 0;
-  const effectiveQty = isOutOfStock ? 1 : Math.min(quantity, availableStock);
+  const availableBySize = Object.fromEntries(
+    PRODUCT_SIZES.map((size) => {
+      const inCartForSize = items
+        .filter((item) => item.productId === product.id && item.size === size)
+        .reduce((sum, item) => sum + item.quantity, 0);
+      const remaining = Math.max(0, getStockForSize(product, size) - inCartForSize);
+      return [size, remaining];
+    })
+  ) as Record<(typeof PRODUCT_SIZES)[number], number>;
+
+  const totalAvailableAllSizes = PRODUCT_SIZES.reduce(
+    (sum, size) => sum + availableBySize[size],
+    0
+  );
+
+  const availableStock = selectedSize
+    ? (availableBySize[selectedSize as (typeof PRODUCT_SIZES)[number]] ?? 0)
+    : totalAvailableAllSizes;
+
+  const isProductCompletelyOut = totalAvailableAllSizes === 0;
+  const isSelectedSizeOut = Boolean(selectedSize) && availableStock === 0;
+  const isOutOfStock = isProductCompletelyOut || isSelectedSizeOut;
+  const effectiveQty = isOutOfStock ? 1 : Math.min(quantity, Math.max(1, availableStock));
   const showFallback = !currentImageSrc || imgFailed;
 
   const handleAddToCart = () => {
@@ -129,7 +145,13 @@ export function ViewProductDetail() {
                   color: isOutOfStock ? "#b91c1c" : "#15803d",
                 }}
               >
-                {isOutOfStock ? "Sin existencias (Agotado)" : `Stock disponible: ${availableStock}`}
+                {isProductCompletelyOut
+                  ? "Sin existencias (Agotado)"
+                  : isSelectedSizeOut
+                    ? `Talla ${selectedSize} agotada`
+                    : selectedSize
+                      ? `Stock talla ${selectedSize}: ${availableStock}`
+                      : `Stock disponible: ${availableStock}`}
               </span>
             </div>
 
@@ -149,7 +171,7 @@ export function ViewProductDetail() {
                     setSelectedColor(e.target.value);
                     setImgFailed(false);
                   }}
-                  disabled={isOutOfStock}
+                  disabled={isProductCompletelyOut}
                 >
                   {colorOptions.map((color) => (
                     <option key={color.name} value={color.name}>
@@ -169,17 +191,26 @@ export function ViewProductDetail() {
                 className="product-detail__select"
                 value={selectedSize}
                 onChange={(e) => {
-                  setSelectedSize(e.target.value);
-                  if (e.target.value) setSizeError("");
+                  const nextSize = e.target.value;
+                  setSelectedSize(nextSize);
+                  setAddedFeedback(false);
+                  if (nextSize) {
+                    setSizeError("");
+                    const nextStock = availableBySize[nextSize as (typeof PRODUCT_SIZES)[number]] ?? 1;
+                    setQuantity((prev) => Math.max(1, Math.min(prev, Math.max(1, nextStock))));
+                  }
                 }}
-                disabled={isOutOfStock}
+                disabled={isProductCompletelyOut}
               >
                 <option value="">Selecciona una talla</option>
-                {AVAILABLE_SIZES.map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
+                {PRODUCT_SIZES.map((size) => {
+                  const rem = availableBySize[size];
+                  return (
+                    <option key={size} value={size}>
+                      {rem > 0 ? `${size} (${rem} disp.)` : `${size} (Agotada)`}
+                    </option>
+                  );
+                })}
               </select>
 
               {sizeError && (

@@ -1,4 +1,8 @@
-﻿export interface PurpleBloomProduct {
+﻿export const PRODUCT_SIZES = ["XS", "S", "M", "L", "XL"] as const;
+export type ProductSize = (typeof PRODUCT_SIZES)[number];
+export type StockBySize = Record<ProductSize, number>;
+
+export interface PurpleBloomProduct {
   id: string;
   name: string;
   price: number;
@@ -8,13 +12,31 @@
   material: string;
   care: "mano" | "maquina" | "ambos";
   stock: number;
+  stockBySize: StockBySize;
   imageSrc?: string;
   imageAlt?: string;
   swatch?: "" | "alt" | "alt2";
   colors?: { name: string; imageSrc: string; imageAlt: string }[];
 }
 
-export const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = [
+function distributeStockBySize(totalStock: number): StockBySize {
+  const safeTotal = Math.max(0, Math.floor(totalStock));
+  const base = Math.floor(safeTotal / PRODUCT_SIZES.length);
+  const remainder = safeTotal % PRODUCT_SIZES.length;
+  // Prioriza M, L, S, XL, XS al repartir el remanente
+  const priorityOrder: ProductSize[] = ["M", "L", "S", "XL", "XS"];
+  const result: StockBySize = { XS: base, S: base, M: base, L: base, XL: base };
+  for (let i = 0; i < remainder; i++) {
+    result[priorityOrder[i]] += 1;
+  }
+  return result;
+}
+
+function sumStockBySize(stockBySize: StockBySize): number {
+  return PRODUCT_SIZES.reduce((sum, size) => sum + Math.max(0, stockBySize[size] ?? 0), 0);
+}
+
+const RAW_PRODUCTS: Omit<PurpleBloomProduct, "stockBySize">[] = [
   {
     id: "blusa-lavanda",
     name: "Blusa Lavanda",
@@ -320,9 +342,18 @@ export const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = [
   },
 ];
 
-const STOCK_STORAGE_KEY = "purple_bloom_stock_v1";
+export const PURPLE_BLOOM_PRODUCTS: PurpleBloomProduct[] = RAW_PRODUCTS.map((product) => {
+  const stockBySize = distributeStockBySize(product.stock);
+  return {
+    ...product,
+    stockBySize,
+    stock: sumStockBySize(stockBySize),
+  };
+});
 
-function readStockOverrides(): Record<string, number> {
+const STOCK_STORAGE_KEY = "purple_bloom_stock_v2";
+
+function readStockOverrides(): Record<string, Partial<StockBySize>> {
   try {
     if (typeof window === "undefined" || !window.localStorage) return {};
     const raw = window.localStorage.getItem(STOCK_STORAGE_KEY);
@@ -334,7 +365,7 @@ function readStockOverrides(): Record<string, number> {
   }
 }
 
-function writeStockOverrides(overrides: Record<string, number>): void {
+function writeStockOverrides(overrides: Record<string, Partial<StockBySize>>): void {
   try {
     if (typeof window === "undefined" || !window.localStorage) return;
     window.localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(overrides));
@@ -343,37 +374,69 @@ function writeStockOverrides(overrides: Record<string, number>): void {
   }
 }
 
+export function getStockForSize(product: PurpleBloomProduct, size: string): number {
+  const normalized = size.toUpperCase() as ProductSize;
+  if (PRODUCT_SIZES.includes(normalized)) {
+    return Math.max(0, product.stockBySize[normalized] ?? 0);
+  }
+  return Math.max(0, product.stock);
+}
+
 export function getProductsWithPersistedStock(): PurpleBloomProduct[] {
   const overrides = readStockOverrides();
-  return PURPLE_BLOOM_PRODUCTS.map((product) => ({
-    ...product,
-    stock:
-      typeof overrides[product.id] === "number"
-        ? Math.max(0, overrides[product.id])
-        : product.stock,
-  }));
+  return PURPLE_BLOOM_PRODUCTS.map((product) => {
+    const productOverride = overrides[product.id];
+    if (!productOverride || typeof productOverride !== "object") {
+      return product;
+    }
+    const mergedBySize: StockBySize = { ...product.stockBySize };
+    for (const size of PRODUCT_SIZES) {
+      if (typeof productOverride[size] === "number") {
+        mergedBySize[size] = Math.max(0, productOverride[size]!);
+      }
+    }
+    return {
+      ...product,
+      stockBySize: mergedBySize,
+      stock: sumStockBySize(mergedBySize),
+    };
+  });
 }
 
 export function commitOrderStock(
-  purchasedLines: { productId: string; quantity: number }[]
+  purchasedLines: { productId: string; size?: string; quantity: number }[]
 ): PurpleBloomProduct[] {
   const currentProducts = getProductsWithPersistedStock();
   const overrides = readStockOverrides();
 
-  const totalsByProduct = new Map<string, number>();
-  for (const line of purchasedLines) {
-    totalsByProduct.set(
-      line.productId,
-      (totalsByProduct.get(line.productId) ?? 0) + line.quantity
-    );
-  }
-
   const updated = currentProducts.map((product) => {
-    const purchasedQty = totalsByProduct.get(product.id) ?? 0;
-    if (purchasedQty <= 0) return product;
-    const nextStock = Math.max(0, product.stock - purchasedQty);
-    overrides[product.id] = nextStock;
-    return { ...product, stock: nextStock };
+    const matchingLines = purchasedLines.filter((l) => l.productId === product.id);
+    if (matchingLines.length === 0) return product;
+
+    const nextBySize: StockBySize = { ...product.stockBySize };
+
+    for (const line of matchingLines) {
+      const normalized = (line.size ?? "").toUpperCase() as ProductSize;
+      if (PRODUCT_SIZES.includes(normalized)) {
+        nextBySize[normalized] = Math.max(0, nextBySize[normalized] - line.quantity);
+      } else {
+        // Descuento de respaldo si no viene talla explícita
+        let remaining = line.quantity;
+        for (const s of PRODUCT_SIZES) {
+          if (remaining <= 0) break;
+          const take = Math.min(nextBySize[s], remaining);
+          nextBySize[s] -= take;
+          remaining -= take;
+        }
+      }
+    }
+
+    overrides[product.id] = nextBySize;
+    return {
+      ...product,
+      stockBySize: nextBySize,
+      stock: sumStockBySize(nextBySize),
+    };
   });
 
   writeStockOverrides(overrides);

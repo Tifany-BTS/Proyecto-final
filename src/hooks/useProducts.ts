@@ -16,7 +16,7 @@ export function useProducts() {
 export function useCommitOrderStock() {
   const queryClient = useQueryClient();
 
-  return (purchasedLines: { productId: string; quantity: number }[]) => {
+  return (purchasedLines: { productId: string; size?: string; quantity: number }[]) => {
     const updatedProducts = commitOrderStock(purchasedLines);
     queryClient.setQueryData<PurpleBloomProduct[]>(["products"], updatedProducts);
   };
